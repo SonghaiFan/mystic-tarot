@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --font-cinzel: "Cinzel", serif;
+  --font-noto: "Noto Serif SC", serif;
+}
+
+/* 配置暗黑模式为 class 策略 */
+@variant dark (&:where(.dark, .dark *));
+
+body {
+  background-color: #000000;
+  color: #f5f5f5;
+  font-family: var(--font-noto);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
