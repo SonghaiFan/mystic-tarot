@@ -1,0 +1,76 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+/.pnp/
+.pnp.js
+
+# Production
+dist/
+build/
+out/
+
+# Vite cache
+.vite/
+
+# Coverage
+coverage/
+
+# Environment files
+.env
+.env.*.local
+.env.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Misc caches
+.cache/
+.parcel-cache/
+/.next/
+.turbo/
+node_repl_history
+
+# Optional tooling
+.eslintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+
+# Optional coverage/temp
+.nyc_output/
+coverage/
+
+# Built static files
+/public/build/
+
+# History / local backups
+.history/
+__pycache__/
