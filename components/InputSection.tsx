@@ -8,20 +8,16 @@ import { SPREADS } from "../constants/spreads";
 interface InputSectionProps {
   question: string;
   spread: SpreadType | null;
-  includeMinor: boolean;
   onQuestionChange: (value: string) => void;
   onSpreadChange: (spread: SpreadType) => void;
-  onToggleMinor: () => void;
   onStartRitual: () => void;
 }
 
 const InputSection: React.FC<InputSectionProps> = ({
   question,
   spread,
-  includeMinor,
   onQuestionChange,
   onSpreadChange,
-  onToggleMinor,
   onStartRitual,
 }) => {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -155,41 +151,6 @@ const InputSection: React.FC<InputSectionProps> = ({
           </AnimatePresence>
         </div>
       </div>
-      {/* Minor Arcana Toggle (Only for 3-card spread) */}
-      <AnimatePresence>
-        {spread === "THREE" && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden"
-          >
-            <button
-              onClick={onToggleMinor}
-              className="w-full flex items-center justify-center gap-3 py-2 cursor-pointer group"
-            >
-              <div
-                className={`w-4 h-4 border flex items-center justify-center transition-colors ${
-                  includeMinor
-                    ? "border-white bg-white/20"
-                    : "border-neutral-600"
-                }`}
-              >
-                {includeMinor && <Check size={10} className="text-white" />}
-              </div>
-              <span
-                className={`text-[10px] tracking-widest transition-colors ${
-                  includeMinor
-                    ? "text-neutral-300"
-                    : "text-neutral-600 group-hover:text-neutral-400"
-                }`}
-              >
-                INCLUDE MINOR ARCANA (包含小阿尔克那)
-              </span>
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
       <motion.button
         onClick={onStartRitual}
         disabled={!spread}

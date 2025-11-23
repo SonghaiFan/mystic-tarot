@@ -66,6 +66,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     cardCount: 3,
     layoutType: "flex",
     labels: ["Past", "Present", "Future"],
+    cardPools: ["MAJOR", "MAJOR", "MAJOR"],
     cardSize: {
       mobile: "w-28 h-44",
       desktop: "w-56 h-80",
@@ -134,13 +135,20 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     ],
   },
   FIVE: {
-    id: "FIVE",
+    id: "FIVE_DIMENSIONS",
     name: "Five Dimensions",
     description:
       "Romance · Finance · Mental · Career · Spirit. 全面扫描生活的五个核心维度。",
     cardCount: 5,
     layoutType: "flex",
     labels: ["Romance", "Finance", "Mental", "Career", "Spirit"],
+    cardPools: [
+      "SUIT_CUPS",
+      "SUIT_PENTACLES",
+      "SUIT_SWORDS",
+      "SUIT_WANDS",
+      "MAJOR",
+    ],
     cardSize: {
       mobile: "w-20 h-32",
       desktop: "w-32 h-48",

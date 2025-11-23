@@ -6,7 +6,13 @@ import React, {
   useMemo,
 } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { GameState, TarotCard, SpreadType, PickedCard, CardPoolType } from "./types";
+import {
+  GameState,
+  TarotCard,
+  SpreadType,
+  PickedCard,
+  CardPoolType,
+} from "./types";
 import {
   MAJOR_ARCANA,
   MINOR_ARCANA,
@@ -93,7 +99,6 @@ const App: React.FC = () => {
   // Input State
   const [question, setQuestion] = useState("");
   const [spread, setSpread] = useState<SpreadType | null>(null);
-  const [includeMinor, setIncludeMinor] = useState(false); // Toggle for Minor Arcana in 3-card spread
 
   // Game Data
   const [pickedCards, setPickedCards] = useState<PickedCard[]>([]);
@@ -142,10 +147,10 @@ const App: React.FC = () => {
   // --- Computed Deck ---
   const activeDeck = useMemo(() => {
     if (!spread) return FULL_DECK;
-    
+
     const spreadDef = SPREADS[spread];
     const currentStep = pickedCards.length;
-    
+
     // Helper to get deck for a specific pool type (duplicated for useMemo scope)
     const getDeckForPool = (pool: CardPoolType): TarotCard[] => {
       const courtPrefixes = ["Page", "Knight", "Queen", "King"];
@@ -159,6 +164,14 @@ const App: React.FC = () => {
           return MINOR_ARCANA.filter((c) => !isCourt(c));
         case "COURT":
           return MINOR_ARCANA.filter((c) => isCourt(c));
+        case "SUIT_CUPS":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Cups"));
+        case "SUIT_PENTACLES":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Pentacles"));
+        case "SUIT_SWORDS":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Swords"));
+        case "SUIT_WANDS":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Wands"));
         case "FULL":
         default:
           return FULL_DECK;
@@ -169,19 +182,10 @@ const App: React.FC = () => {
     let poolType: CardPoolType = "FULL";
     if (spreadDef.cardPools && spreadDef.cardPools[currentStep]) {
       poolType = spreadDef.cardPools[currentStep];
-    } else {
-       // Fallback logic
-       if (spread === "THREE" && !includeMinor) {
-         poolType = "MAJOR";
-       } else if (spread === "SINGLE") {
-         poolType = "MAJOR";
-       }
     }
 
     return getDeckForPool(poolType);
-  }, [spread, includeMinor, pickedCards.length]);
-
-  // --- Audio Initialization ---
+  }, [spread, pickedCards.length]); // --- Audio Initialization ---
   const initAudio = useCallback(() => {
     if (!audioContextRef.current) {
       const AudioContextClass =
@@ -331,6 +335,14 @@ const App: React.FC = () => {
           return MINOR_ARCANA.filter((c) => !isCourt(c));
         case "COURT":
           return MINOR_ARCANA.filter((c) => isCourt(c));
+        case "SUIT_CUPS":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Cups"));
+        case "SUIT_PENTACLES":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Pentacles"));
+        case "SUIT_SWORDS":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Swords"));
+        case "SUIT_WANDS":
+          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Wands"));
         case "FULL":
         default:
           return FULL_DECK;
@@ -344,25 +356,21 @@ const App: React.FC = () => {
       // Determine pool type
       if (spreadDef.cardPools && spreadDef.cardPools[i]) {
         poolType = spreadDef.cardPools[i];
-      } else {
-        // Fallback logic for spreads without explicit pools
-        if (spread === "THREE" && !includeMinor) {
-          poolType = "MAJOR";
-        }
       }
 
       const sourceDeck = getDeckForPool(poolType);
-      
-      // Simple random pick (allowing duplicates across positions if decks overlap, 
+
+      // Simple random pick (allowing duplicates across positions if decks overlap,
       // but usually we want unique cards. For now, simple random is fine as decks are large enough,
       // but ideally we should filter out already picked cards if from same deck)
       // Improved: Filter out already picked IDs
       const availableDeck = sourceDeck.filter(
         (c) => !targets.some((t) => t.id === c.id)
       );
-      
-      const picked = availableDeck[Math.floor(Math.random() * availableDeck.length)];
-      
+
+      const picked =
+        availableDeck[Math.floor(Math.random() * availableDeck.length)];
+
       targets.push({
         ...picked,
         isReversed: Math.random() > 0.4,
@@ -549,10 +557,8 @@ const App: React.FC = () => {
           <InputSection
             question={question}
             spread={spread}
-            includeMinor={includeMinor}
             onQuestionChange={setQuestion}
             onSpreadChange={setSpread}
-            onToggleMinor={() => setIncludeMinor((prev) => !prev)}
             onStartRitual={startRitual}
           />
         );

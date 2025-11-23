@@ -12,12 +12,20 @@ export type SpreadType =
   | "THREE"
   | "FOUR"
   | "FIVE"
-  | "FIVE_INSIGHT"
+  | "FIVE_DIMENSIONS"
   | "RELATIONSHIP"
   | "COURT"
   | "CELTIC";
 
-export type CardPoolType = "MAJOR" | "MINOR_PIP" | "COURT" | "FULL";
+export type CardPoolType =
+  | "MAJOR"
+  | "MINOR_PIP"
+  | "COURT"
+  | "FULL"
+  | "SUIT_CUPS"
+  | "SUIT_PENTACLES"
+  | "SUIT_SWORDS"
+  | "SUIT_WANDS";
 
 export interface TarotCard {
   id: number;
