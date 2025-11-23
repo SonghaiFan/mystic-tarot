@@ -1,6 +1,7 @@
 # Mystic Tarot | 命运塔罗
 
 <div align="center">
+  <img src="docs/teaser.png" alt="Mystic Tarot Teaser" width="100%" />
   <p>
     <em>An immersive, AI-powered Tarot reading experience.</em>
   </p>
