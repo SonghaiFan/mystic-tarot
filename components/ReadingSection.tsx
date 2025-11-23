@@ -56,7 +56,7 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
   }, []);
 
   const handleCardClick = (id: number) => {
-    if (!revealedCardIds.has(id) || isMobile) {
+    if (!revealedCardIds.has(id)) {
       onCardReveal(id);
     }
   };
@@ -89,7 +89,7 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
         className={`mt-10 ${
           SPREADS[spread].layoutType === "absolute" && !isMobile
             ? "relative w-full h-[80vh] max-w-4xl mx-auto"
-            : `flex flex-wrap justify-center gap-4 md:gap-8 ${
+            : `flex flex-wrap justify-center gap-12 ${
                 spread === "THREE" ? "items-start" : "items-center"
               }`
         }`}
@@ -120,7 +120,10 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
                   ? position?.label
                   : spreadConfig.labels?.[index];
 
-              const labelPosition = position?.labelPosition || "bottom";
+              const labelPosition =
+                spreadConfig.layoutType === "absolute" && !isMobile
+                  ? position?.labelPosition || "bottom"
+                  : "bottom";
 
               return (
                 <TarotCard
@@ -135,7 +138,6 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
                   style={absoluteStyle}
                   label={label}
                   labelPosition={labelPosition}
-                  isMobile={isMobile}
                   className={
                     isMobile
                       ? spreadConfig.cardSize.mobile
@@ -166,7 +168,7 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
         document.body
       )}
 
-      <div className="w-full max-w-4xl min-h-[200px] flex flex-col items-center justify-center text-center pb-12">
+      <div className="w-full max-w-4xl min-h-[150px] flex flex-col items-center justify-center text-center pb-12">
         <AnimatePresence mode="wait">
           {!allCardsRevealed ? (
             <motion.div
@@ -229,13 +231,13 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
               transition={{ duration: 1, ease: SILKY_EASE }}
               className="relative px-4 md:px-0 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto flex flex-col items-center"
             >
-              <div className="w-full h-[50vh] md:h-[500px] lg:h-[40vh] overflow-y-auto overscroll-y-auto mb-8 pr-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50">
+              <div className="w-full h-[50vh] md:h-[500px] lg:h-[60vh] overflow-y-auto overscroll-y-auto mb-8 pr-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50">
                 {question && (
                   <p className="text-xs text-neutral-600 mb-4 tracking-widest uppercase text-center sticky top-0 bg-black/90 backdrop-blur-sm py-2 z-10">
                     Reflecting on: "{question}"
                   </p>
                 )}
-                <div className="w-12 h-px bg-white/20 mx-auto my-10" />
+                <div className="w-12 h-px bg-white/20 mx-auto mb-6" />
                 <div className="text-base md:text-xl leading-loose text-neutral-300 font-light font-serif tracking-wide mb-12 text-justify md:text-center">
                   {readingText.split("**").map((part, idx) =>
                     idx % 2 === 1 ? (

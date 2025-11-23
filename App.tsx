@@ -495,15 +495,7 @@ const App: React.FC = () => {
             pickedCards={pickedCards}
             revealedCardIds={revealedCardIds}
             onCardReveal={(id) =>
-              setRevealedCardIds((prev) => {
-                const next = new Set(prev);
-                if (isMobile && next.has(id)) {
-                  next.delete(id);
-                } else {
-                  next.add(id);
-                }
-                return next;
-              })
+              setRevealedCardIds((prev) => new Set(prev).add(id))
             }
             hoveredCardId={hoveredCardId}
             onCardHover={setHoveredCardId}
@@ -548,7 +540,7 @@ const App: React.FC = () => {
       >
         {/* Inner Container - Full Height Centered */}
         <div
-          className={`w-full flex flex-col items-center px-4${
+          className={`w-full flex flex-col items-center px-4 ${
             gameState === GameState.READING || gameState === GameState.REVEAL
               ? "min-h-full py-12 justify-start"
               : "h-full justify-center py-24"

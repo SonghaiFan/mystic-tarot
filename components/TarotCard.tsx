@@ -24,7 +24,6 @@ interface TarotCardProps
   labelPosition?: "top" | "bottom" | "left" | "right";
   width?: string;
   height?: string;
-  isMobile?: boolean;
 }
 
 const TarotCard: React.FC<TarotCardProps> = ({
@@ -42,7 +41,6 @@ const TarotCard: React.FC<TarotCardProps> = ({
   style,
   onClick,
   layoutId,
-  isMobile = false,
   ...motionProps
 }) => {
   const isReversed =
@@ -50,10 +48,10 @@ const TarotCard: React.FC<TarotCardProps> = ({
     ("isReversed" in card ? (card as PickedCard).isReversed : false);
 
   const labelClasses = {
-    top: "bottom-full mb-3 left-1/2 -translate-x-1/2",
-    bottom: "-bottom-8 left-1/2 -translate-x-1/2",
-    left: "right-full mr-3 top-1/2 -translate-y-1/2",
-    right: "left-full ml-3 top-1/2 -translate-y-1/2",
+    top: "bottom-full mb-2 left-1/2 -translate-x-1/2",
+    bottom: "top-full mt-2 left-1/2 -translate-x-1/2",
+    left: "right-full mr-2 top-1/2 -translate-y-1/2",
+    right: "left-full ml-2 top-1/2 -translate-y-1/2",
   };
 
   return (
@@ -65,8 +63,8 @@ const TarotCard: React.FC<TarotCardProps> = ({
         ...style,
       }}
       onClick={onClick}
-      onMouseEnter={() => !isMobile && onHover?.(card.id)}
-      onMouseLeave={() => !isMobile && onHover?.(null)}
+      onMouseEnter={() => onHover?.(card.id)}
+      onMouseLeave={() => onHover?.(null)}
       className={`relative cursor-pointer group ${width} ${height} ${className}`}
       {...motionProps}
     >
@@ -127,11 +125,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
 
         {/* Back Face (Pattern) */}
         <div
-          className={`absolute inset-0 bg-neutral-950 border border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.05)] flex items-center justify-center overflow-hidden transition-all duration-300 ${
-            !isMobile
-              ? "group-hover:border-white/40 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]"
-              : ""
-          }`}
+          className="absolute inset-0 bg-neutral-950 border border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.05)] flex items-center justify-center overflow-hidden group-hover:border-white/40 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] transition-all duration-300"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -146,23 +140,12 @@ const TarotCard: React.FC<TarotCardProps> = ({
             }}
           ></div>
           <div className="absolute inset-1 border-[0.5px] border-white/5" />
-          <div
-            className={`w-3 h-3 border border-white/10 rotate-45 transition-transform duration-700 ${
-              !isMobile ? "group-hover:rotate-90" : ""
-            }`}
-          />
-          {isMobile && label && (
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-              <span className="text-[8px] text-neutral-300 font-cinzel tracking-widest bg-black/80 px-2 py-1 rounded backdrop-blur-md border border-white/10 shadow-lg max-w-[90%] text-center leading-tight">
-                {label}
-              </span>
-            </div>
-          )}
+          <div className="w-3 h-3 border border-white/10 rotate-45 group-hover:rotate-90 transition-transform duration-700" />
         </div>
       </motion.div>
 
-      {/* Label (Desktop only) */}
-      {label && !isMobile && (
+      {/* Label */}
+      {label && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
