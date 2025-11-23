@@ -149,7 +149,7 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
       {/* Tooltip Portal */}
       {createPortal(
         <AnimatePresence>
-          {hoveredCardId && (
+          {hoveredCardId !== null && (
             <CardTooltip
               card={pickedCards.find((c) => c.id === hoveredCardId)!}
               x={mousePos.x + 15}
