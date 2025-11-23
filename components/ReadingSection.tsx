@@ -7,6 +7,7 @@ import { SILKY_EASE } from "../constants/ui";
 import { SPREADS } from "../constants/spreads";
 import TarotCard from "./TarotCard";
 import CardTooltip from "./CardTooltip";
+import DecryptedText from "../utils/DecryptedText";
 
 interface ReadingSectionProps {
   spread: SpreadType;
@@ -226,71 +227,75 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: SILKY_EASE }}
-              className="relative px-4 md:px-0"
+              className="relative px-4 md:px-0 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto flex flex-col items-center"
             >
-              {question && (
-                <p className="text-xs text-neutral-600 mb-4 tracking-widest uppercase">
-                  Reflecting on: "{question}"
-                </p>
-              )}
-              <div className="w-12 h-px bg-white/20 mx-auto mb-6" />
-              <p className="text-base md:text-xl leading-loose text-neutral-300 font-light font-serif tracking-wide mb-12 max-w-xl mx-auto text-justify md:text-center">
-                {readingText.split("**").map((part, idx) =>
-                  idx % 2 === 1 ? (
-                    <strong key={idx} className="font-bold text-white/90">
-                      {part}
-                    </strong>
-                  ) : (
-                    part
-                  )
+              <div className="w-full h-[50vh] md:h-[500px] lg:h-[60vh] overflow-y-auto mb-8 pr-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/40">
+                {question && (
+                  <p className="text-xs text-neutral-600 mb-4 tracking-widest uppercase text-center sticky top-0 bg-black/90 backdrop-blur-sm py-2 z-10">
+                    Reflecting on: "{question}"
+                  </p>
                 )}
-              </p>
+                <div className="w-12 h-px bg-white/20 mx-auto mb-6" />
+                <div className="text-base md:text-xl leading-loose text-neutral-300 font-light font-serif tracking-wide mb-12 text-justify md:text-center">
+                  {readingText.split("**").map((part, idx) =>
+                    idx % 2 === 1 ? (
+                      <strong key={idx} className="font-bold text-white/90">
+                        {part}
+                      </strong>
+                    ) : (
+                      part
+                    )
+                  )}
+                </div>
+              </div>
 
-              <div className="flex items-center justify-center gap-4 mb-8">
-                {readingAudioBuffer && (
+              <div className="shrink-0 flex flex-col items-center w-full">
+                <div className="flex items-center justify-center gap-4 mb-8">
+                  {readingAudioBuffer && (
+                    <motion.button
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 2 }}
+                      onClick={onReplayAudio}
+                      disabled={isAudioPlaying}
+                      className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="重播解读音频"
+                    >
+                      <Volume2
+                        size={14}
+                        className={isAudioPlaying ? "animate-pulse" : ""}
+                      />
+                      REPLAY
+                    </motion.button>
+                  )}
+
                   <motion.button
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 2 }}
-                    onClick={onReplayAudio}
-                    disabled={isAudioPlaying}
-                    className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                    title="重播解读音频"
+                    transition={{ delay: 2.2 }}
+                    onClick={onDownload}
+                    className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20"
+                    title="下载解读图片"
                   >
-                    <Volume2
-                      size={14}
-                      className={isAudioPlaying ? "animate-pulse" : ""}
-                    />
-                    REPLAY
+                    <Download size={14} />
+                    SAVE
                   </motion.button>
-                )}
+                </div>
 
                 <motion.button
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 2.2 }}
-                  onClick={onDownload}
-                  className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20"
-                  title="下载解读图片"
+                  transition={{ delay: 3 }}
+                  onClick={onReset}
+                  className="inline-flex items-center gap-3 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-6 py-2 border border-transparent hover:border-white/10"
                 >
-                  <Download size={14} />
-                  SAVE
+                  <RefreshCw
+                    size={12}
+                    className="group-hover:rotate-180 transition-transform duration-700"
+                  />
+                  SEEK AGAIN
                 </motion.button>
               </div>
-
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3 }}
-                onClick={onReset}
-                className="inline-flex items-center gap-3 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-6 py-2 border border-transparent hover:border-white/10"
-              >
-                <RefreshCw
-                  size={12}
-                  className="group-hover:rotate-180 transition-transform duration-700"
-                />
-                SEEK AGAIN
-              </motion.button>
             </motion.div>
           )}
         </AnimatePresence>

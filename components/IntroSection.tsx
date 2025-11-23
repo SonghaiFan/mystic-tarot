@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { SILKY_EASE } from "../constants/ui";
+import ASCIIText from "../utils/ASCIIText";
 
 interface IntroSectionProps {
   onEnter: () => void;
@@ -22,9 +23,12 @@ const IntroSection: React.FC<IntroSectionProps> = ({ onEnter }) => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5, ease: SILKY_EASE }}
-        className="text-7xl md:text-9xl font-thin tracking-tighter text-white mix-blend-difference opacity-90"
+        className="relative text-7xl md:text-9xl font-thin tracking-tighter text-white mix-blend-difference opacity-90"
       >
-        塔罗
+        <span className="opacity-0">命运塔罗</span>
+        <div className="absolute inset-0">
+          <ASCIIText text="命运塔罗" enableWaves={true} asciiFontSize={4} />
+        </div>
       </motion.h1>
       <motion.p
         initial={{ opacity: 0 }}
