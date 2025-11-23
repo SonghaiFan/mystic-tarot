@@ -41,8 +41,8 @@ jobs:
         run: npm run build
         env:
           # Pass environment variables if needed during build
-          # GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} 
-          # Note: Client-side env vars must be prefixed with VITE_ usually, 
+          # GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # Note: Client-side env vars must be prefixed with VITE_ usually,
           # but your config uses process.env.GEMINI_API_KEY replacement.
           # If you need secrets, add them to repo secrets and uncomment above.
           CI: true
