@@ -7,13 +7,7 @@ import React, {
 } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { GameState, TarotCard, SpreadType, PickedCard } from "./types";
-import {
-  MAJOR_ARCANA,
-  FULL_DECK,
-  STATIC_SCRIPTS,
-  getCardImageUrl,
-  getCardImageFallbackUrl,
-} from "./constants";
+import { MAJOR_ARCANA, FULL_DECK, STATIC_SCRIPTS } from "./constants";
 import { SPREADS } from "./constants/spreads";
 import { generateTarotReading, generateSpeech } from "./services/gemini";
 import CosmicParticles from "./components/CosmicParticles";
@@ -23,6 +17,7 @@ import InputSection from "./components/InputSection";
 import ShufflingSection from "./components/ShufflingSection";
 import PickingSection from "./components/PickingSection";
 import ReadingSection from "./components/ReadingSection";
+import printTheReading from "./utils/printTheReading";
 
 // --- Configuration ---
 const BACKGROUND_VOLUME = 0.06;
@@ -99,6 +94,10 @@ const App: React.FC = () => {
   const [readingText, setReadingText] = useState<string>("");
   const [readingAudioBuffer, setReadingAudioBuffer] =
     useState<AudioBuffer | null>(null);
+  const [revealedCardIds, setRevealedCardIds] = useState<Set<number>>(
+    new Set()
+  );
+  const [hasPlayedReadingAudio, setHasPlayedReadingAudio] = useState(false);
 
   // System State
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -112,6 +111,12 @@ const App: React.FC = () => {
   const soundEngineRef = useRef<SoundEngine | null>(null);
   const audioCacheRef = useRef<Map<string, AudioBuffer>>(new Map());
   const voiceSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const readingPromiseRef = useRef<Promise<string> | null>(null);
+  const readingReadyRef = useRef<boolean>(false);
+  const ritualIdRef = useRef<number>(0);
+  const predeterminedCardsRef = useRef<PickedCard[]>([]);
+  const predeterminedCardsIndexRef = useRef<number>(0);
+  const hiddenCardIdsRef = useRef<Set<number>>(new Set());
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -261,6 +266,63 @@ const App: React.FC = () => {
   const startRitual = async () => {
     setGameState(GameState.SHUFFLING);
     setPickedCards([]);
+    setRevealedCardIds(new Set());
+    setHasPlayedReadingAudio(false);
+    setReadingText("");
+    setReadingAudioBuffer(null);
+    hiddenCardIdsRef.current.clear();
+    readingReadyRef.current = false;
+
+    // Increment Ritual ID to invalidate old promises
+    const currentRitualId = ritualIdRef.current + 1;
+    ritualIdRef.current = currentRitualId;
+
+    // 1. Pre-determine cards immediately
+    const requiredCards = SPREADS[spread].cardCount;
+    const shuffled = [...activeDeck].sort(() => Math.random() - 0.5);
+    const targets = shuffled.slice(0, requiredCards).map((card) => ({
+      ...card,
+      isReversed: Math.random() > 0.5,
+    }));
+
+    predeterminedCardsRef.current = targets;
+    predeterminedCardsIndexRef.current = 0;
+
+    // 2. Start Gemini Generation in Background
+    readingPromiseRef.current = generateTarotReading(targets, spread, question)
+      .then((text) => {
+        // Check if this result is for the current ritual
+        if (ritualIdRef.current !== currentRitualId) return text;
+
+        readingReadyRef.current = true;
+
+        // Optional: Start TTS prefetch here if we want to be even faster
+        // But we need to parse the last sentence first.
+        if (audioContextRef.current) {
+          const sentences = text
+            .split(/[。！？.!?]/)
+            .filter((s) => s.trim().length > 0);
+
+          const firstSentence = sentences.length > 0 ? sentences[0] : text;
+          const lastSentence =
+            sentences.length > 0 ? sentences[sentences.length - 1] : text;
+
+          // Fire and forget TTS prefetch
+          generateSpeech(firstSentence, audioContextRef.current).then(
+            (buffer) => {
+              if (ritualIdRef.current === currentRitualId && buffer) {
+                setReadingAudioBuffer(buffer);
+              }
+            }
+          );
+        }
+        return text;
+      })
+      .catch((err) => {
+        console.error("Background generation failed", err);
+        return "The stars are silent...";
+      });
+
     await playVoice(STATIC_SCRIPTS.SHUFFLE, "SHUFFLE", "shuffle");
 
     // Auto advance after shuffle (5s)
@@ -270,19 +332,34 @@ const App: React.FC = () => {
     }, 5000);
   };
 
-  const handleCardSelect = async (card: TarotCard) => {
+  const handleCardSelect = async (visualCard: TarotCard) => {
     if (isThinking || gameState !== GameState.PICKING) return;
 
     const requiredCards = SPREADS[spread].cardCount;
     if (pickedCards.length >= requiredCards) return;
 
-    // Prevent picking duplicate cards
-    if (pickedCards.some((c) => c.id === card.id)) return;
+    // Prevent picking duplicate visual cards (though hiddenCardIds should handle this)
+    if (hiddenCardIdsRef.current.has(visualCard.id)) return;
 
-    // Determine Upright vs Reversed (50% chance of reversal now)
-    const isReversed = Math.random() > 0.5;
+    // Get the next predetermined target
+    const targetIndex = predeterminedCardsIndexRef.current;
+    if (targetIndex >= predeterminedCardsRef.current.length) return;
 
-    const newPicked: PickedCard[] = [...pickedCards, { ...card, isReversed }];
+    const targetCard = predeterminedCardsRef.current[targetIndex];
+    predeterminedCardsIndexRef.current++;
+
+    // Create Hybrid Card:
+    // Visual ID: From the card user clicked (so it disappears from cloud)
+    // Data: From the target card (so the reading is correct)
+    const hybridCard: PickedCard = {
+      ...targetCard,
+      id: visualCard.id, // Use visual ID to satisfy unique key requirements and animations
+    };
+
+    // Mark visual ID as hidden so it disappears from cloud
+    hiddenCardIdsRef.current.add(visualCard.id);
+
+    const newPicked: PickedCard[] = [...pickedCards, hybridCard];
     setPickedCards(newPicked);
 
     // If we have all cards, proceed to reveal
@@ -298,31 +375,51 @@ const App: React.FC = () => {
     playVoice(STATIC_SCRIPTS.REVEAL, "REVEAL", "reveal");
 
     // Start Thinking Process (for the text generation)
-    setThinkingKeywordIndex(0);
-    setIsThinking(true);
-
-    // 1. Get Text Reading
-    const text = await generateTarotReading(finalCards, spread, question);
-    setReadingText(text);
-
-    // 2. Get Audio for Reading (Wait for this before showing text)
-    let audioBuffer = null;
-    if (audioContextRef.current) {
-      // Try Gemini TTS
-      audioBuffer = await generateSpeech(text, audioContextRef.current);
+    if (!readingReadyRef.current) {
+      setThinkingKeywordIndex(0);
+      setIsThinking(true);
     }
 
-    // Save audio buffer for replay
-    setReadingAudioBuffer(audioBuffer);
+    // 1. Get Text Reading (Should be ready or almost ready)
+    let text = "";
+    if (readingPromiseRef.current) {
+      text = await readingPromiseRef.current;
+    } else {
+      // Fallback if something went wrong
+      text = await generateTarotReading(finalCards, spread, question);
+    }
+    setReadingText(text);
+
+    // 2. Audio should have been prefetched in the promise chain
+    // If not (e.g. promise resolved before TTS finished), we wait or it will update via state
+    // We don't need to do anything here if we set state in the promise chain.
 
     // Stop thinking state
     setIsThinking(false);
-
-    if (audioBuffer) {
-      playBuffer(audioBuffer);
-    }
-    // If audioBuffer is null, we just show the text silently
   };
+
+  // Effect to play audio when all cards are revealed and audio is ready
+  useEffect(() => {
+    if (
+      gameState === GameState.READING &&
+      !isThinking &&
+      readingAudioBuffer &&
+      pickedCards.length > 0 &&
+      revealedCardIds.size === pickedCards.length &&
+      !hasPlayedReadingAudio
+    ) {
+      playBuffer(readingAudioBuffer);
+      setHasPlayedReadingAudio(true);
+    }
+  }, [
+    gameState,
+    isThinking,
+    readingAudioBuffer,
+    pickedCards.length,
+    revealedCardIds.size,
+    hasPlayedReadingAudio,
+    playBuffer,
+  ]);
 
   const resetRitual = () => {
     if (voiceSourceRef.current) {
@@ -332,6 +429,8 @@ const App: React.FC = () => {
     }
     setGameState(GameState.INPUT);
     setPickedCards([]);
+    setRevealedCardIds(new Set());
+    setHasPlayedReadingAudio(false);
     setReadingText("");
     setReadingAudioBuffer(null);
     setQuestion("");
@@ -347,299 +446,14 @@ const App: React.FC = () => {
   };
 
   // Download reading as image
-  const downloadReading = async () => {
-    try {
-      const { toPng } = await import("html-to-image");
-
-      // 创建一个精美的卡牌解读图片
-      const container = document.createElement("div");
-      container.style.cssText = `
-        position: absolute;
-        left: 0;
-        top: 0;
-        background: #0f0f0f;
-        color: #e5e5e5;
-        padding: 60px 50px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        width: 1000px;
-        box-sizing: border-box;
-        z-index: -1;
-        opacity: 1;
-        pointer-events: none;
-      `;
-
-      // 顶部标题
-      const headerDiv = document.createElement("div");
-      headerDiv.style.cssText = `
-        text-align: center;
-        margin-bottom: 40px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        padding-bottom: 30px;
-      `;
-
-      const titleDiv = document.createElement("div");
-      titleDiv.style.cssText = `
-        font-size: 28px;
-        letter-spacing: 8px;
-        color: #fff;
-        margin-bottom: 12px;
-        font-weight: 300;
-      `;
-      titleDiv.textContent = "塔罗解读";
-
-      const subtitleDiv = document.createElement("div");
-      subtitleDiv.style.cssText = `
-        font-size: 10px;
-        letter-spacing: 4px;
-        color: #666;
-        text-transform: uppercase;
-      `;
-      subtitleDiv.textContent = "TAROT READING";
-
-      headerDiv.appendChild(titleDiv);
-      headerDiv.appendChild(subtitleDiv);
-      container.appendChild(headerDiv);
-
-      // 问题部分
-      if (question) {
-        const questionSection = document.createElement("div");
-        questionSection.style.cssText = `
-          margin-bottom: 40px;
-          text-align: center;
-        `;
-
-        const questionLabel = document.createElement("div");
-        questionLabel.style.cssText = `
-          font-size: 10px;
-          letter-spacing: 3px;
-          color: #666;
-          margin-bottom: 12px;
-          text-transform: uppercase;
-        `;
-        questionLabel.textContent = "Your Question";
-
-        const questionText = document.createElement("div");
-        questionText.style.cssText = `
-          font-size: 16px;
-          color: #b8b8b8;
-          line-height: 1.8;
-          max-width: 700px;
-          margin: 0 auto;
-        `;
-        questionText.textContent = `"${question}"`;
-
-        questionSection.appendChild(questionLabel);
-        questionSection.appendChild(questionText);
-        container.appendChild(questionSection);
-      }
-
-      // 卡牌区域
-      const cardsSection = document.createElement("div");
-      cardsSection.style.cssText = `
-        margin-bottom: 50px;
-      `;
-
-      const cardsLabel = document.createElement("div");
-      cardsLabel.style.cssText = `
-        font-size: 10px;
-        letter-spacing: 3px;
-        color: #666;
-        margin-bottom: 20px;
-        text-align: center;
-        text-transform: uppercase;
-      `;
-      cardsLabel.textContent = SPREADS[spread].name;
-      cardsSection.appendChild(cardsLabel);
-
-      const cardsContainer = document.createElement("div");
-      cardsContainer.style.cssText = `
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        align-items: flex-start;
-        flex-wrap: wrap;
-      `;
-
-      pickedCards.forEach((card, index) => {
-        const cardDiv = document.createElement("div");
-        cardDiv.style.cssText = `
-          width: ${spread === "SINGLE" ? "280px" : "200px"};
-          text-align: center;
-        `;
-
-        // 卡牌图片
-        const img = document.createElement("img");
-        img.src = getCardImageUrl(card.image);
-        img.crossOrigin = "anonymous";
-        img.onerror = () => {
-          img.src = getCardImageFallbackUrl(card.image);
-        };
-        img.style.cssText = `
-          width: 100%;
-          height: auto;
-          border: 1px solid rgba(255,255,255,0.15);
-          filter: grayscale(100%) contrast(1.2) brightness(0.9);
-          margin-bottom: 16px;
-        `;
-
-        // 卡牌名称
-        const nameDiv = document.createElement("div");
-        nameDiv.style.cssText = `
-          font-size: 14px;
-          color: #e5e5e5;
-          letter-spacing: 1px;
-          margin-bottom: 6px;
-        `;
-        nameDiv.textContent = card.nameCn;
-
-        // 英文名和逆位标识
-        const enNameDiv = document.createElement("div");
-        enNameDiv.style.cssText = `
-          font-size: 10px;
-          color: #888;
-          letter-spacing: 1px;
-          margin-bottom: 12px;
-        `;
-        enNameDiv.textContent = card.isReversed
-          ? `${card.nameEn} (Reversed)`
-          : card.nameEn;
-
-        // 关键词
-        const keywordsDiv = document.createElement("div");
-        keywordsDiv.style.cssText = `
-          display: flex;
-          flex-wrap: wrap;
-          gap: 6px;
-          justify-content: center;
-        `;
-
-        card.keywords.slice(0, 4).forEach((keyword) => {
-          const keywordSpan = document.createElement("span");
-          keywordSpan.style.cssText = `
-            font-size: 9px;
-            color: #999;
-            padding: 4px 8px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-            letter-spacing: 1px;
-          `;
-          keywordSpan.textContent = keyword;
-          keywordsDiv.appendChild(keywordSpan);
-        });
-
-        cardDiv.appendChild(img);
-        cardDiv.appendChild(nameDiv);
-        cardDiv.appendChild(enNameDiv);
-        cardDiv.appendChild(keywordsDiv);
-        cardsContainer.appendChild(cardDiv);
-      });
-
-      cardsSection.appendChild(cardsContainer);
-      container.appendChild(cardsSection);
-
-      // 解读内容部分
-      const readingSection = document.createElement("div");
-      readingSection.style.cssText = `
-        margin-top: 50px;
-        padding-top: 40px;
-        border-top: 1px solid rgba(255,255,255,0.1);
-      `;
-
-      const readingLabel = document.createElement("div");
-      readingLabel.style.cssText = `
-        font-size: 10px;
-        letter-spacing: 3px;
-        color: #666;
-        margin-bottom: 20px;
-        text-align: center;
-        text-transform: uppercase;
-      `;
-      readingLabel.textContent = "Interpretation";
-
-      const textDiv = document.createElement("div");
-      textDiv.style.cssText = `
-        font-size: 16px;
-        line-height: 2.2;
-        color: #d0d0d0;
-        text-align: justify;
-        max-width: 850px;
-        margin: 0 auto;
-        font-weight: 300;
-        text-indent: 2em;
-      `;
-      textDiv.textContent = readingText;
-
-      readingSection.appendChild(readingLabel);
-      readingSection.appendChild(textDiv);
-      container.appendChild(readingSection);
-
-      // 底部时间戳
-      const footerDiv = document.createElement("div");
-      footerDiv.style.cssText = `
-        margin-top: 50px;
-        text-align: center;
-        font-size: 9px;
-        color: #444;
-        letter-spacing: 2px;
-      `;
-      const now = new Date();
-      footerDiv.textContent = now.toLocaleString("zh-CN", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      container.appendChild(footerDiv);
-
-      document.body.appendChild(container);
-
-      // 等待图片加载
-      const images = container.querySelectorAll("img");
-      await Promise.all(
-        Array.from(images).map(
-          (img) =>
-            new Promise((resolve) => {
-              if (img.complete) resolve(null);
-              else {
-                img.onload = () => resolve(null);
-                img.onerror = () => resolve(null);
-              }
-            })
-        )
-      );
-
-      // 等待一小段时间确保渲染完成
-      await new Promise((resolve) => setTimeout(resolve, 300));
-
-      // 生成图片
-      const dataUrl = await toPng(container, {
-        quality: 0.95,
-        pixelRatio: 2,
-        backgroundColor: "#0a0a0a",
-        cacheBust: true,
-        style: {
-          transform: "scale(1)",
-          transformOrigin: "top left",
-        },
-      });
-
-      // 清理
-      document.body.removeChild(container);
-
-      // 下载
-      const link = document.createElement("a");
-      link.download = `tarot-reading-${Date.now()}.png`;
-      link.href = dataUrl;
-      link.click();
-    } catch (error) {
-      console.error("下载失败:", error);
-    }
-  };
+  const downloadReading = printTheReading(
+    question,
+    spread,
+    pickedCards,
+    readingText
+  );
 
   // --- Render Helpers ---
-
-  // Dynamic Background Opacity: High in Intro, Low otherwise
 
   // Dynamic Background Opacity: High in Intro, Low otherwise
   const bgOpacity = gameState === GameState.INTRO ? 0.9 : 0.3;
@@ -680,6 +494,10 @@ const App: React.FC = () => {
             spread={spread}
             isMobile={isMobile}
             pickedCards={pickedCards}
+            revealedCardIds={revealedCardIds}
+            onCardReveal={(id) =>
+              setRevealedCardIds((prev) => new Set(prev).add(id))
+            }
             hoveredCardId={hoveredCardId}
             onCardHover={setHoveredCardId}
             isThinking={isThinking}

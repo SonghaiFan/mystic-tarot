@@ -12,6 +12,8 @@ interface ReadingSectionProps {
   spread: SpreadType;
   isMobile: boolean;
   pickedCards: PickedCard[];
+  revealedCardIds: Set<number>;
+  onCardReveal: (id: number) => void;
   hoveredCardId: number | null;
   onCardHover: (id: number | null) => void;
   isThinking: boolean;
@@ -29,6 +31,8 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
   spread,
   isMobile,
   pickedCards,
+  revealedCardIds,
+  onCardReveal,
   hoveredCardId,
   onCardHover,
   isThinking,
@@ -42,9 +46,6 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
   onReset,
 }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [revealedCardIds, setRevealedCardIds] = useState<Set<number>>(
-    new Set()
-  );
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -56,7 +57,7 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
 
   const handleCardClick = (id: number) => {
     if (!revealedCardIds.has(id)) {
-      setRevealedCardIds((prev) => new Set(prev).add(id));
+      onCardReveal(id);
     }
   };
 
