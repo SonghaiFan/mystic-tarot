@@ -2,7 +2,7 @@ import { TarotCard } from "./types";
 
 // Base URL for card images
 // Using local images stored in public folder for better performance and offline support
-const LOCAL_CDN = "/images/cards/";
+const LOCAL_CDN = `${import.meta.env.BASE_URL}images/cards/`;
 // Fallback to Sacred Texts Archive if local images are not available
 const REMOTE_CDN = "https://www.sacred-texts.com/tarot/pkt/img/";
 
