@@ -616,49 +616,15 @@ const App: React.FC = () => {
         <CosmicParticles gameState={gameState} />
       </motion.div>
 
-      {/* Ritual Glow Effect */}
-      <AnimatePresence>
-        {gameState !== GameState.INTRO && gameState !== GameState.INPUT && (
-          <motion.div
-            key="ritual-glow"
-            initial={{ opacity: 0 }}
-            animate={
-              gameState === GameState.SHUFFLING
-                ? { opacity: [0.3, 0.6, 0.3] } // Energetic
-                : gameState === GameState.PICKING
-                ? { opacity: [0.3, 0.7, 0.3] } // Focused (Human Breath)
-                : { opacity: [0.2, 0.5, 0.2] } // Deep (Reading/Reveal)
-            }
-            exit={{ opacity: 0 }}
-            transition={
-              gameState === GameState.SHUFFLING
-                ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
-                : gameState === GameState.PICKING
-                ? {
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    times: [0, 0.4, 1],
-                  }
-                : { duration: 8, repeat: Infinity, ease: "easeInOut" }
-            }
-            className="absolute inset-0 z-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at center, transparent 60%, rgba(255, 220, 150, 0.08) 100%)",
-              boxShadow: "inset 0 0 120px rgba(255, 200, 100, 0.05)",
-            }}
-          />
-        )}
-      </AnimatePresence>
-
       {/* Header */}
       <HeaderBar isAudioPlaying={isAudioPlaying} />
 
       {/* Main Content Area - No Scroll */}
       <main
-        className={`absolute inset-0 z-10 perspective-1000 ${
-          gameState === GameState.READING || gameState === GameState.REVEAL
+        className={`absolute inset-0 z-10 perspective-1000 overflow-hidden ${
+          gameState === GameState.READING ||
+          gameState === GameState.REVEAL ||
+          gameState === GameState.INPUT
             ? "overflow-y-auto"
             : "overflow-hidden"
         }`}
@@ -666,7 +632,9 @@ const App: React.FC = () => {
         {/* Inner Container - Full Height Centered */}
         <div
           className={`w-full flex flex-col items-center px-4 ${
-            gameState === GameState.READING || gameState === GameState.REVEAL
+            gameState === GameState.READING ||
+            gameState === GameState.REVEAL ||
+            gameState === GameState.INPUT
               ? "min-h-full py-12 justify-start"
               : "h-full justify-center py-24"
           }`}
