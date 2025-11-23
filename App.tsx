@@ -282,7 +282,7 @@ const App: React.FC = () => {
     const shuffled = [...activeDeck].sort(() => Math.random() - 0.5);
     const targets = shuffled.slice(0, requiredCards).map((card) => ({
       ...card,
-      isReversed: Math.random() > 0.5,
+      isReversed: Math.random() > 0.4,
     }));
 
     predeterminedCardsRef.current = targets;
@@ -302,9 +302,11 @@ const App: React.FC = () => {
             .filter((s) => s.trim().length > 0);
 
           const firstSentence = sentences.length > 0 ? sentences[0] : text;
+          const lastSentence =
+            sentences.length > 0 ? sentences[sentences.length - 1] : text;
 
           // Fire and forget TTS prefetch
-          generateSpeech(firstSentence, audioContextRef.current).then(
+          generateSpeech(lastSentence, audioContextRef.current).then(
             (buffer) => {
               if (ritualIdRef.current === currentRitualId && buffer) {
                 setReadingAudioBuffer(buffer);
