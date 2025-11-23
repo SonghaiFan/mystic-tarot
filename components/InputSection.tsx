@@ -25,6 +25,7 @@ const InputSection: React.FC<InputSectionProps> = ({
   onStartRitual,
 }) => {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     setPlaceholderIndex(0);
@@ -59,29 +60,46 @@ const InputSection: React.FC<InputSectionProps> = ({
           在心中默念你的困惑，保持虔诚与专注
         </p>
       </div>
-
       {/* Question Input */}
       <div className="w-full relative group">
         <div className="absolute inset-0 bg-linear-to-b from-white/5 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 blur-2xl -z-10 rounded-full" />
         <label className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase block text-center mb-8 group-hover:text-neutral-400 transition-colors">
           What is your query?
         </label>
-        <input
-          type="text"
-          name="tarot-query"
-          autoComplete="off"
-          data-lpignore="true"
-          value={question}
-          onChange={(e) => onQuestionChange(e.target.value)}
-          placeholder={getPlaceholder()}
-          className="w-full bg-transparent border-b border-white/10 py-6 md:py-8 text-center text-2xl md:text-4xl lg:text-5xl text-white placeholder:text-white/10 focus:outline-none focus:border-white/40 transition-all duration-700 font-serif tracking-wide"
-        />
-      </div>
-
+        <div className="relative w-full">
+          <AnimatePresence mode="wait">
+            {!question && !isFocused && (
+              <motion.div
+                key={getPlaceholder()}
+                initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              >
+                <span className="text-2xl md:text-4xl lg:text-5xl text-white/10 font-serif tracking-wide text-center px-4 whitespace-nowrap">
+                  {getPlaceholder()}
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <input
+            type="text"
+            name="tarot-query"
+            autoComplete="off"
+            data-lpignore="true"
+            value={question}
+            onChange={(e) => onQuestionChange(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            className="w-full bg-transparent border-b border-white/10 py-6 md:py-8 text-center text-2xl md:text-4xl lg:text-5xl text-white focus:outline-none focus:border-white/40 transition-all duration-700 font-serif tracking-wide relative z-10"
+          />
+        </div>
+      </div>{" "}
       {/* Spread Selection */}
       <div className="w-full space-y-6">
         <label className="text-[10px] tracking-[0.3em] text-neutral-500 uppercase block text-center">
-          Choose your Path
+          Choose your spread
         </label>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {Object.values(SPREADS).map((s) => (
@@ -137,7 +155,6 @@ const InputSection: React.FC<InputSectionProps> = ({
           </AnimatePresence>
         </div>
       </div>
-
       {/* Minor Arcana Toggle (Only for 3-card spread) */}
       <AnimatePresence>
         {spread === "THREE" && (
@@ -173,7 +190,6 @@ const InputSection: React.FC<InputSectionProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
-
       <motion.button
         onClick={onStartRitual}
         disabled={!spread}
