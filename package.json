@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "generate-audio": "tsx scripts/generate-static-audio.ts",
-    "download-cards": "tsx scripts/download-cards.ts"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
@@ -25,6 +23,6 @@
     "tailwindcss": "^4.1.17",
     "tsx": "^4.20.6",
     "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "vite": "^7.2.4"
   }
 }
