@@ -177,8 +177,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       "这段关系未来的走向如何？",
     ],
   },
-  FIVE_D: {
-    id: "FIVE_D",
+  DIMENSION: {
+    id: "DIMENSION",
     name: "Five Dimensions",
     description:
       "Romance · Finance · Mental · Career · Spirit. 全面扫描生活的五个核心维度。",

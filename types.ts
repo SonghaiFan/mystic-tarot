@@ -11,7 +11,7 @@ export type SpreadType =
   | "SINGLE"
   | "THREE"
   | "FOUR"
-  | "FIVE_D"
+  | "DIMENSION"
   | "FIVE"
   | "RELATIONSHIP"
   | "COURT"
