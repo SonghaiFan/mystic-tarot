@@ -31,7 +31,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["无限潜力", "新的开始", "赤子之心", "纯真", "自由", "冒险"],
     image: "ar00.jpg",
     description:
-      "他轻盈地前行,仿佛大地及其束缚对他无力,一位身着华丽服饰的年轻人停在世界之巅的悬崖边缘；他凝视着眼前的蓝色远方——那片天空比下方景色更为广阔。尽管他此刻静止不动,但他急切的行走姿态依然可见；他的狗仍在跳跃。那道通向深谷的边缘毫无恐惧；仿佛天使正等待扶持他,若他真的从高处跃下。他的面容充满智慧与期盼的梦境。他一手持玫瑰,另一手持昂贵的魔杖,魔杖上悬挂着一个绣有精美图案的钱袋,斜挂在右肩。他是另一个世界的王子,正在这个世界的旅途中——置身于晨光之中,呼吸着清冽的空气。身后的太阳知道他来自何方,将去往何处,以及许多日后将沿另一条路径归来。他是寻求体验的灵魂。这张牌中浓缩了诸多与神秘仪式相关的象征,它逆转了之前的所有混乱,在崇高的授权下。我们将根据常见的占卜技艺来看这张牌如何发挥作用,对于那些能够辨识的人而言,这将是一个例证,证明大阿卡那原本就没有在心理赌博中使用纸牌作为筹码和借口时,占卜技艺中不存在。然而,关于这种技艺产生的背景,我们知之甚少。传统的解释说,愚人象征着肉体,感性生命,并通过一种独特的讽刺,它的别名叫炼金术士,描绘了最无知的阶段。关于这部分,最后我要给出关于愚人的进一步指示,这是所有符号中最具代表性的。他象征着向外的旅程,第一层显现的状态,精神的恩典与被动性。他的钱袋上刻着模糊的符号,表明许多潜意识记忆储存在灵魂中。",
+      "With a light step and his dog leaping beside him, a youth in gorgeous vestments pauses on the brink of a precipice, rose and wand in hand, as if angels would uphold him. He is the spirit setting out to seek experience—first emanation, passivity and grace stored in the soul.  轻装的青年与跳跃的犬立于悬崖，手持白玫与杖，仿佛天使会托住他的脚步；他是出发寻求体验的灵魂，象征最初的放射、被动与蕴藏的恩典。",
     positive:
       "从零开始; 好赌运; 不墨守成规; 追求新奇的梦想; 冒险; 放浪形骸; 艺术家的气质; 异于常人; 直攻要害、盲点; 爱情狩猎者; 爱情历经沧桑; 不拘形式的自由恋爱",
     negative:
@@ -44,7 +44,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["显化", "意志力", "创造", "资源", "专注"],
     image: "ar01.jpg",
     description:
-      "一个身穿魔法师长袍的年轻身影,面容如神圣的阿波罗,带着自信的微笑和闪亮的眼睛。他头顶上方是圣灵的神秘符号,生命的符号,如同无尽的绳索,水平排列成数字 8。腰间系着一条蛇形束带,蛇似乎吞噬自己的尾巴。这对大多数人来说是永恒的传统象征,但这里它更特别地指的是灵性中永恒的成就。魔法师右手持一根指向天空的魔杖,左手指向大地。这种双重符号在《设立的奥秘》的高年级中广为人知;它展现了恩典、美德与光明的降临,源自上方,源自下方。因此,贯穿始终的暗示是拥有并传达圣灵的能力与恩赐。魔法师面前的桌子上是四种塔罗牌花色的符号,象征自然生命的元素,这些元素如同计数器般摆放在高手面前,他会根据自己的意愿调整它们。下面是玫瑰和百合,花卉和花莲花被变成花园花卉 ,展现着理想的文化。这张牌象征着人内在的神圣动机,反映上帝,意愿解放其与上方的结合。它也是个体存在在所有层面上的统一,并且在很高的意义上被认为是对其的执着。",
+      "A youthful figure with the face of Apollo stands before the four suits; the lemniscate crowns him and a serpent girds his waist. Wand to heaven, hand to earth—he channels grace. Roses and lilies bloom from wild ground. He embodies the divine motive in man, unity on all planes and the power to manifest Spirit.  阿波罗面貌的青年立于四种花色前，头顶无限符号，腰缠蛇带，一手指天一手指地，引下恩典；玫瑰与百合自野地化为花园。他象征人内在的神意、诸界的统一与显化灵恩的力量。",
     positive:
       "好的开始; 具独创性; 有发展的; 新计划成功; 想像力丰富或有好点子; 有恋情发生; 拥有默契良好的伴侣; 有新恋人出现; 值得效仿的对象出现",
     negative:
@@ -57,7 +57,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["直觉", "潜意识", "神秘", "内在智慧", "静默"],
     image: "ar02.jpg",
     description:
-      "她脚下有月牙,头戴带角的王冠,中央有一个地球仪,胸前有一个巨大的太阳十字架。她手中的卷轴刻有“Tora”一词,象征更高的法则、秘密法则以及“神话”的第二义。她的披风部分遮盖着它,以表明有些事情是暗示的,有些是说出来的。她坐在神秘神庙的白柱和黑柱之间。和 B.——神庙的面纱在她身后：上面绣有棕榈和石榴。祭服飘逸而朦胧,披风暗示着光芒——闪烁的光辉。她被称为伊西斯圣所门槛上的神秘科学,但她实际上是秘密教会,是神与人的殿堂。她也代表了已不在这个世界的王子的第二次婚姻;她是灵性的新娘与母亲,星辰与伊甸园的高地之女。她是借来之光的女王,但这才是万物之光。她是由至高母亲乳汁滋养的月亮。",
+      "She sits between the white and black pillars, crescent at her feet, horned crown and globe above. A solar cross rests on her breast; the veiled scroll Tora lies in her hands before the temple veil of palms and pomegranates. She is the Secret Tradition—the invisible Church, bride and mother by borrowed light—guarding what is hinted and withheld.  她端坐于黑白之柱之间，足踏新月，头戴角冠与球体，胸前日十字，手持半遮的“Tora”卷轴，身后是绣有棕榈与石榴的殿幔。她是隐秘传统、无形之教会，以借来的光为新娘与母亲，守护暗示与隐匿之知。",
     positive:
       "知性、优秀的判断力; 具洞察力及先见之明; 强大的战斗意志; 冷静的统率力; 学问、研究等精神方面幸运; 独立自主的女性; 柏拉图式的爱情; 有心灵上交往至深的友人; 冷淡的恋情",
     negative:
@@ -70,7 +70,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["丰饶", "自然", "母性", "感官享受", "孕育"],
     image: "ar03.jpg",
     description:
-      "一位庄严的坐姿人物,身着华丽的服饰,具有王室气质,如同天地之女。她的头冠由十二颗星星组成一簇。在她附近的盾牌上刻有维纳斯的象征。她面前的田野里谷物正在成熟,远处有瀑布流淌。她手持的权杖顶端是地球仪。她是伊甸园下界,尘世的天堂,象征着人类可见之家的所有事物。她不是天主之女,但仍是罪人的庇护所,是能生养千子的丰饶母亲。在某些方面,她被正确地描述为欲望及其翅膀,如披着太阳衣裳的女人,如世界之荣光和圣所的幕布；但我可以补充,除非以另一种不寻常的方式计算所有象征意义,她并非获得翅膀的灵魂。她最重要的是普遍的丰饶和话语的外在意义。这是显而易见的,因为人类没有直接收到像女性所承载的那样明确的信息；但她自己并不携带其解释。",
+      "Amid wheat and waterfall a stately figure sits, crowned with twelve stars, scepter with globe in hand; the Venus shield marks her as Earth Mother, the lower Eden. She is prolific, the outer word without its interpretation—shelter of sinners yet not spouse of the Holy King.  在麦穗与瀑流之间，威仪的女主戴十二星冠，手执地球仪权杖，维纳斯盾牌彰显她为大地之母、下界乐园。她孕育万物、是外在之言但未含解读，庇护罪人却非圣王之配。",
     positive:
       "母性本能强; 富创造力; 事业有成; 生活富足; 感情充实; 美好的恋情; 受人爱戴的对象; 有结婚的机会; 温柔体贴的伴侣",
     negative:
@@ -83,7 +83,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["权威", "结构", "控制", "父亲原型", "秩序"],
     image: "ar04.jpg",
     description:
-      "他的权杖是十字钥匙形状,左手持一个球体。他是一位戴着王冠的君主——威严、庄重,坐在一把由公羊头装饰的宝座上。他是执行与实现,是这个世界上的权力,此刻披着其最崇高的自然属性。他有时被描绘为坐在立方形石头上,但这却使某些问题变得模糊。他是阳刚之力,而女皇则是对应的阴柔之力,从这个意义上说,他是试图揭开伊西斯面纱的人；然而她依然保持纯洁无瑕。",
+      "A crowned monarch on a ram-carved stone throne holds orb and cross-like scepter. He is executive power, realized authority of this world, the masculine counterpart seeking to lift Isis’ veil. He is the householder of the material sphere.  戴冠君主坐于羊首石座，手持宝球与十字权杖，象征尘世高贵的执行与权威，是欲揭开伊西斯面纱的阳性力量，也是物质世界的家主。",
     positive:
       "以坚强的意志力及手腕获致成功; 富裕和力量; 有责任感; 良好的处理能力; 具领导能力; 男性的思考; 坚持到底; 虽有点专制却值得信赖; 条件诱人的提亲; 与年长者恋爱",
     negative:
@@ -96,7 +96,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["传统", "信仰", "教导", "社会规范", "精神指引"],
     image: "ar05.jpg",
     description:
-      "他戴着三重冠冕,坐在两根柱子之间,但这并非由女祭司守护的圣殿的柱子。他左手拿着顶端是三重十字的权杖,右手做出众所周知的教会手势,这个手势被称为神秘主义的标志,用以区分教义的显现与隐秘部分。在这个联系中值得注意的是,女祭司没有做出任何手势。他的脚下是交叉的钥匙,两位穿着长袍的祭司跪在他面前。他通常被称为教皇,这是对他所象征的更普遍职位的特殊应用。他是外部宗教的统治力量,而女祭司则是隐秘教义的占主导地位的精魂。",
+      "Wearing the triple crown, he sits between pillars other than the Priestess’s. Triple cross in one hand, blessing sign in the other, keys at his feet, ministers kneeling. He rules exoteric religion as spiritual father; the Priestess holds the hidden tradition.  他戴三重冠坐于两柱间，手持三重十字并行祝福手势，脚边交叉钥匙，侍者跪前。他是外显宗教的统摄与灵性之父，而隐秘传统则在女祭司手中。",
     positive:
       "受人信赖; 有贵人相助; 贡献; 受上司重视; 能胜任工作; 拥有一颗温柔的心; 受惠于有益的建言; 接触宗教的事物大吉; 与年长的异性有缘; 良缘; 深情宽大的爱; 有结良缘的机会",
     negative:
@@ -109,7 +109,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["爱", "和谐", "价值观", "选择", "结合"],
     image: "ar06.jpg",
     description:
-      "太阳高悬于天顶,下方是一个巨大的有翼人形,双臂伸展,倾泻而下。前景中是一男一女,彼此坦诚相见,如同亚当和夏娃初入尘世天堂时的模样。男人身后是结满十二果实的生命树,女人身后是善恶树,一条蛇缠绕其上。这些人物象征着青春、纯洁、天真和尚未被世俗欲望玷污的爱。这便是人类爱情的牌面,它以最简洁的方式呈现,象征着道路、真理和生命。它回归本源, 从某种意义上说,这张牌象征着盟约与安息日的奥秘。",
+      "A great winged figure shines above the man and woman; behind them stand the Tree of Life with twelve fruits and the serpent-twined Tree of Knowledge. They are youth, innocence and first love without shame. The card is the simple, sacred mystery of love—the way, the truth and the life—hinting at covenant and Sabbath.  光辉有翼者悬于男女之上，身后生命树结十二果，知识之树缠绕蛇形；二人象征无羞的青春与初恋。此牌是爱的神圣奥秘，亦暗示盟约与安息。",
     positive:
       "幸运的结合; 有希望的将来; 有共同做事的伙伴; 与人合作或社团活动; 敏感决定前进之路的好时机; 有意气相投的朋友; 爱情机会将到来; 罗曼蒂克的恋情; 爱的预感",
     negative:
@@ -122,7 +122,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["意志力", "胜利", "决心", "自我掌控", "进取"],
     image: "ar07.jpg",
     description:
-      "一位身姿挺拔、威严的王子,手持利剑,大致符合我在第一部分中描述的传统形象。据说,这位凯旋英雄的肩上扛着乌陵和图明 。他征服了一切俘虏；他在各个层面都取得了胜利——在精神层面、科学层面、进步层面,以及某些启蒙试炼层面。他以此回应了斯芬克斯,也正因如此,我接受了埃利法斯·莱维的变体：两尊斯芬克斯拉着他的战车。他首先在精神层面取得了胜利。因此,应当理解如下：(a) 斯芬克斯的问题关乎自然之谜,而非恩典之境,对此,御者无从解答；(b) 他所征服的层面是显而易见的或外在的,而非内在的；(c) 他所获得的解放或许会使他自身陷入逻辑理解的束缚；(d) 他凯旋通过的启蒙考验,应从物质或理性的角度来理解；(e) 即使他来到女祭司所坐的那座神庙的柱子前,他也无法打开名为 《Tora》的经卷,即便女祭司提问,他也无法回答。他并非世袭王室成员,也并非祭司。",
+      "A victorious prince in his chariot bears sword and shoulder emblems; two sphinxes draw him. He has conquered on visible planes—science, progress, outer trials—but not within the sanctuary. He cannot open the Priestess’s scroll. This is worldly triumph, not that of the Spirit.  凯旋的王子执剑立于战车，肩饰符号，车由双狮身人面像牵引；他征服外在领域与试炼，却无法开启女祭司的经卷。此乃世俗胜利，非灵性的凯歌。",
     positive:
       "前进必胜; 先下手为强; 独立; 起程; 在颠簸中仍有好成绩; 活泼; 有野心; 以速度取胜; 有开拓精神; 握有指挥权; 战胜敌手; 富行动力的恋情; 恋爱的胜利者",
     negative:
@@ -135,7 +135,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["勇气", "耐心", "同情", "内在力量", "驯服"],
     image: "ar08.jpg",
     description:
-      "一位女子头顶盘旋着与魔术师牌中相同的生命象征,她正合拢一头狮子的利齿。此牌与传统版本的唯一不同之处在于,她仁慈的坚韧已然制服了狮子,而狮子则被一串花环牵引。出于我个人认为合理的理由,这张牌与通常编号为八的正义牌互换了位置。由于这种变化对读者而言并无任何意义,因此无需解释。坚韧在其最崇高的层面之一,与神圣的结合奥秘相连；美德自然在所有层面运作,因此其象征意义涵盖一切。它也与纯洁无瑕(innocentia inviolata)以及冥想中蕴藏的力量相连。然而,这些更深层的含义需要推敲,我并不认为它们能从牌面表面直接看出。它们以一种隐晦的方式通过花环暗示出来,花环象征着神圣律法的甜蜜轭和轻盈重担,当它被铭记于心时。这张牌与通常意义上的自信无关,尽管有人这样认为——它关乎那些以神为力量、在神那里找到庇护之人的信心。狮子象征着激情,而被称为“力量”的牌则代表着更高层次的本性及其解放。它曾践踏毒蛇和蛇怪,也曾踩倒狮子和巨龙。",
+      "A lady crowned with the lemniscate closes a lion’s jaws with a garland leash. Mercy steadies passion; the flowers suggest the sweet yoke of Divine Law in the heart. Strength is faith finding refuge in God, not self-assertion—the animal nature subject to higher love.  头戴无限符号的女子以花环缰绳合上狮口，慈爱制服激情，花朵暗示铭心的神圣轭。这里的力量是投靠于神的信心，而非自我逞强；兽性因至高的爱而驯服。",
     positive:
       "不屈不挠的精神; 将不可能化为可能的意志力; 全力以赴; 突破难关; 坚强的信念和努力; 挑战已知危险的勇气; 神秘的力量; 旺盛的斗志; 轰轰烈烈的恋情; 克服困难的真实爱情",
     negative:
@@ -148,7 +148,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["内省", "孤独", "寻求真理", "指引", "撤退"],
     image: "ar09.jpg",
     description:
-      "这张牌与传统牌面的区别仅在于,灯盏并未部分被持灯者的斗篷包裹,而是将亘古常在者与世界之光的意象融合在一起。灯盏中闪耀着一颗星辰。我曾说过这是一张成就牌,为了进一步阐释这一概念,牌面上的人物被描绘成在高处高举着他的灯塔。因此,隐士并非如库尔·德·热贝兰所解释的那样,是一位寻求真理和正义的智者；也并非如后来的解释所言,是一位经验的典范。他的灯塔暗示着“我所在之处,亦有你可至”。这张牌常被误解为与神秘隔离的概念联系在一起,例如保护个人磁力免受干扰。这种轻率的解读要归功于埃利法斯·莱维。法国马丁主义教团采纳了这种解读,我们当中有些人也因此听说了许多关于“沉默而未知的哲学”的说法,认为它与世俗的知识隔绝。然而,在真正的马丁主义中, “未知哲学”(Philosophe inconnu)一词的含义截然不同。它并非指刻意隐藏既定的奥秘,更非指隐藏其替代品,而是——如同这张牌本身——指神圣的奥秘会保护自身免受毫无准备之人的侵害这一真理。",
+      "An aged figure on a height lifts a lantern with a star and bears a staff. The unveiled lamp proclaims attainment—where I am, you may come. He is no recluse hoarding power but a sage lighting the way; the mysteries guard themselves, and his silence is realized wisdom.  老者立于高处，高举星光灯笼，手持杖，灯不被遮掩，昭示“我所在处你亦可至”。他非闭关自守者，而是已达巅峰、为他人照亮的智者；奥秘自护，他的沉默是已然的觉悟。",
     positive:
       "智能与卓越见解; 不断地追求更高层次的东西; 思虑周密; 冷静沉着; 不多言; 接触知性事物吉; 正中核心的建言; 活动慢慢进行较有成果; 出局; 追求柏拉图式的爱情; 暗中的爱情",
     negative:
@@ -161,7 +161,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["宿命", "转折点", "周期", "运气", "改变"],
     image: "ar10.jpg",
     description:
-      "在这个符号中,我再次遵循了埃利法斯·莱维的重建,他提供了多个变体。正如我所暗示的,只要埃及象征符合我们的目的,且其中不暗示任何起源理论,使用埃及象征是合法的。不过,我已经以蛇形态呈现了泰丰。当然,象征意义并非仅限于埃及,因为以西结的四位生灵占据了牌面的各个角落,轮盘本身也遵循了以西结异象中列维的其他指示,象征着特定的塔罗牌钥匙。在这位法国神秘学家和设计中,象征性的画面代表着流体宇宙的永恒运动和人类生命的流动。斯芬克斯就是其中的平衡。塔罗的音译为 Rota,刻在轮子上,并与神名字母对应——以表明天意贯穿一切。但这就是内在的神圣意图,而类似的外在意图则由四大生灵体现。有时狮身人面像被描绘为“couchant”,这削弱了运动中稳定的核心理念,从而削弱了象征意义。在符号所表达的普遍概念背后,隐藏着对偶然性的否认以及其中隐含的宿命性。还需要补充的是,从列维时代起,这张牌的神秘解释——即使是对神秘学本身——也极其荒谬。据说它指的是原则、生育力、阳刚的荣誉、统治权威等。常见的占卜结果在各自的层面上比这更好。",
+      "The wheel marked ROTA and the Divine Name turns between Typhon descending and Anubis rising, a sphinx atop; Ezekiel’s winged creatures watch from the corners. It shows perpetual flux with balance at center—denying chance, pointing to hidden law.  刻有ROTA与圣名的轮子在堕落的巨蛇与上升的阿努比斯之间旋转，斯芬克斯居其上，以西结的四生灵守于四角。象征万物流变中的中枢平衡，否定偶然，指向命运的隐秘法则。",
     positive:
       "机会到来; 随机应变能力佳; 好运; 转换期; 意想不到的幸运; 升迁有望; 变化丰富; 好时机; 宿命的相逢; 一见钟情; 幸运的婚姻; 富贵的身份",
     negative:
@@ -174,7 +174,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["公平", "真理", "因果", "法律", "平衡"],
     image: "ar11.jpg",
     description:
-      "由于这张牌遵循传统象征,并承载其最明显的含义,除了第一部分中收集的少数考虑外,读者对此几乎无多余内容。然而,可以看出,这个人物像大祭司一样坐在柱子之间,因此有必要表明,按照每个人的行为对待每个人的道德原则——虽然它严格类比于更高的事物;——在本质上与选择理念中涉及的精神正义不同。后者属于一种神秘的天意秩序,某些人因此可以构思对最高事物的奉献。这种运作就像圣灵随意呼吸,我们对此没有批评规范或解释依据。这类似于诗人拥有的天赋、高贵天赋和恩典天赋：我们有或没有,它们的存在和它们的缺失一样是个谜。然而,正义的律法并不属于任何一种选择。总之,正义的支柱通向一个世界,而高阶女祭司的支柱则通向另一个世界。",
+      "Between pillars she holds raised sword and scales. Justice deals to each according to works—a law akin to higher things yet distinct from the mystery of grace. Her pillars open to one world; the Priestess’s to another.  她在双柱间执剑与天平，按行为而分配的律法与更高之事相类，却有别于任意吹拂的恩典。她的柱子通向此界，女祭司的柱子通向彼界。",
     positive:
       "公正; 严正的意见; 良好的均衡关系; 严守中立立场; 凡事合理化; 身兼两种工作; 协调者; 与裁判、法律相关者; 表里一致的公正人物; 以诚实之心光明正大地交往; 彼此能获得协调",
     negative:
@@ -187,7 +187,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["牺牲", "等待", "新视角", "放下", "暂停"],
     image: "ar12.jpg",
     description:
-      "悬挂他的绞刑架形成了陶十字,而人物——从腿的位置——形成了一个菲尔福特十字。在这位看似殉道者的头部上有一根云雾。需要注意的是,（1）献祭树是活木,上面有叶子;（2）面部表达的是深刻的入神,而非痛苦;（3）整体上,这个图形暗示的是悬浮生命,但实际上是生命而非死亡。这是一张意义深远的牌,但所有的意义都被掩盖了。他的一位编辑认为埃利法斯·莱维并不懂得其含义,这无可置疑,编辑本人也无可置疑。它曾被错误地称为殉道牌、谨慎牌、伟大工作的牌、责任牌;但我们可能会穷尽所有已发表的解释,只发现虚荣。我可以非常简单地说,它在某个方面表达了神圣与宇宙之间的关系。能够理解他更高本性的故事蕴含于这一象征意义的人,将会收到关于可能的伟大觉醒的暗示,并知道在死亡的神圣奥秘之后,还有荣耀的复活之谜。",
+      "Hung by one foot from a living tau tree, legs forming a cross, nimbus about his calm face—the scene is suspended, living sacrifice. It veils the relation of Divine and universe, hinting at awakening and resurrection; not mere martyrdom or prudence.  他单脚悬于活的T字树上，双腿成十字，神情安宁，光环围绕，呈现的是悬而未绝的奉献。牌中遮掩着神与宇宙的关联，暗示觉醒与复活，并非单纯的殉道或谨慎。",
     positive:
       "接受考验; 无法动弹; 被牺牲; 有失必有得; 从痛苦的体验中获得教训; 过度期; 不贪图眼前利益; 浴火重生; 多方学习; 奉献的爱; 明知辛苦但全力以赴",
     negative:
@@ -200,7 +200,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["结束", "重生", "转变", "必然性", "过渡"],
     image: "ar13.jpg",
     description:
-      "生命的帷幕在变化、转化和从低到高的过渡中永存,这在修正后的塔罗牌中通过末日景象比通过粗俗的收割骷髅概念更恰当地表现。在其背后是精神上升的整个世界。神秘的骑手缓缓前行,扛着一面黑色旗帜,旗帜上绣有神秘玫瑰,象征着生命。在地平线边缘的两根柱子之间,闪耀着不朽的太阳。骑手没有明显的武器,但国王、孩子和少女都倒在他面前,而一位合十双手的主教等待着他的终结。无需指出,我之前与这张牌相关的死亡暗示当然应从神秘学的角度来理解,但在当前情况下并非如此。人自然过渡到生命下一阶段的旅程,要么是,要么可能是其进步的一种形式,但在这个生命期间进入神秘死亡状态的外来且几乎未知的入口,是意识形式的一种转变,进入一个普通死亡既非路径也非入口的状态。现有第 13 张牌的神秘学解释总体上比通常情况更好,包括重生、创造、目的地、更新等等。",
+      "A skeletal rider bears a black banner with the mystic rose; king, child and maiden fallen, a bishop awaiting. The sun of immortality rises between pillars. It is transformation and passage from lower to higher, touching the mystery of inner death in life.  骷髅骑士举着绣有神秘玫瑰的黑旗前行，国王、孩童与少女已倒，主教正待其至；地平线两柱间升起不朽之日。此牌象征由低至高的转化，触及生命中神秘的内在之死。",
     positive:
       "失败; 毁灭之日将近; 损害继续延续; 失业; 进展停滞; 交易停止; 为时已晚; 停滞状态; 生病或意外的暗示; 味如嚼蜡的生活; 不幸的恋情; 恋情终止; 彼此间有很深的鸿沟; 别离",
     negative:
@@ -213,7 +213,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["平衡", "温和", "调和", "耐心", "炼金术"],
     image: "ar14.jpg",
     description:
-      "一位有翅膀的天使,额头上带着太阳的标志,胸前佩戴着七行的正方形和三角形。我以男性身份谈论他,但这个形象既非男性也非女性。人们认为他正将生命的精华从圣杯倒入圣杯。他一只脚站在地上,另一只脚站在水上,以此说明精华的本质。一条直路通向地平线边缘的某个高度,上方有一道巨大的光芒,透过光芒隐约可见一顶王冠。这是永恒生命之秘的一部分,也是人类在化身时所能达到的部分。这里放弃了所有传统标志。同样,常规含义也指代季节的变化、生命的永恒运动,甚至思想的结合。此外,说这个形象象征着太阳的精灵是不正确的,尽管它是太阳光的类推,在我们的三重人类旅程的第三部分得以实现。它被奇妙地称为节制,因为当它的规则在我们的意识中生效时,它调和、结合和协调心理和物质本性。在这种规则下,我们在理性部分中了解一些我们来自何方以及去向何方的事情。",
+      "A winged angel, solar sign on the brow, pours life’s essence between cups, one foot on land, one on water; a path leads to a distant crown of light. Beyond season symbols, neither male nor female, Temperance blends psychic and material natures—likeness of Spirit’s inflow.  翼天使额带日徽，一足陆一足水，将生命之液在双杯间流转，小径通向远处光冠。无季节标记、超越雌雄，节制调和心性与物质，象征灵流的灌注。",
     positive:
       "单纯化; 顺畅; 交往平顺; 两者相融顺畅; 调整; 彼此交换有利条件; 平凡中也有重要的契机; 平顺的心境; 纯爱; 从好感转为爱意; 深爱",
     negative:
@@ -226,7 +226,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["束缚", "物质主义", "诱惑", "阴影", "成瘾"],
     image: "ar15.jpg",
     description:
-      "孟德斯的山羊头,长着蝙蝠般的翅膀,站在祭坛上。在腹部深处有水星的符号。右手举起并伸直,与第五张牌中由大祭司所赐的祝福相反。左手拿着一盏巨大的燃烧火炬,倒向地面。额头上有一个倒置的五芒星。祭坛前有一个戒指,从戒指上系着两条链子,分别套在两个形象——男性和女性的脖子上。这些与第五张牌中的形象相似,仿佛是堕落后的亚当和夏娃。这就是物质生活的锁链和宿命。人物有尾巴,象征着动物本性,但他们的脸上有人类智慧,而那高高在上的人并非永远能做他们的主人。如今,他也是一个奴隶,被自身中的邪恶所支撑,盲目于服务的自由。埃利法斯·勒维带着他惯有的对那些他假装尊重并作为大师来诠释的艺术的嘲讽,断言巴菲门特形象是隐秘科学和魔法。另一位评论家说,在神圣世界中它象征着预定,但在那个世界与下面那些属于野蛮的事物没有对应关系。它所象征的是当那些吃了禁果的人被赶出神秘花园时,守门人。",
+      "The horned goat of Mendes, bat-winged, stands on an altar, inverted pentagram on brow, torch reversed. Man and woman, tailed and chained, recall the Hierophant’s pair after the Fall. He is bondage to matter and false desire—himself a slave upheld by followers’ evil—guardian of the false Eden, not secret wisdom.  蝙蝠翼的山羊头立于祭坛，额饰倒五芒星，手持倒火炬，身前的男女带尾被链，仿佛堕落后的教皇牌人物。他象征物欲的桎梏与虚妄欲望的暴政，自身亦被追随者的邪恶所缚，是伪伊甸的守门人，而非隐秘智慧的象形。",
     positive:
       "被束缚; 堕落; 恶魔的私语; 卑躬屈膝; 欲望的俘虏; 荒废的生活; 举债度日; 病魔入侵; 夜游过多; 不可告人的事; 恶意; 不可抗拒的诱惑; 私密恋情; 沉溺于感官刺激之下",
     negative:
@@ -239,7 +239,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["剧变", "启示", "破坏", "觉醒", "混乱"],
     image: "ar16.jpg",
     description:
-      "与这张牌相关的神秘解释既贫乏又大多令人不安。指出它描绘了万物,这毫无意义,因为这一点在其表面就显而易见。据说它还包含了对物质建筑的首次暗示,但我认为高塔与我们在前三个案例中遇到的其他柱子一样,在物质性上并无不同。我看不到任何理由支持帕波斯认为它字面意思是亚当的堕落,但他的另一种解释——即它象征着精神之词的物质化——更有道理。基督教书目学家想象这是心灵寻求洞察上帝之奥秘时的堕落。我更倾向于共济会大东方的观点,认为这是当邪恶盛行时我们之家的毁灭,最重要的是,它是教义之家的撕裂。然而,我理解这里的参考是指虚假之家的撕裂。它也以最全面的方式阐释了古老的真理:“except the Lord build the house, they labour in vain that build it.”在某种意义上,这场灾难是前一张牌的反映,但并非在我试图在其中指出的象征意义上。更准确地说,这是一个类比问题；一个涉及堕入物质和动物状态,而另一个则意味着在智力方面的毁灭。高塔曾被描述为对骄傲的惩罚,以及在试图洞察上帝之奥秘时被智力所淹没；但在两种情况下,这些解释都无法解释那两个作为真正受害者的个体。一个是被字面意义所废除,另一个则是其虚假的解释。在更深层次上,它也可能意味着一个时代的终结,但在这里没有可能考虑这个复杂的问题。",
+      "Lightning smites a crowned tower; fire bursts forth, two figures fall headlong. The house falls because the Lord did not build it—the false edifice rent. It may be ruin of a house of doctrine or proud intellect, the close of a cycle and collapse of what cannot stand.  闪电击碎戴冠高塔，火焰迸出，二人倒坠。房屋因非主所建而毁，象征虚假殿堂的撕裂；可指邪恶当道时教义之屋的崩塌，或傲慢智识的覆灭，也预示周期终结与不堪的瓦解。",
     positive:
       "致命的打击; 纷争; 纠纷不断; 与周遭事物对立,情况恶化; 意想不到的事情; 急病; 受牵连; 急剧的大变动; 信念奔溃; 逆境; 破产; 没有预警,突然分离; 破灭的爱; 玩火自焚",
     negative:
@@ -252,7 +252,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["希望", "灵感", "宁静", "疗愈", "更新"],
     image: "ar17.jpg",
     description:
-      "一颗巨大的、放射八道光芒的星星,周围环绕着七颗较小的星星——这些小星星同样有八道光芒。前景中的女性形象完全赤裸。她的左膝踩在陆地上,右脚踏在水面上。她从两个大水罐中倾倒生命之水,滋润海洋和陆地。在她身后是上升的地形,右侧有一丛灌木或树木,一只鸟栖息在上面。这个形象展现了永恒的青春和美丽。这颗星星是 l'étoile flamboyante,出现在共济会符号中,但在此处已被混淆。这个形象向生动场景传递的是天体和元素的精华。人们确实说过这张牌的格言是“生命之水自由”和“精神的礼物”。对几段庸俗解释的总结称其为希望之牌。在其他层面上,它已被确认为不朽和内在之光。对于大多数准备好的心灵来说,这个形象将表现为被揭示的真理之类型,在永恒的美中显得庄严,向灵魂的水流倾注了她无价之宝的一部分和分量。但实际上,她是卡巴拉 Sephira Binah 中的伟大母亲,她是至高无上的理解,她以这些 Sephiroth 能接收到的程度,向其传递她的启示。",
+      "A naked maiden kneels by land and water, pouring living water from two vessels; a mound with tree and bird rises behind. Above shines a great eight-rayed star ringed by seven lesser. It is youth, beauty, revealed truth and Spirit’s water freely given—hope and inner light, Binah of the Kabalah.  赤裸的少女跪于陆水之间，将生命之水自双壶倾注，身后土丘有树与鸟；上方一颗八芒巨星环绕七星。此牌象征青春、美与真理的显露，灵水自由给予，是希望与内在之光，对应卡巴拉的理解之母。",
     positive:
       "愿望达成; 前途光明; 充满希望的未来; 美好的生活; 曙光出现; 大胆的幻想; 水准提高; 新的创造力; 想像力; 理想的对象; 美好的恋情; 爱苗滋生",
     negative:
@@ -265,7 +265,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["幻觉", "潜意识", "不安", "梦境", "直觉"],
     image: "ar18.jpg",
     description:
-      "月亮正在被称为怜悯的一侧逐渐增大,位于观察者的右侧。它有十六个主要射线和十六个次要射线。这张牌代表的是想象中的生活,而非精神中的生活。两座塔之间的道路是通向未知的出口。狗和狼是自然心智在面对这个出口时产生的恐惧,当时只有反射的光线能指引它。最后一个参考是另一种象征形式的关键。智力之光是一种反映,在其之后是它无法展现的未知之谜。它照亮了我们动物的本性,其类型如下所示——狗、狼和从深渊中涌出的东西,那无名而丑陋的倾向,它比野蛮的野兽更为低下。它努力去达到显现,象征为从水的深渊中爬行到陆地,但通常它会沉回它来的地方。心灵的容颜平静地注视着下面的不安；思想的露珠落下；信息是：平静,保持静止；也许动物的本性会迎来平静,而深渊之下的东西将停止释放形态。",
+      "The waxing moon of mercy sheds drops of light; a path between two towers leads into the unknown. Dog and wolf howl, a crayfish crawls from the pool. Reflected intellect stirs animal fears; beyond lies the unseen abyss. Be still—let lower nature quiet and the shapes sink back.  渐盈的月洒下光滴，小径穿过双塔通往未知；狗与狼长嚎，螯虾自水而出。反射之智唤醒兽性的恐惧，光外是不可见的深渊。讯息是安静，让下层本性平息，深处之影自会退去。",
     positive:
       "不安与动摇; 心中不平静; 谎言; 暧昧不明; 鬼迷心窍; 暗藏动乱; 欺骗; 终止; 不安的爱; 三角关系",
     negative:
@@ -278,7 +278,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["快乐", "成功", "活力", "清晰", "温暖"],
     image: "ar19.jpg",
     description:
-      "骑在白马上的裸体孩童和展示着红旗的象征已经作为这张牌更好的象征意义被提及。这是超自然东方的命运,也是伟大而神圣的光芒,它引领着人类无尽的行列,从敏感生命的围栏花园中走出,踏上回家的旅程。因此,这张牌象征着从这个世界显明之光（由地球的辉煌太阳代表）的过渡,到未来世界的光,它引领着渴望,并以孩童之心为象征。但最后这个暗示再次是通往另一种形式或方面的象征的关键。太阳是精神中的意识——直接的对立是反射的光。人类典型的类型在其中变成了一个小孩——在简单性的意义上,在纯洁性的意义上是智慧。在这种简单性中,他带着自然和艺术的印记；在这种纯洁性中,他象征着恢复的世界。当自我认知的精神在自然心智之上的意识中觉醒时,那心智在其更新中引导动物本性进入完美的和谐状态。",
+      "A radiant sun shines over sunflowers as a naked child rides a white horse with scarlet banner. It marks the restored world and passage from reflected moonlight to true Spirit. Innocence is wisdom and simplicity—the child of the new Adam—great light leading humanity home.  灿日照耀向日葵墙，裸童骑白马持红旗前行，象征复原的世界与由反射月光迈向灵性真光；此处的纯真即智慧与单纯，新的亚当之子，引领人类归途的圣光。",
     positive:
       "丰富的生命力; 巨大的成就感; 人际关系非常好; 爱情美满; 内心充满了热情和力量; 一定能够实现的约定; 飞黄腾达; 无忧无虑",
     negative:
@@ -291,7 +291,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["觉醒", "反思", "重生", "召唤", "赦免"],
     image: "ar20.jpg",
     description:
-      "我曾说过,这个符号在所有塔罗牌集中都是基本不变的,或者至少变化不会改变其性质。在这张牌中,伟大的天使被云彩包围,但他吹响了他的旗帜上的号角,并且像往常一样,旗帜上展示了十字架。死者正从他们的坟墓中升起——右边是一个女人,左边是一个男人,他们中间是他们的孩子,孩子的背对着我们。但在这张牌中,恢复的人不止三个,人们认为值得做出这种变化,以说明现有解释的不足。应该注意的是,所有人物在他们的姿态中表达了一种惊奇、崇敬和狂喜。这是一张记录了在至高无上的召唤回应下,伟大转化工作的完成的牌——这个召唤是从内心深处听到的并得到回应的。此处暗示了一种意义,在此处已难以进一步阐述。我们内心深处那鸣响号角的事物,以及我们本性中较低的部分随之响应——几乎是瞬间,几乎是电光火石之间？让这张牌继续描绘,对于那些看不到更深层含义的人,描绘最后的审判和自然身体的复活；但对于那些拥有内在之眼的人,让他们用这双眼睛去发现。他们将明白,它过去确实被称为永恒生命的牌,因此可以与那个被称为节制的东西相比较。",
+      "A great angel in clouds blows the cross-marked trumpet as dead rise—man, woman, child and more—faces filled with wonder. It records the completed work of transmutation answering the Supernal call within, hinting at the inner trumpet that awakens lower nature: a card of eternal life.  大天使于云间吹响带十字旗的号角，亡者—男女孩童与众人—出墓而起，神情惊喜。此牌记录回应至高召唤的炼化完成，也暗指内在号角瞬间唤醒下层本性，是永生的象征。",
     positive:
       "复活的喜悦; 开运; 公开; 改革期; 危机解除; 决断; 荣升; 崭露头角; 好消息; 爱的使者; 恢复健康; 坦白; 复苏的爱; 再会; 爱的奇迹",
     negative:
@@ -304,7 +304,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["圆满", "完成", "旅行", "成就", "整体"],
     image: "ar21.jpg",
     description:
-      "它也代表了宇宙的完善和终结,它内部的秘密,当宇宙在上帝中理解自己时的狂喜。它还是灵魂在神圣之境意识中的状态,从自我认知的精神中反射出来。但这些意义并不影响我对它在物质方面的描述。它在宏观层面上有多重信息,例如,当显现法则达到自然完美的最高程度时,它代表着恢复后的世界状态。但它或许更特别是一个关于过去的传说,指的是所有事物都被宣告为善的那一天,当晨星齐声歌唱,上帝之子们欢欣鼓舞的那一天。关于它的最糟糕的解释是,这个形象象征着当魔法师达到最高程度启蒙时；另一种说法称它代表绝对,这是荒谬的。",
+      "A wreath encloses a dancing figure with two wands; Ezekiel’s four living creatures fill the corners. It is the perfection and consummation of the cosmos, the soul in divine vision, the joy when all was declared good. Not the absolute nor the Magus crowned.  花环环绕舞动的披纱之人双持权杖，四角列以西结的四生灵。此牌象征宇宙的圆满与终结、灵魂处于神圣观照中的喜悦，回响“万物皆善”之日，并非绝对或登顶的魔术师。",
     positive:
       "完成; 成功; 拥有毕生的志业; 达成目标; 永续不断; 最盛期; 完美无缺; 接触异国,将获得幸运; 到达标准; 精神亢奋; 快乐的结束; 模范情侣",
     negative:
@@ -321,6 +321,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖首牌",
     keywords: ["灵感", "新机会", "创造力", "潜力"],
     image: "waac.jpg",
+    description:
+      "A hand issues from the clouds holding a sprouting wand—the raw spark of creation, enterprise and virility at the start.  云间伸出之手握着发芽的权杖，象征创生的火种、冒险的冲动与起点的生命力。",
   },
   {
     id: 23,
@@ -328,6 +330,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖二",
     keywords: ["未来规划", "决定", "发现", "掌控"],
     image: "wa02.jpg",
+    description:
+      "A lord on a battlement holds a globe and looks over land and sea—command of dominion shadowed by unrest and choice.  城垛上的贵族手持地球仪眺望海陆，既有权势与远景，也有坐拥天下仍心怀不安的抉择。",
   },
   {
     id: 24,
@@ -335,6 +339,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖三",
     keywords: ["扩张", "远见", "海外", "进步"],
     image: "wa03.jpg",
+    description:
+      "A merchant prince watches his ships from a high shore—enterprise launched, aid and cooperation on the horizon.  商旅立于高岸眺望远航的船队，事业已启程，合作与拓展正在前方到来。",
   },
   {
     id: 25,
@@ -342,6 +348,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖四",
     keywords: ["庆祝", "和谐", "回家", "安稳"],
     image: "wa04.jpg",
+    description:
+      "Garlands hang between four wands; figures celebrate by a bridge before a manor—homecoming, repose and harmonious prosperity.  花环悬于四根权杖之间，庆典在桥畔与庄园前展开，象征归家、安逸与和乐的收成。",
   },
   {
     id: 26,
@@ -349,6 +357,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖五",
     keywords: ["冲突", "竞争", "分歧", "挑战"],
     image: "wa05.jpg",
+    description:
+      "Youths brandish staves in mimic strife—a contest of wills, rivalry and the mock battle of ambition.  少年舞动权杖嬉戏又似争斗，表现竞争、较量与为目标而起的练兵。",
   },
   {
     id: 27,
@@ -356,6 +366,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖六",
     keywords: ["胜利", "认可", "自信", "成就"],
     image: "wa06.jpg",
+    description:
+      "A laurelled rider bears a crowned staff amid attendants—public victory, awaited news and hope fulfilled.  戴桂冠的骑士举着花冠权杖穿行人群，象征凯旋、捷报以及愿望的实现。",
   },
   {
     id: 28,
@@ -363,6 +375,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖七",
     keywords: ["防御", "坚持", "挑战", "勇气"],
     image: "wa07.jpg",
+    description:
+      "From a height one defends against six rising staves—valor with the vantage ground, debate and competition resisted.  立于高处者挥杖抵御下方六杖，象征据险固守的勇气、辩驳与竞争中的坚持。",
   },
   {
     id: 29,
@@ -370,6 +384,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖八",
     keywords: ["速度", "行动", "消息", "快速变化"],
     image: "wa08.jpg",
+    description:
+      "Eight wands fly across open country—movement through the immovable, swift messages and imminent arrival.  八根权杖划空而行，表示迅疾的进展、讯息飞至与即将到来的结果。",
   },
   {
     id: 30,
@@ -377,6 +393,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖九",
     keywords: ["韧性", "防御", "最后坚持", "疲惫"],
     image: "wa09.jpg",
+    description:
+      "A wary figure leans on his staff before a palisade—strength in opposition, readiness to meet the next onslaught.  戒备的守卫倚杖立于栅栏前，象征逆境中的坚守与迎击来犯的准备。",
   },
   {
     id: 31,
@@ -384,6 +402,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖十",
     keywords: ["负担", "责任", "压力", "努力"],
     image: "wa10.jpg",
+    description:
+      "A man staggers beneath ten staves—oppression by success, burdens of gain and the strain of disguises.  男子弯身扛起十根权杖，显示成就与财富所带来的沉重负担与压力。",
   },
   {
     id: 32,
@@ -391,6 +411,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖侍从",
     keywords: ["探索", "新想法", "热情", "自由"],
     image: "wapa.jpg",
+    description:
+      "A youthful herald proclaims with wand in hand—faithful messenger, strange tidings and family news.  年轻的传令官举杖宣告，象征忠诚的信使、陌生但重要的消息与家族讯息。",
   },
   {
     id: 33,
@@ -398,6 +420,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖骑士",
     keywords: ["冲动", "激情", "行动", "冒险"],
     image: "wakn.jpg",
+    description:
+      "An armored rider presses forward with a short wand—departure, change of place and the precipitate mood.  披甲骑士执杖飞奔，代表启程、搬迁与冲动的行动力。",
   },
   {
     id: 34,
@@ -405,6 +429,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖王后",
     keywords: ["自信", "独立", "社交", "活力"],
     image: "waqu.jpg",
+    description:
+      "The Queen of flowering wands, magnetic and warm, sits with a lion symbol—kind yet ardent, success in dealings and business charm.  手握开花权杖的王后，带着狮子徽记，温暖而有磁性，象征友善、热情与事业上的吸引力。",
   },
   {
     id: 35,
@@ -412,6 +438,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "权杖国王",
     keywords: ["领导", "远见", "企业家", "荣誉"],
     image: "waki.jpg",
+    description:
+      "A noble King uplifts a flowering wand, the lion upon his throne—ardent, honest rulership and news of heritage.  高举开花权杖的国王坐于狮饰王座，体现热烈正直的领导力，也预示传承与消息。",
   },
 
   // --- CUPS (Water / Emotion) ---
@@ -421,6 +449,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯首牌",
     keywords: ["新感情", "同情", "创造力", "灵性"],
     image: "cuac.jpg",
+    description:
+      "From the cloud a hand holds an overflowing Cup with dove and four streams—the house of the true heart, joy and divine nourishment.  云间之手托起满溢的圣杯，鸽子与四道水流倾注，象征真心之屋、喜悦与灵性的滋养。",
   },
   {
     id: 37,
@@ -428,6 +458,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯二",
     keywords: ["伴侣", "结合", "吸引", "平等"],
     image: "cu02.jpg",
+    description:
+      "Youth and maiden pledge each other as the caduceus rises with a lion’s head—union, passion and harmony that sanctify nature.  青年与少女举杯相对，杖翼与狮头升起，象征结合、热情以及使自然神圣化的和谐之爱。",
   },
   {
     id: 38,
@@ -435,6 +467,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯三",
     keywords: ["友谊", "社群", "聚会", "快乐"],
     image: "cu03.jpg",
+    description:
+      "Three maidens uplift cups in a garden—happy conclusion, plenty, merriment and healing companionship.  花园中的三位少女举杯同庆，寓意圆满的结果、丰盛与疗愈的欢聚。",
   },
   {
     id: 39,
@@ -442,6 +476,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯四",
     keywords: ["冷漠", "沉思", "错失机会", "厌倦"],
     image: "cu04.jpg",
+    description:
+      "A youth broods under a tree before three cups; a fourth is offered from a cloud—weariness and satiety while a fresh gift goes unseen.  少年在树下凝望三只酒杯，云间递出第四杯，他却无动于衷，象征厌倦之中忽略的新契机。",
   },
   {
     id: 40,
@@ -449,6 +485,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯五",
     keywords: ["悲伤", "失望", "遗憾", "丧失"],
     image: "cu05.jpg",
+    description:
+      "Cloaked figure laments three fallen cups while two remain; a bridge leads to a keep—loss mingled with what endures.  披袍人哀叹倒下的三杯，身后仍有两杯完好，桥通堡垒，暗示失去与保留并存。",
   },
   {
     id: 41,
@@ -456,6 +494,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯六",
     keywords: ["怀旧", "童年", "纯真", "重逢"],
     image: "cu06.jpg",
+    description:
+      "Children in an old garden fill cups with flowers—memories and happiness from the past, or innocence meeting new surroundings.  古园中孩童将鲜花放入杯中，象征过往的回忆与喜悦，也可指以童真目光迎向新环境。",
   },
   {
     id: 42,
@@ -463,6 +503,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯七",
     keywords: ["幻觉", "选择", "白日梦", "困惑"],
     image: "cu07.jpg",
+    description:
+      "Fantastical chalices brim with visions—reflection, sentiment and tempting phantoms without lasting substance.  七只杯中浮现奇异幻象，代表感性想象与镜中虚影，诱惑却难以持久。",
   },
   {
     id: 43,
@@ -470,6 +512,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯八",
     keywords: ["离开", "寻找", "放弃", "旅行"],
     image: "cu08.jpg",
+    description:
+      "A figure leaves eight cups behind—decline of a matter or the choice to abandon former concerns for another quest.  行者转身离开八只酒杯，寓意事务的式微，或主动放手旧事去追寻新方向。",
   },
   {
     id: 44,
@@ -477,6 +521,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯九",
     keywords: ["满足", "愿望成真", "感激", "享受"],
     image: "cu09.jpg",
+    description:
+      "A content host sits before a row of cups—concord, satisfaction and success enjoyed with future provision implied.  心满意足的主人端坐杯阵之前，象征和谐、满足与已经收获的成功，也暗含后续的保障。",
   },
   {
     id: 45,
@@ -484,6 +530,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯十",
     keywords: ["和谐", "幸福", "家庭", "团圆"],
     image: "cu10.jpg",
+    description:
+      "A rainbow of cups arches above a rejoicing family and their home—perfection of love, friendship and heart’s repose.  彩虹杯悬于欢乐家人与居所之上，寓意圆满的爱情、友谊与内心的安息。",
   },
   {
     id: 46,
@@ -491,6 +539,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯侍从",
     keywords: ["直觉", "创意", "新消息", "敏感"],
     image: "cupa.jpg",
+    description:
+      "A thoughtful youth watches a fish rise from his cup—imagination taking form, messages and reflective service.  沉思的侍从望向杯中跃鱼，象征化想为形的创意、讯息以及专注的助力。",
   },
   {
     id: 47,
@@ -498,6 +548,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯骑士",
     keywords: ["浪漫", "魅力", "想象力", "追求"],
     image: "cukn.jpg",
+    description:
+      "A graceful rider with winged helmet advances quietly—arrival or invitation colored by dream and feeling.  戴翼盔的优雅骑士安然前行，代表带着梦幻与情感色彩的来访、提案或邀约。",
   },
   {
     id: 48,
@@ -505,6 +557,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯王后",
     keywords: ["慈悲", "关怀", "情感", "直觉"],
     image: "cuqu.jpg",
+    description:
+      "Dreamy yet active, she contemplates her cup—loving intelligence, devoted service and the vision of a perfect spouse and mother.  温柔而行动的王后凝望圣杯，象征关爱的智慧、奉献之心与理想伴侣、慈母的形象。",
   },
   {
     id: 49,
@@ -512,6 +566,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "圣杯国王",
     keywords: ["情绪平衡", "控制", "宽容", "外交"],
     image: "cuki.jpg",
+    description:
+      "Upon the sea-set throne he holds cup and scepter—equitable, artistic, responsible and calm in creative intelligence.  坐于海上宝座的国王握杯持杖，代表公平、艺术性与负责任的平静智慧。",
   },
 
   // --- SWORDS (Air / Intellect) ---
@@ -521,6 +577,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑首牌",
     keywords: ["突破", "清晰", "真理", "决断"],
     image: "swac.jpg",
+    description:
+      "A hand from the cloud raises a crowned sword—triumph of force and incisive clarity, a great power for love or for hate.  云间之手举起戴冠之剑，象征力量与锐利真相的胜利，这份巨大力量可成爱也可成恨。",
   },
   {
     id: 51,
@@ -528,6 +586,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑二",
     keywords: ["僵局", "艰难决定", "回避", "权衡"],
     image: "sw02.jpg",
+    description:
+      "Blindfolded figure balances two swords—equipoise, guarded harmony and the need for courageous choice amid arms.  蒙眼者肩扛双剑保持平衡，寓意谨慎的和谐与需在对峙中做出的勇敢抉择。",
   },
   {
     id: 52,
@@ -535,6 +595,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑三",
     keywords: ["心碎", "悲伤", "痛苦", "分离"],
     image: "sw03.jpg",
+    description:
+      "Three swords pierce a heart against cloud and rain—absence, division and the sorrow that needs no further words.  三把利剑穿心，阴云雨幕为背景，象征分离、缺席与不言自明的哀痛。",
   },
   {
     id: 53,
@@ -542,6 +604,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑四",
     keywords: ["休息", "恢复", "沉思", "被动"],
     image: "sw04.jpg",
+    description:
+      "The effigy of a knight lies in prayer upon a tomb—vigilance in retreat, solitude, hermit’s repose and suspended action.  骑士石像平卧祈祷于墓上，代表退隐中的警觉、独处与暂停行动的休养。",
   },
   {
     id: 54,
@@ -549,6 +613,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑五",
     keywords: ["失败", "背叛", "冲突", "空虚的胜利"],
     image: "sw05.jpg",
+    description:
+      "A disdainful victor gathers swords as others retreat—hollow mastery, dishonor and the sting of conflict.  轻蔑的胜利者收起宝剑，败者远去，象征空洞的占有、耻辱与冲突的痛感。",
   },
   {
     id: 55,
@@ -556,6 +622,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑六",
     keywords: ["过渡", "离开", "治愈", "前进"],
     image: "sw06.jpg",
+    description:
+      "A ferryman bears passengers toward the farther shore—passage, remedy, envoy and travel by water to calmer ground.  摆渡人载着乘客驶向彼岸，寓意过渡、疗愈与驶向平静的旅程或使命。",
   },
   {
     id: 56,
@@ -563,6 +631,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑七",
     keywords: ["欺骗", "策略", "隐秘", "逃避"],
     image: "sw07.jpg",
+    description:
+      "A man hastens off with five swords, two left behind near a camp—design, daring attempt, quarrel and the risk of cunning plans.  男子急奔带走五剑，营旁留二剑，象征谋划与冒险、争执以及机巧计划的风险。",
   },
   {
     id: 57,
@@ -570,6 +640,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑八",
     keywords: ["束缚", "受害者心态", "无助", "限制"],
     image: "sw08.jpg",
+    description:
+      "A bound and hoodwinked woman stands among swords—temporary durance, crisis and censure, yet not irretrievable bondage.  被绑蒙眼的女子被剑阵环绕，代表暂时的束缚、危机与责难，但仍可解脱。",
   },
   {
     id: 58,
@@ -577,6 +649,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑九",
     keywords: ["焦虑", "噩梦", "担忧", "恐惧"],
     image: "sw09.jpg",
+    description:
+      "One sits up in lamentation beneath nine swords—utter desolation, despair, deception and delay.  有人在床上痛苦而坐，九剑悬顶，象征极度的绝望、欺骗与停滞带来的煎熬。",
   },
   {
     id: 59,
@@ -584,6 +658,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑十",
     keywords: ["毁灭", "痛苦结局", "背叛", "最低点"],
     image: "sw10.jpg",
+    description:
+      "A prostrate figure pierced by ten swords—the end of a cycle, pain and desolation, though not always violent death.  倒地之人被十剑贯穿，象征阶段的终结、剧痛与荒凉，未必意味着暴亡。",
   },
   {
     id: 60,
@@ -591,6 +667,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑侍从",
     keywords: ["好奇", "警惕", "新想法", "沟通"],
     image: "swpa.jpg",
+    description:
+      "An active youth strides with sword upright, alert to every side—vigilance, spying, examination and nimble mind.  敏捷的侍从举剑疾行、四处戒备，象征警觉、侦查与灵巧的思维。",
   },
   {
     id: 61,
@@ -598,6 +676,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑骑士",
     keywords: ["急躁", "直接", "行动", "野心"],
     image: "swkn.jpg",
+    description:
+      "A knight charges full course with sword out—skill, wrath and swift militant intelligence that can destroy or defend.  骑士策马挥剑疾进，代表技能与迅猛的战斗意志，可攻亦可守。",
   },
   {
     id: 62,
@@ -605,6 +685,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑王后",
     keywords: ["敏锐", "独立", "清晰", "界限"],
     image: "swqu.jpg",
+    description:
+      "Severe yet composed, the Queen raises her sword and extends her hand—widowhood, sorrow-tinged clarity and discerning fairness.  庄严的王后执剑并伸出手，带着历经忧伤的清醒与公平的辨识力。",
   },
   {
     id: 63,
@@ -612,6 +694,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "宝剑国王",
     keywords: ["理智", "权威", "真理", "公正"],
     image: "swki.jpg",
+    description:
+      "The King sits in judgment with unsheathed sword—authority, command and militant intellect holding power of life and death.  国王持裸剑端坐审判，象征权威、指挥与握有生杀大权的理性力量。",
   },
 
   // --- PENTACLES (Earth / Material) ---
@@ -621,6 +705,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币首牌",
     keywords: ["新机会", "繁荣", "丰富", "表现"],
     image: "peac.jpg",
+    description:
+      "A hand from the cloud lifts a pentacle—perfect contentment and prosperous beginnings, the seed of material felicity.  云间之手托起五芒星币，象征圆满与富足的开端，物质幸福的种子。",
   },
   {
     id: 65,
@@ -628,6 +714,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币二",
     keywords: ["平衡", "适应", "优先顺位", "灵活"],
     image: "pe02.jpg",
+    description:
+      "A dancer juggles two pentacles joined by an endless cord—gaiety amid change, written news and the play of adaptation.  舞者以无限符号连结双币抛接，寓意变动中的轻快、书信讯息与灵活应变。",
   },
   {
     id: 66,
@@ -635,6 +723,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币三",
     keywords: ["团队", "合作", "技能", "计划"],
     image: "pe03.jpg",
+    description:
+      "A sculptor works in a monastery with others consulting—skilled labor, recognized craft and nobility of practiced art.  雕工在修道院中作业并受人商议，象征熟练技艺、合作认可与实践艺术的尊贵。",
   },
   {
     id: 67,
@@ -642,6 +732,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币四",
     keywords: ["控制", "占有", "保守", "安全"],
     image: "pe04.jpg",
+    description:
+      "Crowned figure clasps a pentacle, with one above and two beneath his feet—surety of possessions and clinging to what one has.  戴冠者手抱钱币，头顶与脚下亦各有一币，象征守财与牢牢抓住现有的一切。",
   },
   {
     id: 68,
@@ -649,6 +741,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币五",
     keywords: ["贫穷", "孤立", "不安全", "困难"],
     image: "pe05.jpg",
+    description:
+      "Two mendicants pass a lighted window in snow—material trouble, destitution or discord pressing from without.  两名乞者在风雪中经过亮窗，寓意物质困境、贫乏或外在纷乱的压迫。",
   },
   {
     id: 69,
@@ -656,6 +750,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币六",
     keywords: ["慈善", "慷慨", "分享", "平衡"],
     image: "pe06.jpg",
+    description:
+      "A merchant weighs and gives coins to the needy—presents, present prosperity and the balance of giving and receiving.  商人秤量钱币分给贫者，象征馈赠、当前的富足以及施与受的平衡。",
   },
   {
     id: 70,
@@ -663,6 +759,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币七",
     keywords: ["耐心", "投资", "等待", "长期规划"],
     image: "pe07.jpg",
+    description:
+      "A worker leans on his staff regarding seven pentacles on the vine—money and business weighed, with anxieties over return.  劳者倚杖凝视藤上七币，代表金钱与事业的衡量，也暗示收益未明的忧虑与等待。",
   },
   {
     id: 71,
@@ -670,6 +768,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币八",
     keywords: ["勤奋", "技能", "工艺", "细节"],
     image: "pe08.jpg",
+    description:
+      "An artisan chisels pentacles he displays—work, apprenticeship, craft skill perhaps still in preparation.  工匠雕琢并陈列钱币，象征勤作、学徒阶段与正在精进的技艺。",
   },
   {
     id: 72,
@@ -677,6 +777,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币九",
     keywords: ["富足", "奢华", "自给自足", "成就"],
     image: "pe09.jpg",
+    description:
+      "A lady with a hooded bird walks a rich vineyard estate—prudence, safety, accomplishment and independent well-being.  携驯鹰的女子漫步葡萄园庄园，象征谨慎、安全、成就与自足的安乐。",
   },
   {
     id: 73,
@@ -684,6 +786,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币十",
     keywords: ["财富", "遗产", "家庭", "长期成功"],
     image: "pe10.jpg",
+    description:
+      "Beneath an arch a family with dogs greets an elder—riches, legacy, archives and the abode of generations.  拱门下家人与犬迎向长者，寓意财富、传承与家族居所的稳固。",
   },
   {
     id: 74,
@@ -691,6 +795,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币侍从",
     keywords: ["好学", "务实", "新机会", "显化"],
     image: "pepa.jpg",
+    description:
+      "A youth slowly advances, absorbed in the pentacle he lifts—study, application, management and sometimes news or messages.  侍从专注举起钱币缓步前行，象征学习投入、管理才能，也可能带来讯息。",
   },
   {
     id: 75,
@@ -698,6 +804,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币骑士",
     keywords: ["勤奋", "效率", "例行公事", "保守"],
     image: "pekn.jpg",
+    description:
+      "On a heavy, enduring horse the Knight presents his pentacle—utility, responsibility and steady service on the outer plane.  骑着沉稳坐骑的骑士举币示人，代表务实、责任与踏实的服务精神。",
   },
   {
     id: 76,
@@ -705,6 +813,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币王后",
     keywords: ["养育", "务实", "安全", "居家"],
     image: "pequ.jpg",
+    description:
+      "A serious, generous Queen contemplates her pentacle—opulence, security, greatness of soul and wise provision.  沉稳慷慨的王后凝视钱币，象征富足、安全、宽广胸怀与妥善的资源运用。",
   },
   {
     id: 77,
@@ -712,6 +822,8 @@ export const MINOR_ARCANA: TarotCard[] = [
     nameCn: "星币国王",
     keywords: ["富裕", "商业", "领导", "安全感"],
     image: "peki.jpg",
+    description:
+      "The King with pentagrammed coin and bull emblems—realizing intelligence in business, courage and success in material mastery.  带有五芒星币与公牛徽记的国王，代表商业上的聪慧、勇气与物质领域的成功掌控。",
   },
 ];
 
