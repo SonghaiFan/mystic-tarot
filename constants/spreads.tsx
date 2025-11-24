@@ -39,8 +39,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     labels: ["Insight"],
     cardPools: ["MAJOR"],
     cardSize: {
-      mobile: "w-64 aspect-[300/519]",
-      desktop: "w-80 aspect-[300/519]",
+      mobile: "w-64 aspect-300/519",
+      desktop: "w-80 aspect-300/519",
     },
     icon: (isActive) => (
       <div
@@ -75,8 +75,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     labels: ["Past", "Present", "Future"],
     cardPools: ["MAJOR", "MAJOR", "MAJOR"],
     cardSize: {
-      mobile: "w-28 aspect-[300/519]",
-      desktop: "w-56 aspect-[300/519]",
+      mobile: "w-28 aspect-300/519",
+      desktop: "w-56 aspect-300/519",
     },
     icon: (isActive) => (
       <div className="flex gap-0.5 items-center">
@@ -111,8 +111,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     layoutType: "flex",
     labels: ["Situation", "Cons", "Pro", "Answer"],
     cardSize: {
-      mobile: "w-24 aspect-[300/519]",
-      desktop: "w-36 aspect-[300/519]",
+      mobile: "w-24 aspect-300/519",
+      desktop: "w-36 aspect-300/519",
     },
     icon: (isActive) => (
       <div className="flex gap-0.5 items-center">
@@ -152,8 +152,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     layoutType: "flex",
     labels: ["Past", "Present", "Hidden", "Advice", "Outcome"],
     cardSize: {
-      mobile: "w-20 aspect-[300/519]",
-      desktop: "w-32 aspect-[300/519]",
+      mobile: "w-20 aspect-300/519",
+      desktop: "w-32 aspect-300/519",
     },
     icon: (isActive) => (
       <div className="flex gap-0.5 items-end">
@@ -196,8 +196,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     labels: ["Situation", "Persona", "Cause"],
     cardPools: ["MINOR_PIP", "COURT", "MAJOR"],
     cardSize: {
-      mobile: "w-24 aspect-[300/519]",
-      desktop: "w-36 aspect-[300/519]",
+      mobile: "w-24 aspect-300/519",
+      desktop: "w-36 aspect-300/519",
     },
     icon: (isActive) => (
       <div className="flex gap-1 items-end">
@@ -256,8 +256,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       "MAJOR",
     ],
     cardSize: {
-      mobile: "w-20 aspect-[300/519]",
-      desktop: "w-32 aspect-[300/519]",
+      mobile: "w-20 aspect-300/519",
+      desktop: "w-32 aspect-300/519",
     },
     icon: (isActive) => (
       <div className="relative w-6 h-6">
@@ -319,8 +319,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       { x: 85, y: 25, label: "Outcome", labelPosition: "right" },
     ],
     cardSize: {
-      mobile: "w-12 aspect-[300/519]",
-      desktop: "w-16 aspect-[300/519]",
+      mobile: "w-12 aspect-300/519",
+      desktop: "w-16 aspect-300/519",
     },
     icon: (isActive) => (
       <div className="flex gap-1 items-center">
@@ -394,8 +394,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       { x: 50, y: 20, label: "Outcome", labelPosition: "top" },
     ],
     cardSize: {
-      mobile: "w-14 aspect-[300/519]",
-      desktop: "w-20 aspect-[300/519]",
+      mobile: "w-14 aspect-300/519",
+      desktop: "w-20 aspect-300/519",
     },
     icon: (isActive) => (
       <div className="flex gap-1 items-center h-5">

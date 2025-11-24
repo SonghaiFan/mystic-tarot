@@ -116,6 +116,7 @@ const App: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
   const [thinkingKeywordIndex, setThinkingKeywordIndex] = useState(0);
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
   // --- Refs ---
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -541,6 +542,22 @@ const App: React.FC = () => {
     }
   };
 
+  const goHome = () => {
+    setGameState(GameState.INTRO);
+    setIsLibraryOpen(false);
+    setPickedCards([]);
+    setRevealedCardIds(new Set());
+    setQuestion("");
+    setSpread(null);
+    setReadingText("");
+    setReadingAudioBuffer(null);
+    if (voiceSourceRef.current) {
+      try {
+        voiceSourceRef.current.stop();
+      } catch (e) {}
+    }
+  };
+
   // Download reading as image
   const downloadReading = printTheReading(
     question,
@@ -557,7 +574,13 @@ const App: React.FC = () => {
   const renderPhase = () => {
     switch (gameState) {
       case GameState.INTRO:
-        return <IntroSection onEnter={enterInputPhase} />;
+        return (
+          <IntroSection
+            onEnter={enterInputPhase}
+            isLibraryOpen={isLibraryOpen}
+            onLibraryToggle={setIsLibraryOpen}
+          />
+        );
       case GameState.INPUT:
         return (
           <InputSection
@@ -623,7 +646,13 @@ const App: React.FC = () => {
       </motion.div>
 
       {/* Header */}
-      <HeaderBar isAudioPlaying={isAudioPlaying} />
+      <HeaderBar
+        isAudioPlaying={isAudioPlaying}
+        gameState={gameState}
+        isLibraryOpen={isLibraryOpen}
+        onCloseLibrary={() => setIsLibraryOpen(false)}
+        onNavigateHome={goHome}
+      />
 
       {/* Main Content Area - No Scroll */}
       <main

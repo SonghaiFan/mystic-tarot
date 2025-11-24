@@ -196,8 +196,8 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                       : spreadConfig.cardSize.desktop
                   }
                   animate={{
-                    scale: isHovered ? 1.1 : 1,
                     zIndex: isHovered ? 100 : absoluteStyle?.zIndex || "auto",
+                    transition: { duration: 0.3 },
                   }}
                 />
               );

@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence, HTMLMotionProps } from "motion/react";
 import { TarotCard as TarotCardType, PickedCard } from "../types";
-import { getCardImageUrl, getCardImageFallbackUrl } from "../constants/cards";
+import { getCardImageUrl } from "../constants/cards";
 
 interface TarotCardProps
   extends Omit<
@@ -38,7 +38,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
   label,
   labelPosition = "bottom",
   width = "w-28",
-  height = "aspect-[300/519]",
+  height = "aspect-300/519",
   className = "",
   style,
   onClick,
@@ -68,7 +68,9 @@ const TarotCard: React.FC<TarotCardProps> = ({
       onMouseEnter={() => !isDetailed && onHover?.(card.id)}
       onMouseLeave={() => !isDetailed && onHover?.(null)}
       className={`relative ${
-        !isDetailed ? "cursor-pointer group" : ""
+        !isDetailed
+          ? "cursor-pointer group hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-500 ease-out"
+          : ""
       } ${width} ${height} ${className}`}
       {...motionProps}
     >
@@ -102,12 +104,6 @@ const TarotCard: React.FC<TarotCardProps> = ({
             <img
               src={getCardImageUrl(card.image)}
               alt={card.nameEn}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                if (target.src !== getCardImageFallbackUrl(card.image)) {
-                  target.src = getCardImageFallbackUrl(card.image);
-                }
-              }}
               className="w-full h-full object-cover"
               style={{
                 filter: "grayscale(100%) contrast(1.2) brightness(0.9)",
@@ -198,7 +194,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                     <h4 className="text-[10px] text-neutral-500 uppercase tracking-[0.3em] mb-4 text-center">
                       Arcana Wisdom
                     </h4>
-                    <p className="text-xs md:text-sm text-neutral-400 font-light leading-relaxed text-justify opacity-80">
+                    <p className="text-xs md:text-sm text-neutral-400 font-light leading-relaxed text-justify opacity-80 h-30 sm:h-full overflow-y-auto">
                       {(card as PickedCard).description}
                     </p>
                   </div>

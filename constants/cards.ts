@@ -3,8 +3,6 @@ import { TarotCard } from "../types";
 // Base URL for card images
 // Using local images stored in public folder for better performance and offline support
 const LOCAL_CDN = `${import.meta.env.BASE_URL}images/cards/`;
-// Fallback to Sacred Texts Archive if local images are not available
-const REMOTE_CDN = "https://www.sacred-texts.com/tarot/pkt/img/";
 
 export const MAJOR_ARCANA: TarotCard[] = [
   {
@@ -698,11 +696,8 @@ export const MINOR_ARCANA: TarotCard[] = [
   },
 ];
 
-// Helper to get image URL with fallback support
-// Tries local image first, falls back to remote CDN if not available
+// Helper to get image URL
 export const getCardImageUrl = (image: string) => `${LOCAL_CDN}${image}`;
-export const getCardImageFallbackUrl = (image: string) =>
-  `${REMOTE_CDN}${image}`;
 
 export const FULL_DECK: TarotCard[] = [...MAJOR_ARCANA, ...MINOR_ARCANA];
 
