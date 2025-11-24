@@ -18,6 +18,7 @@ import {
   MINOR_ARCANA,
   FULL_DECK,
   STATIC_SCRIPTS,
+  getDeckForPool,
 } from "./constants/cards";
 import { SPREADS } from "./constants/spreads";
 import { generateTarotReading, generateSpeech } from "./services/gemini";
@@ -28,6 +29,7 @@ import InputSection from "./components/InputSection";
 import ShufflingSection from "./components/ShufflingSection";
 import PickingSection from "./components/PickingSection";
 import ReadingSection from "./components/ReadingSection";
+import DeckLibrary from "./components/DeckLibrary";
 import printTheReading from "./utils/printTheReading";
 
 // --- Configuration ---
@@ -95,6 +97,9 @@ class SoundEngine {
 const App: React.FC = () => {
   // --- State ---
   const [gameState, setGameState] = useState<GameState>(GameState.INTRO);
+  const [previousGameState, setPreviousGameState] = useState<GameState | null>(
+    null
+  );
 
   // Input State
   const [question, setQuestion] = useState("");
@@ -328,33 +333,6 @@ const App: React.FC = () => {
     const spreadDef = SPREADS[spread];
     const targets: PickedCard[] = [];
 
-    // Helper to get deck for a specific pool type
-    const getDeckForPool = (pool: CardPoolType): TarotCard[] => {
-      const courtPrefixes = ["Page", "Knight", "Queen", "King"];
-      const isCourt = (c: TarotCard) =>
-        courtPrefixes.some((p) => c.nameEn.startsWith(p));
-
-      switch (pool) {
-        case "MAJOR":
-          return MAJOR_ARCANA;
-        case "MINOR_PIP":
-          return MINOR_ARCANA.filter((c) => !isCourt(c));
-        case "COURT":
-          return MINOR_ARCANA.filter((c) => isCourt(c));
-        case "SUIT_CUPS":
-          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Cups"));
-        case "SUIT_PENTACLES":
-          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Pentacles"));
-        case "SUIT_SWORDS":
-          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Swords"));
-        case "SUIT_WANDS":
-          return MINOR_ARCANA.filter((c) => c.nameEn.includes("Wands"));
-        case "FULL":
-        default:
-          return FULL_DECK;
-      }
-    };
-
     // Generate cards for each position
     for (let i = 0; i < spreadDef.cardCount; i++) {
       let poolType: CardPoolType = "FULL";
@@ -530,6 +508,7 @@ const App: React.FC = () => {
     setReadingText("");
     setReadingAudioBuffer(null);
     setQuestion("");
+    setPreviousGameState(null);
     // Keep drone playing
     playVoice(STATIC_SCRIPTS.ASK, "ASK", "ask");
   };
@@ -549,6 +528,20 @@ const App: React.FC = () => {
     readingText
   );
 
+  const toggleLibrary = () => {
+    if (gameState === GameState.LIBRARY) {
+      if (previousGameState) {
+        setGameState(previousGameState);
+        setPreviousGameState(null);
+      } else {
+        setGameState(GameState.INTRO);
+      }
+    } else {
+      setPreviousGameState(gameState);
+      setGameState(GameState.LIBRARY);
+    }
+  };
+
   // --- Render Helpers ---
 
   // Dynamic Background Opacity: High in Intro, Low otherwise
@@ -558,6 +551,8 @@ const App: React.FC = () => {
     switch (gameState) {
       case GameState.INTRO:
         return <IntroSection onEnter={enterInputPhase} />;
+      case GameState.LIBRARY:
+        return <DeckLibrary onClose={toggleLibrary} />;
       case GameState.INPUT:
         return (
           <InputSection
@@ -623,14 +618,31 @@ const App: React.FC = () => {
       </motion.div>
 
       {/* Header */}
-      <HeaderBar isAudioPlaying={isAudioPlaying} />
+      <HeaderBar
+        gameState={gameState}
+        isAudioPlaying={isAudioPlaying}
+        onLibraryClick={toggleLibrary}
+        onHomeClick={() => {
+          if (gameState === GameState.LIBRARY && previousGameState) {
+            // If in library and came from somewhere, go back to intro or reset?
+            // User said "Intro -> Library -> Reading".
+            // If I click Home, I expect to go to Intro.
+            setGameState(GameState.INTRO);
+            setPreviousGameState(null);
+          } else {
+            // Reset to intro
+            resetRitual();
+          }
+        }}
+      />
 
       {/* Main Content Area - No Scroll */}
       <main
         className={`absolute inset-0 z-10 perspective-1000 overflow-hidden ${
           gameState === GameState.READING ||
           gameState === GameState.REVEAL ||
-          gameState === GameState.INPUT
+          gameState === GameState.INPUT ||
+          gameState === GameState.LIBRARY
             ? "overflow-y-auto"
             : "overflow-hidden"
         }`}
@@ -640,7 +652,8 @@ const App: React.FC = () => {
           className={`w-full flex flex-col items-center px-4 ${
             gameState === GameState.READING ||
             gameState === GameState.REVEAL ||
-            gameState === GameState.INPUT
+            gameState === GameState.INPUT ||
+            gameState === GameState.LIBRARY
               ? "min-h-full py-12 justify-center"
               : "h-full justify-center py-24"
           }`}

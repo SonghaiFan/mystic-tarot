@@ -1,4 +1,4 @@
-import { TarotCard } from "../types";
+import { TarotCard, CardPoolType } from "../types";
 
 // Base URL for card images
 // Using local images stored in public folder for better performance and offline support
@@ -131,7 +131,7 @@ export const MAJOR_ARCANA: TarotCard[] = [
     keywords: ["内省", "孤独", "寻求真理", "指引", "撤退"],
     image: "ar09.jpg",
     description:
-      "这张牌与传统牌面的区别仅在于,灯盏并未部分被持灯者的斗篷包裹,而是将亘古常在者与世界之光的意象融合在一起。灯盏中闪耀着一颗星辰。我曾说过这是一张成就牌,为了进一步阐释这一概念,牌面上的人物被描绘成在高处高举着他的灯塔。因此,隐士并非如库尔·德·热贝兰所解释的那样,是一位寻求真理和正义的智者；也并非如后来的解释所言,是一位经验的典范。他的灯塔暗示着“我所在之处,亦有你可至”。这张牌常被误解为与神秘隔离的概念联系在一起，例如保护个人磁力免受干扰。这种轻率的解读要归功于埃利法斯·莱维。法国马丁主义教团采纳了这种解读，我们当中有些人也因此听说了许多关于“沉默而未知的哲学”的说法，认为它与世俗的知识隔绝。然而，在真正的马丁主义中， “未知哲学家”(Philosophe inconnu)一词的含义截然不同。它并非指刻意隐藏既定的奥秘，更非指隐藏其替代品，而是——如同这张牌本身——指神圣的奥秘会保护自身免受毫无准备之人的侵害这一真理。",
+      "这张牌与传统牌面的区别仅在于,灯盏并未部分被持灯者的斗篷包裹,而是将亘古常在者与世界之光的意象融合在一起。灯盏中闪耀着一颗星辰。我曾说过这是一张成就牌,为了进一步阐释这一概念,牌面上的人物被描绘成在高处高举着他的灯塔。因此,隐士并非如库尔·德·热贝兰所解释的那样,是一位寻求真理和正义的智者；也并非如后来的解释所言,是一位经验的典范。他的灯塔暗示着“我所在之处,亦有你可至”。这张牌常被误解为与神秘隔离的概念联系在一起，例如保护个人磁力免受干扰。这种轻率的解读要归功于埃利法斯·莱维。法国马丁主义教团采纳了这种解读，我们当中有些人也因此听说了许多关于“沉默而未知的哲学”的说法，认为它与世俗的知识隔绝。然而，在真正的马丁主义中， “未知哲学”(Philosophe inconnu)一词的含义截然不同。它并非指刻意隐藏既定的奥秘，更非指隐藏其替代品，而是——如同这张牌本身——指神圣的奥秘会保护自身免受毫无准备之人的侵害这一真理。",
     positive:
       "智能与卓越见解; 不断地追求更高层次的东西; 思虑周密; 冷静沉着; 不多言; 接触知性事物吉; 正中核心的建言; 活动慢慢进行较有成果; 出局; 追求柏拉图式的爱情; 暗中的爱情",
     negative:
@@ -713,4 +713,31 @@ export const STATIC_SCRIPTS = {
   SHUFFLE: "星辰正在归位,混乱中孕育着秩序。专注于你的问题。",
   PICK: "在流动的命运中,选择你的指引。",
   REVEAL: "这就是……命运的回响。",
+};
+
+// Helper to get deck for a specific pool type
+export const getDeckForPool = (pool: CardPoolType): TarotCard[] => {
+  const courtPrefixes = ["Page", "Knight", "Queen", "King"];
+  const isCourt = (c: TarotCard) =>
+    courtPrefixes.some((p) => c.nameEn.startsWith(p));
+
+  switch (pool) {
+    case "MAJOR":
+      return MAJOR_ARCANA;
+    case "MINOR_PIP":
+      return MINOR_ARCANA.filter((c) => !isCourt(c));
+    case "COURT":
+      return MINOR_ARCANA.filter((c) => isCourt(c));
+    case "SUIT_CUPS":
+      return MINOR_ARCANA.filter((c) => c.nameEn.includes("Cups"));
+    case "SUIT_PENTACLES":
+      return MINOR_ARCANA.filter((c) => c.nameEn.includes("Pentacles"));
+    case "SUIT_SWORDS":
+      return MINOR_ARCANA.filter((c) => c.nameEn.includes("Swords"));
+    case "SUIT_WANDS":
+      return MINOR_ARCANA.filter((c) => c.nameEn.includes("Wands"));
+    case "FULL":
+    default:
+      return FULL_DECK;
+  }
 };

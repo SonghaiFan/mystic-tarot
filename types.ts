@@ -5,6 +5,7 @@ export enum GameState {
   PICKING = "PICKING",
   REVEAL = "REVEAL",
   READING = "READING",
+  LIBRARY = "LIBRARY",
 }
 
 export type SpreadType =
