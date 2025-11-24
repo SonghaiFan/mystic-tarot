@@ -315,7 +315,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               transition={{ duration: 1, ease: SILKY_EASE }}
               className="relative px-4 md:px-0 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto flex flex-col items-center"
             >
-              <div className="w-full overflow-y-auto overscroll-y-auto mb-8 pr-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50">
+              <div className="w-full overflow-y-auto overscroll-y-auto mb-8 pr-4">
                 {question && (
                   <p className="text-xs text-neutral-600 mb-4 tracking-widest uppercase text-center sticky top-0 bg-black/90 backdrop-blur-sm py-2 z-10">
                     Reflecting on: "{question}"
