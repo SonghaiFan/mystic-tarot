@@ -119,7 +119,7 @@ const DeckLibrary: React.FC<DeckLibraryProps> = ({ isOpen, onClose }) => {
                     card={selectedCard}
                     isRevealed={true}
                     isDetailed={true}
-                    width="w-full max-w-md md:max-w-5xl"
+                    width="w-full max-w-md md:max-w-4xl"
                     height="h-[80vh] md:h-[85vh]"
                     className="shadow-2xl cursor-default"
                     onClick={(e) => e.stopPropagation()}

@@ -132,7 +132,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
               ${
                 isDetailed
                   ? "absolute bottom-0 w-full h-[65%]  backdrop-blur-md md:static md:w-1/2 md:h-full md:backdrop-blur-none"
-                  : "absolute bottom-0 w-full p-3 md:p-4"
+                  : "absolute bottom-0 w-full p-2 md:p-4"
               }
             `}
           >
@@ -174,7 +174,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                 </div>
 
                 {/* Scrollable Description Section */}
-                <div className="flex-1 w-full overflow-y-auto px-6 pb-8 md:px-16 md:pb-16 text-center">
+                <div className="flex-1 w-full overflow-y-auto px-6 pb-8 md:px-10 md:pb-10 text-center">
                   {"keywords" in card && (
                     <div className="w-full max-w-lg mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
                       <p className="text-sm md:text-base text-neutral-300 font-light leading-loose text-justify tracking-wide">

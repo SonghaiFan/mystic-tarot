@@ -235,7 +235,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                 card={pickedCards.find((c) => c.id === selectedCardId)!}
                 isRevealed={true}
                 isDetailed={true}
-                width="w-full max-w-md md:max-w-5xl"
+                width="w-full max-w-md md:max-w-4xl"
                 height="h-[80vh] md:h-[85vh]"
                 className="shadow-2xl cursor-default"
                 onClick={(e) => e.stopPropagation()}
@@ -313,7 +313,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: SILKY_EASE }}
-              className="relative px-4 md:px-0 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto flex flex-col items-center"
+              className="relative px-4 md:px-0 w-full max-w-2xl lg:max-w-4xl xl:max-w-4xl mx-auto flex flex-col items-center"
             >
               <div className="w-full overflow-y-auto overscroll-y-auto mb-8 pr-4">
                 {question && (
@@ -414,7 +414,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                 card={pickedCards.find((c) => c.id === selectedCardId)!}
                 isRevealed={true}
                 isDetailed={true}
-                width="w-full max-w-md md:max-w-5xl"
+                width="w-full max-w-md md:max-w-4xl"
                 height="h-[80vh] md:h-[85vh]"
                 className="shadow-2xl cursor-default"
                 onClick={(e) => e.stopPropagation()}
