@@ -1,4 +1,4 @@
-import { TarotCard } from "./types";
+import { TarotCard } from "../types";
 
 // Base URL for card images
 // Using local images stored in public folder for better performance and offline support

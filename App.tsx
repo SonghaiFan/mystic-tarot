@@ -18,7 +18,7 @@ import {
   MINOR_ARCANA,
   FULL_DECK,
   STATIC_SCRIPTS,
-} from "./constants";
+} from "./constants/cards";
 import { SPREADS } from "./constants/spreads";
 import { generateTarotReading, generateSpeech } from "./services/gemini";
 import CosmicParticles from "./components/CosmicParticles";

@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence, HTMLMotionProps } from "motion/react";
 import { TarotCard as TarotCardType, PickedCard } from "../types";
-import { getCardImageUrl, getCardImageFallbackUrl } from "../constants";
+import { getCardImageUrl, getCardImageFallbackUrl } from "../constants/cards";
 
 interface TarotCardProps
   extends Omit<
@@ -38,7 +38,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
   label,
   labelPosition = "bottom",
   width = "w-28",
-  height = "h-44",
+  height = "aspect-[300/519]",
   className = "",
   style,
   onClick,
@@ -88,82 +88,118 @@ const TarotCard: React.FC<TarotCardProps> = ({
       >
         {/* Front Face (Image) */}
         <div
-          className="absolute inset-0 bg-black border border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.05)] overflow-hidden"
+          className={`absolute inset-0 bg-black border border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.05)] overflow-hidden ${
+            isDetailed ? "md:flex md:flex-row" : ""
+          }`}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <img
-            src={getCardImageUrl(card.image)}
-            alt={card.nameEn}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              if (target.src !== getCardImageFallbackUrl(card.image)) {
-                target.src = getCardImageFallbackUrl(card.image);
-              }
-            }}
-            className="w-full h-full object-cover"
-            style={{
-              filter: "grayscale(100%) contrast(1.2) brightness(0.9)",
-              mixBlendMode: "normal",
-              rotate: isReversed && isDetailed ? "180deg" : "0deg",
-            }}
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-black/40" />
-          <div className="absolute inset-2 md:inset-3 border border-white/20 pointer-events-none" />
+          {/* Image Container */}
           <div
-            className={`absolute bottom-0 w-full flex flex-col items-center text-center z-10 transition-opacity duration-500 ${
-              isRevealed ? "opacity-100" : "opacity-0"
-            } ${
-              isDetailed
-                ? "bg-linear-to-t from-black via-black/95 to-transparent pt-20 pb-8 px-6 md:px-10"
-                : "p-3 md:p-4"
+            className={`relative w-full h-full ${
+              isDetailed ? "md:w-1/2 md:border-r md:border-white/10" : ""
             }`}
           >
+            <img
+              src={getCardImageUrl(card.image)}
+              alt={card.nameEn}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target.src !== getCardImageFallbackUrl(card.image)) {
+                  target.src = getCardImageFallbackUrl(card.image);
+                }
+              }}
+              className="w-full h-full object-cover"
+              style={{
+                filter: "grayscale(100%) contrast(1.2) brightness(0.9)",
+                mixBlendMode: "normal",
+              }}
+            />
+            {/* Gradient Overlay - Only show on mobile if detailed, or always if not detailed */}
+            <div
+              className={`absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-black/40 ${
+                isDetailed ? "md:hidden" : ""
+              }`}
+            />
+            {/* Border - Hide in detailed desktop view as it conflicts with layout */}
+            <div
+              className={`absolute inset-2 md:inset-3 border border-white/20 pointer-events-none ${
+                isDetailed ? "md:hidden" : ""
+              }`}
+            />
+          </div>
+
+          {/* Content Container */}
+          <div
+            className={`
+              flex flex-col items-center text-center z-10 transition-opacity duration-500
+              ${isRevealed ? "opacity-100" : "opacity-0"}
+              ${
+                isDetailed
+                  ? "absolute bottom-0 w-full bg-linear-to-t from-black via-black/95 to-transparent pt-24 pb-10 px-6 md:static md:w-1/2 md:h-full md:bg-neutral-950 md:pt-16 md:px-16 md:justify-center md:overflow-y-auto md:border-l md:border-white/5"
+                  : "absolute bottom-0 w-full p-3 md:p-4"
+              }
+            `}
+          >
+            {/* Decorative Element for Desktop Detailed View */}
+            {isDetailed && (
+              <div className="hidden md:block absolute top-8 left-8 right-8 bottom-8 border border-white/5 pointer-events-none" />
+            )}
+
             <h2
               className={`${
                 isDetailed
-                  ? "text-2xl md:text-4xl mb-2"
-                  : "text-[10px] md:text-sm mb-1"
-              } text-white font-cinzel tracking-widest drop-shadow-md`}
+                  ? "text-3xl md:text-5xl mb-3 text-amber-50/90"
+                  : "text-[10px] md:text-sm mb-1 text-white"
+              } font-cinzel tracking-widest drop-shadow-md`}
             >
               {card.nameEn}
             </h2>
             <p
               className={`${
                 isDetailed
-                  ? "text-sm md:text-lg mb-6"
+                  ? "text-sm md:text-lg mb-8 tracking-wide"
                   : "text-[9px] md:text-[10px]"
               } text-neutral-400 font-serif`}
             >
               {card.nameCn}
               {isReversed && (
-                <span className="text-red-400/80 opacity-80 inline-block ml-1">
-                  (逆位)
+                <span className="text-red-400/80 opacity-80 inline-block ml-2 font-light italic">
+                  (Reversed)
                 </span>
               )}
             </p>
 
             {isDetailed && "keywords" in card && (
-              <div className="w-full max-w-lg animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-                <div className="flex flex-wrap justify-center gap-2 mb-6">
+              <div className="w-full max-w-lg animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 relative z-10">
+                <div className="flex flex-wrap justify-center gap-3 mb-8">
                   {(card as PickedCard).keywords.map((keyword) => (
                     <span
                       key={keyword}
-                      className="text-[10px] md:text-xs px-3 py-1 bg-white/10 border border-white/10 rounded-full text-neutral-300 tracking-wider uppercase"
+                      className="text-[10px] md:text-xs px-3 py-1 bg-white/5 border border-white/10 rounded-sm text-neutral-300 tracking-[0.15em] uppercase hover:bg-white/10 transition-colors"
                     >
                       {keyword}
                     </span>
                   ))}
                 </div>
-                <div className="w-12 h-px bg-white/20 mx-auto mb-6" />
-                <p className="text-sm md:text-base text-neutral-300 font-light leading-relaxed text-justify">
+
+                <div className="flex items-center justify-center gap-4 mb-8 opacity-30">
+                  <div className="h-px w-12 bg-white" />
+                  <div className="w-1.5 h-1.5 rotate-45 border border-white" />
+                  <div className="h-px w-12 bg-white" />
+                </div>
+
+                <p className="text-sm md:text-base text-neutral-300 font-light leading-loose text-justify tracking-wide">
                   {isReversed
                     ? (card as PickedCard).negative
                     : (card as PickedCard).positive}
                 </p>
-                {card.description && (
-                  <div className="mt-4">
-                    <p className="text-sm md:text-[10px] text-neutral-400 font-light leading-relaxed text-justify">
-                      {card.description}
+                {(card as PickedCard).description && (
+                  <div className="mt-8 pt-8 border-t border-white/5">
+                    <h4 className="text-[10px] text-neutral-500 uppercase tracking-[0.3em] mb-4 text-center">
+                      Arcana Wisdom
+                    </h4>
+                    <p className="text-xs md:text-sm text-neutral-400 font-light leading-relaxed text-justify opacity-80">
+                      {(card as PickedCard).description}
                     </p>
                   </div>
                 )}

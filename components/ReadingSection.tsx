@@ -235,7 +235,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                 card={pickedCards.find((c) => c.id === selectedCardId)!}
                 isRevealed={true}
                 isDetailed={true}
-                width="w-full max-w-md md:max-w-lg"
+                width="w-full max-w-md md:max-w-5xl"
                 height="h-[80vh] md:h-[85vh]"
                 className="shadow-2xl cursor-default"
                 onClick={(e) => e.stopPropagation()}
@@ -322,7 +322,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                   </p>
                 )}
                 <div className="w-12 h-px bg-white/20 mx-auto mb-6" />
-                <div className="text-base md:text-xl leading-loose text-neutral-300 font-light font-serif tracking-wide mb-12 text-justify md:text-center">
+                <div className="text-base md:text-xl leading-loose text-neutral-300 font-light font-serif tracking-wide mb-12 text-center">
                   {readingText.split("**").map((part, idx) =>
                     idx % 2 === 1 ? (
                       <strong key={idx} className="font-bold text-white/90">
@@ -414,7 +414,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                 card={pickedCards.find((c) => c.id === selectedCardId)!}
                 isRevealed={true}
                 isDetailed={true}
-                width="w-full max-w-md md:max-w-lg"
+                width="w-full max-w-md md:max-w-5xl"
                 height="h-[80vh] md:h-[85vh]"
                 className="shadow-2xl cursor-default"
                 onClick={(e) => e.stopPropagation()}

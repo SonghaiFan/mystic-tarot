@@ -1,4 +1,4 @@
-import { getCardImageUrl, getCardImageFallbackUrl } from "../constants";
+import { getCardImageUrl, getCardImageFallbackUrl } from "../constants/cards";
 import { SPREADS } from "../constants/spreads";
 
 export default function printTheReading(
