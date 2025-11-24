@@ -1,7 +1,8 @@
 import React from "react";
-import { motion, AnimatePresence, HTMLMotionProps } from "motion/react";
+import { motion, HTMLMotionProps } from "motion/react";
 import { TarotCard as TarotCardType, PickedCard } from "../types";
 import { getCardImageUrl, getCardImageFallbackUrl } from "../constants/cards";
+import { getRomanNumeral } from "../utils/getRomanNumeral";
 
 interface TarotCardProps
   extends Omit<
@@ -25,6 +26,7 @@ interface TarotCardProps
   labelPosition?: "top" | "bottom" | "left" | "right";
   width?: string;
   height?: string;
+  priority?: boolean;
 }
 
 const TarotCard: React.FC<TarotCardProps> = ({
@@ -43,8 +45,10 @@ const TarotCard: React.FC<TarotCardProps> = ({
   style,
   onClick,
   layoutId,
+  priority = false,
   ...motionProps
 }) => {
+  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
   const isReversed =
     propIsReversed ??
     ("isReversed" in card ? (card as PickedCard).isReversed : false);
@@ -56,9 +60,13 @@ const TarotCard: React.FC<TarotCardProps> = ({
     right: "left-full ml-2 top-1/2 -translate-y-1/2",
   };
 
+  const effectiveLayoutId = !isDetailed
+    ? layoutId || `card-${card.id}`
+    : undefined;
   return (
     <motion.div
-      layoutId={layoutId || `card-${card.id}`}
+      layoutId={effectiveLayoutId}
+      layout={!isDetailed} // 明确关闭 detailed 下的自动 layout 动画
       style={{
         transformStyle: "preserve-3d",
         rotate: isHorizontal ? 90 : 0,
@@ -95,25 +103,35 @@ const TarotCard: React.FC<TarotCardProps> = ({
         >
           {/* Image Container */}
           <div
-            className={`relative w-full h-full ${
+            className={`relative w-full h-full bg-neutral-900 ${
               isDetailed ? "md:w-1/2 md:border-r md:border-white/10" : ""
             }`}
           >
             <img
               src={getCardImageUrl(card.image)}
               alt={card.nameEn}
+              loading={priority ? "eager" : "lazy"}
+              onLoad={() => setIsImageLoaded(true)}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 if (target.src !== getCardImageFallbackUrl(card.image)) {
                   target.src = getCardImageFallbackUrl(card.image);
                 }
               }}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover transition-opacity duration-500 ${
+                isImageLoaded ? "opacity-100" : "opacity-0"
+              }`}
               style={{
                 filter: "grayscale(100%) contrast(1.2) brightness(0.9)",
                 mixBlendMode: "normal",
               }}
             />
+            {/* Loading Placeholder */}
+            {!isImageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+              </div>
+            )}
             {/* Gradient Overlay - Hide in detailed view as content container handles the gradient */}
             <div
               className={`absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-black/40 ${
@@ -151,6 +169,19 @@ const TarotCard: React.FC<TarotCardProps> = ({
                 isDetailed ? "px-6 pt-16 md:px-16 md:pt-16" : ""
               }`}
             >
+              {/* Roman Numeral */}
+              {getRomanNumeral(card.id) && (
+                <div
+                  className={`${
+                    isDetailed
+                      ? "text-sm md:text-base mb-2 text-amber-50/60"
+                      : "text-[8px] md:text-[10px] mb-0.5 text-white/60"
+                  } font-cinzel tracking-[0.2em]`}
+                >
+                  {getRomanNumeral(card.id)}
+                </div>
+              )}
+
               <h2
                 className={`${
                   isDetailed

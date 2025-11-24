@@ -1,13 +1,13 @@
 import React from "react";
 import { motion } from "motion/react";
 
-const ShufflingSection: React.FC = () => (
+const ShufflingSection: React.FC<{ cardCount: number }> = ({ cardCount }) => (
   <motion.div
     key="shuffling"
     className="absolute inset-0 flex items-center justify-center pointer-events-none"
     exit={{ opacity: 0, transition: { duration: 0.5 } }}
   >
-    {[0, 1, 2].map((i) => (
+    {Array.from({ length: cardCount }, (_, i) => (
       <motion.div
         key={i}
         className="absolute w-48 h-80 md:w-64 md:h-96 rounded-sm shadow-2xl origin-bottom overflow-hidden"

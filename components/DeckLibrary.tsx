@@ -22,9 +22,10 @@ const DeckLibrary: React.FC<DeckLibraryProps> = ({ onClose }) => {
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<CardPoolType>("FULL");
 
-  const selectedCard = selectedCardId
-    ? FULL_DECK.find((c) => c.id === selectedCardId)
-    : null;
+  const selectedCard =
+    selectedCardId !== null
+      ? FULL_DECK.find((c) => c.id === selectedCardId)
+      : null;
 
   const filteredCards = useMemo(() => {
     return getDeckForPool(activeCategory);
@@ -99,6 +100,7 @@ const DeckLibrary: React.FC<DeckLibraryProps> = ({ onClose }) => {
                 width="w-full"
                 height="h-full"
                 layoutId={`detail-${selectedCard.id}`}
+                priority={true}
               />
             </div>
           </motion.div>

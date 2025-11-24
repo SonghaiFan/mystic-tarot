@@ -19,6 +19,7 @@ import {
   FULL_DECK,
   STATIC_SCRIPTS,
   getDeckForPool,
+  getCardImageUrl,
 } from "./constants/cards";
 import { SPREADS } from "./constants/spreads";
 import { generateTarotReading, generateSpeech } from "./services/gemini";
@@ -364,6 +365,12 @@ const App: React.FC = () => {
     predeterminedCardsRef.current = targets;
     predeterminedCardsIndexRef.current = 0;
 
+    // Preload images for the selected cards
+    targets.forEach((card) => {
+      const img = new Image();
+      img.src = getCardImageUrl(card.image);
+    });
+
     // 2. Start Gemini Generation in Background
     readingPromiseRef.current = generateTarotReading(targets, spread, question)
       .then((text) => {
@@ -564,7 +571,7 @@ const App: React.FC = () => {
           />
         );
       case GameState.SHUFFLING:
-        return <ShufflingSection />;
+        return <ShufflingSection cardCount={7} />;
       case GameState.PICKING:
         return (
           <PickingSection
