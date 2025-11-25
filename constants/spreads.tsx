@@ -33,7 +33,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     id: "SINGLE",
     name: "One Card Oracle",
     description:
-      "适合日常能量扫描、需要快速方向感的是否提问（正位=是，逆位=否）。建议用开放式问题效果更佳。\n与其只问“我应该在二月休假吗?”，不如改问“关于在二月休年假，我需要留意什么?”",
+      "适合日常能量扫描、需要快速方向感的是否提问（正位=是，逆位=否）。建议用开放式问题效果更佳。\n与其只问“我应该在二月休假吗？”，不如改问“关于在二月休年假，我需要留意什么？”",
     cardCount: 1,
     layoutType: "flex",
     labels: ["Insight"],
@@ -55,13 +55,13 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       "Spread Type: Single Card Oracle (Direct Guidance). Focus entirely on the essence of this single card.",
     defaultQuestions: [
       "How can I benefit from this situation?",
-      "我如何从目前的状况中获益?",
+      "我如何从目前的状况中获益？",
       "Is this a good and fair deal?",
-      "今天采取什么样的态度最有用?",
+      "今天采取什么样的态度最有用？",
       "What attitude will be most useful to adopt today?",
-      "我能从这个问题中学到什么?",
+      "我能从这个问题中学到什么？",
       "What can I learn from this problem?",
-      "处理这种情况的最佳方式是什么?",
+      "处理这种情况的最佳方式是什么？",
       "What’s the best way of dealing with this situation?",
     ],
   },
@@ -69,7 +69,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     id: "THREE",
     name: "Past · Present · Future",
     description:
-      "Past · Present · Future:梳理事件的起因、现状与走向。\n提问时可用“我需要了解什么?”并在适当时加入时间范围。",
+      "Past · Present · Future：梳理事件的起因、现状与走向。\n提问时可用“我需要了解什么？”并在适当时加入时间范围。",
     cardCount: 3,
     layoutType: "flex",
     labels: ["Past", "Present", "Future"],
@@ -93,13 +93,13 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     interpretationInstruction:
       "Spread Type: Three Card Spread (Past / Present / Future). Use this time flow to structure your answer.",
     defaultQuestions: [
-      "这段关系的发展趋势是怎样的?",
+      "这段关系的发展趋势是怎样的？",
       "What do I need to know about my health this weekend?",
-      "这个周末我的健康状况如何?",
+      "这个周末我的健康状况如何？",
       "What do I need to know about my finances over the next month?",
-      "下个月我的财务状况需要注意什么?",
+      "下个月我的财务状况需要注意什么？",
       "What do I need to know about my work during this week ahead?",
-      "这一周我的工作运势如何?",
+      "这一周我的工作运势如何？",
     ],
   },
   FOUR: {
@@ -137,10 +137,10 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       Synthesize the "Cons" and "Pro" to provide balanced advice on how to navigate from the "Situation" to the best possible "Answer".
     `,
     defaultQuestions: [
-      "未来三个月我的新恋情会如何发展?",
-      "未来半年我的职业生涯需要注意什么?",
-      "未来一年我的财务状况如何?",
-      "我该如何让生活更有意义?",
+      "未来三个月我的新恋情会如何发展？",
+      "未来半年我的职业生涯需要注意什么？",
+      "未来一年我的财务状况如何？",
+      "我该如何让生活更有意义？",
     ],
   },
   FIVE: {
@@ -180,17 +180,17 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       Focus on the "Hidden" card as the pivot point that connects the current state to the advice and outcome.
     `,
     defaultQuestions: [
-      "我该如何处理当前面临的困境?",
-      "这件事背后的隐性影响是什么?",
-      "我需要采取什么行动来达成目标?",
-      "这段关系未来的走向如何?",
+      "我该如何处理当前面临的困境？",
+      "这件事背后的隐性影响是什么？",
+      "我需要采取什么行动来达成目标？",
+      "这段关系未来的走向如何？",
     ],
   },
   COURT: {
     id: "COURT",
     name: "Court Card Spread",
     description:
-      "Situation · Persona · Cause. 探索你在特定情境下的行为模式与深层原因。\n适合自我反思，了解“为什么我在这种情况下会这样反应?”",
+      "Situation · Persona · Cause. 探索你在特定情境下的行为模式与深层原因。\n适合自我反思，了解“为什么我在这种情况下会这样反应？”",
     cardCount: 3,
     layoutType: "flex",
     labels: ["Situation", "Persona", "Cause"],
@@ -236,8 +236,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     `,
     defaultQuestions: [
       "Tell me about the way I deal with situations in daily life.",
-      "我在面对压力时会变成什么样?",
-      "为什么我在工作中总是表现出这种性格?",
+      "我在面对压力时会变成什么样？",
+      "为什么我在工作中总是表现出这种性格？",
     ],
   },
   DIMENSION: {
@@ -291,10 +291,10 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       Synthesize these five dimensions to provide a holistic view of the seeker's current life state.
     `,
     defaultQuestions: [
-      "下个月我的生活重心应该放在哪里?",
-      "我目前的整体能量状态如何?",
-      "我在各个生活领域需要注意什么?",
-      "如何平衡我的物质生活与精神追求?",
+      "下个月我的生活重心应该放在哪里？",
+      "我目前的整体能量状态如何？",
+      "我在各个生活领域需要注意什么？",
+      "如何平衡我的物质生活与精神追求？",
     ],
   },
   CELTIC: {
@@ -362,9 +362,9 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       10. Outcome: Final result.
     `,
     defaultQuestions: [
-      "我该如何解决目前面临的复杂局面?",
-      "这件事的最终结果会是如何?",
-      "我需要了解哪些被忽略的深层因素?",
+      "我该如何解决目前面临的复杂局面？",
+      "这件事的最终结果会是如何？",
+      "我需要了解哪些被忽略的深层因素？",
     ],
   },
 
@@ -372,7 +372,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     id: "RELATIONSHIP",
     name: "Relationship Mirror",
     description:
-      "You · Them · Us. 深度解析双方心态、阻碍与关系走向。\n适合处于暧昧、冷战、或想要深入了解双方真实想法与关系潜力的时刻。也可以是和朋友、家人、领导间的关系解读。",
+      "You · Them · Us. 深度解析双方心态、阻碍与关系走向。\n适合处于暧昧、冷战、或想要深入了解双方真实想法与关系潜力的时刻。",
     cardCount: 11,
     layoutType: "absolute",
     positions: [
@@ -455,10 +455,10 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       Compare parallel cards (e.g., Your View vs. Their View) to find alignment or conflict.
     `,
     defaultQuestions: [
-      "我们这段关系的未来走向如何?",
-      "对方目前对这段关系的真实想法是什么?",
-      "我们需要克服哪些阻碍才能更进一步?",
-      "我和他/她之间有发展的可能吗?",
+      "我们这段关系的未来走向如何？",
+      "对方目前对这段关系的真实想法是什么？",
+      "我们需要克服哪些阻碍才能更进一步？",
+      "我和他/她之间有发展的可能吗？",
     ],
   },
 };

@@ -275,8 +275,6 @@ export default function printTheReading(
         pixelRatio: 2,
         backgroundColor: "#0a0a0a",
         cacheBust: true,
-        // Avoid reading cross-origin stylesheets (e.g., Google Fonts) to prevent SecurityError
-        skipFonts: true,
         style: {
           transform: "scale(1)",
           transformOrigin: "top left",
