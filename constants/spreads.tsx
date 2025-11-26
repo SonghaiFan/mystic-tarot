@@ -365,7 +365,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
-              className={`w-0.5 h-1 rounded-[0.5px] ${
+              className={`w-1 h-1 rounded-[0.5px] ${
                 isActive ? "bg-white/90" : "bg-white/30"
               }`}
             />
@@ -375,7 +375,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className={`w-0.5 h-1 rounded-[0.5px] ${
+              className={`w-1 h-1 rounded-[0.5px] ${
                 isActive ? "bg-white/90" : "bg-white/30"
               }`}
             />
@@ -385,7 +385,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
-              className={`w-0.5 h-1 rounded-[0.5px] ${
+              className={`w-1 h-1 rounded-[0.5px] ${
                 isActive ? "bg-white/90" : "bg-white/30"
               }`}
             />
@@ -611,7 +611,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       <div className="relative w-6 h-6 flex items-center justify-center">
         {/* Center rectangle */}
         <div
-          className={`w-1 h-2 rounded-[0.5px] ${
+          className={`w-1 h-1 rounded-[0.5px] ${
             isActive ? "bg-white/90" : "bg-white/30"
           }`}
         />
