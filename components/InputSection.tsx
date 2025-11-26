@@ -126,7 +126,7 @@ const InputSection: React.FC<InputSectionProps> = ({
       </div>
       {/* Question Input */}
       <div className="w-full relative group">
-        <div className="absolute inset-0 bg-linear-to-b from-white/5 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 blur-2xl -z-10 rounded-full" />
+        <div className="absolute inset-0 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000" />
         <label className="text-[10px] tracking-[0.4em] text-neutral-600 uppercase block text-center mb-4 md:mb-8 group-hover:text-neutral-400 transition-colors">
           What is your query?
         </label>

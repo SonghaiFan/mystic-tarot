@@ -441,8 +441,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       "为什么我在这种情况下会这样反应?",
     ],
   },
-  ACTION_PLAN: {
-    id: "ACTION_PLAN",
+  ACTION: {
+    id: "ACTION",
     name: "Action Plan",
     description:
       "Yearly Strategy. 针对未来12个月的行动计划。\n每张牌代表一个季度（3个月）的行动重心与建议。",
@@ -477,8 +477,8 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       "What is my action plan for the next 12 months?",
     ],
   },
-  KICKING_GOALS: {
-    id: "KICKING_GOALS",
+  GOALS: {
+    id: "GOALS",
     name: "Kicking Goals",
     description:
       "Goal Achievement. 深入分析实现目标过程中的心理与行动要素。\n包括：专注点、隐藏因素、行动、挑战、助力、灵感与结果。",
