@@ -86,7 +86,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       </div>
     ),
     interpretationInstruction:
-      "Spread Type: Three Card Spread. Read from left to right: 1. Recent Past (Influences), 2. Present (Current happenings), 3. Near Future (How it unfolds). Can also be interpreted as Body / Mind / Spirit.",
+      "Read left to right. 1. Past (Recent occurrences/influences). 2. Present (Current happenings). 3. Future (Situation unfolding). Alternative: Past Hurts, Present Gifts, Future Rewards.",
     defaultQuestions: [
       "What do I need to know about [topic]?",
       "What do I need to know about my health this weekend?",
@@ -193,7 +193,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
           />
         ))}
         <div
-          className={`absolute w-full h-[1px] bg-white/20 top-1/2 left-0 -z-10`}
+          className={`absolute w-full h-px bg-white/20 top-1/2 left-0 -z-10`}
         />
       </div>
     ),
@@ -459,7 +459,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       desktop: "w-36 aspect-[300/519]",
     },
     icon: (isActive) => (
-      <div className="grid grid-cols-2 gap-0.5 w-4 h-5">
+      <div className="grid grid-cols-2 gap-0.5 w-3 h-4">
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
@@ -485,62 +485,84 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     cardCount: 7,
     layoutType: "absolute",
     positions: [
-      // Column 1
-      { x: 20, y: 25, label: "1. Focus", labelPosition: "top" },
-      { x: 20, y: 55, label: "2. Hidden", labelPosition: "bottom" },
-      // Column 2
-      { x: 50, y: 25, label: "3. Action", labelPosition: "top" },
-      { x: 50, y: 55, label: "4. Challenge", labelPosition: "bottom" },
-      // Column 3
-      { x: 80, y: 25, label: "5. Helpful", labelPosition: "top" },
-      { x: 80, y: 55, label: "6. Inspiration", labelPosition: "bottom" },
-      // Footer
-      { x: 50, y: 85, label: "7. Outcome", labelPosition: "bottom" },
+      // Column 1: Focus (1) & Hidden (2)
+      { x: 20, y: 25, label: "1. Focus", labelPosition: "top", zIndex: 10 },
+      {
+        x: 20,
+        y: 35,
+        label: "2. Hidden",
+        labelPosition: "bottom",
+        rotation: 90,
+        zIndex: 20,
+      },
+
+      // Column 2: Action (3) & Challenge (4)
+      { x: 50, y: 25, label: "3. Action", labelPosition: "top", zIndex: 10 },
+      {
+        x: 50,
+        y: 35,
+        label: "4. Challenge",
+        labelPosition: "bottom",
+        rotation: 90,
+        zIndex: 20,
+      },
+
+      // Column 3: Helpful (5) & Inspiration (6)
+      { x: 80, y: 25, label: "5. Helpful", labelPosition: "top", zIndex: 10 },
+      {
+        x: 80,
+        y: 35,
+        label: "6. Inspiration",
+        labelPosition: "bottom",
+        rotation: 90,
+        zIndex: 20,
+      },
+
+      // Footer: Outcome (7)
+      { x: 50, y: 75, label: "7. Outcome", labelPosition: "bottom" },
     ],
     cardSize: {
       mobile: "w-14 aspect-[300/519]",
       desktop: "w-20 aspect-[300/519]",
     },
+    // Updated Icon: Reflects the "Vertical card standing on/behind a Horizontal card" structure
     icon: (isActive) => (
-      <div className="flex flex-col items-center gap-0.5 w-5">
-        <div className="flex justify-between w-full">
-          {[0, 1, 2].map((i) => (
+      <div className="flex flex-col items-center justify-center w-6 h-6 gap-0.5">
+        <div className="flex justify-between w-full px-0.5">
+          {[0, 1, 2].map((col) => (
             <div
-              key={i}
-              className={`w-1 h-1.5 rounded-[0.5px] ${
-                isActive ? "bg-white/90" : "bg-white/30"
-              }`}
-            />
+              key={col}
+              className="relative w-1.5 h-3 flex items-center justify-center"
+            >
+              {/* Vertical Card (Back) */}
+              <div
+                className={`absolute top-0 w-1 h-2 rounded-[0.5px] ${
+                  isActive ? "bg-white/60" : "bg-white/20"
+                }`}
+              />
+              {/* Horizontal Card (Front/Bottom) - Represented as a wider, shorter block overlapping the bottom */}
+              <div
+                className={`absolute bottom-0 w-1.5 h-1 rounded-[0.5px] ${
+                  isActive ? "bg-white/90" : "bg-white/40"
+                }`}
+              />
+            </div>
           ))}
         </div>
-        <div className="flex justify-between w-full">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className={`w-1 h-1.5 rounded-[0.5px] ${
-                isActive ? "bg-white/90" : "bg-white/30"
-              }`}
-            />
-          ))}
-        </div>
+        {/* Outcome Card */}
         <div
-          className={`w-1 h-1.5 rounded-[0.5px] ${
+          className={`w-1 h-1.5 mt-0.5 rounded-[0.5px] ${
             isActive ? "bg-white/90" : "bg-white/30"
           }`}
         />
       </div>
     ),
-    interpretationInstruction: `
-    Spread Type: Kicking Goals. Focus on Card 2 (Hidden) and Card 6 (Inspiration) as the internal drivers. Card 3 and 4 are the external friction. Card 7 is the result after one year.
-      1. **The Focus:** Present level of focus.
-      2. **What is Hidden:** Self-knowledge needed (Unconscious drivers).
-      3. **The Action:** What to do to stay true to goal.
-      4. **The Challenge:** What to avoid.
-      5. **The Helpful Influence:** Decision making aid.
-      6. **The Inspiration:** Motivation source.
-      7. **The Outcome:** Expected result after one year.
-    `,
+    interpretationInstruction:
+      "Spread Type: Mister Tarot's Kicking Goals. Top Row (1,3,5): Visible aspects (Focus, Action, Helpful). Middle Row (2,4,6 Horizontal): Hidden/Subconscious aspects (Hidden Self, Challenge, Inspiration Source).Bottom (7): Outcome after 1 year.",
     defaultQuestions: [
+      "What are the hidden psychological blocks to my goal?",
+      "How do I maintain inspiration over the next year?",
+      "What specific actions aligns with my true focus?",
       "What do I need to know to achieve my goal?",
       "我如何才能建立成功的副业?",
     ],
@@ -553,64 +575,61 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     cardCount: 15,
     layoutType: "absolute",
     positions: [
-      // Center
+      // Center Cluster - Spread out slightly more (35->32, 65->68) to avoid overlap
       { x: 50, y: 50, label: "Trend" },
-      { x: 35, y: 50, label: "Challenge" },
-      { x: 65, y: 50, label: "Helpful" },
-      // Clockwise from Top (Jan/Month 1)
-      { x: 50, y: 15, label: "Month 1" },
-      { x: 67, y: 20, label: "Month 2" },
-      { x: 80, y: 35, label: "Month 3" },
-      { x: 85, y: 50, label: "Month 4" },
-      { x: 80, y: 65, label: "Month 5" },
-      { x: 67, y: 80, label: "Month 6" },
-      { x: 50, y: 85, label: "Month 7" },
-      { x: 33, y: 80, label: "Month 8" },
-      { x: 20, y: 65, label: "Month 9" },
-      { x: 15, y: 50, label: "Month 10" },
-      { x: 20, y: 35, label: "Month 11" },
-      { x: 33, y: 20, label: "Month 12" },
+      { x: 32, y: 50, label: "Challenge" },
+      { x: 68, y: 50, label: "Helpful" },
+
+      // Outer Ring - Radius expanded to ~42% (was ~35%)
+      // Top Hemisphere: labelPosition='bottom' (Default) to drop label into circle
+      { x: 50, y: 8, label: "Month 1", labelPosition: "bottom" }, // 12 o'clock
+      { x: 71, y: 13, label: "Month 2", labelPosition: "bottom" }, // 1 o'clock
+      { x: 87, y: 29, label: "Month 3", labelPosition: "bottom" }, // 2 o'clock
+
+      // Side:
+      { x: 92, y: 50, label: "Month 4", labelPosition: "bottom" }, // 3 o'clock
+
+      // Bottom Hemisphere: labelPosition='top' to raise label into circle
+      { x: 87, y: 71, label: "Month 5", labelPosition: "top" }, // 4 o'clock
+      { x: 71, y: 87, label: "Month 6", labelPosition: "top" }, // 5 o'clock
+      { x: 50, y: 92, label: "Month 7", labelPosition: "top" }, // 6 o'clock
+      { x: 29, y: 87, label: "Month 8", labelPosition: "top" }, // 7 o'clock
+      { x: 13, y: 71, label: "Month 9", labelPosition: "top" }, // 8 o'clock
+
+      // Side:
+      { x: 8, y: 50, label: "Month 10", labelPosition: "bottom" }, // 9 o'clock
+
+      // Top Hemisphere Return:
+      { x: 13, y: 29, label: "Month 11", labelPosition: "bottom" }, // 10 o'clock
+      { x: 29, y: 13, label: "Month 12", labelPosition: "bottom" }, // 11 o'clock
     ],
     cardSize: {
       mobile: "w-8 aspect-[300/519]",
       desktop: "w-12 aspect-[300/519]",
     },
     icon: (isActive) => (
-      <div className="relative w-6 h-6 rounded-full border border-white/20">
+      <div className="relative w-6 h-6 flex items-center justify-center">
+        {/* Center rectangle */}
         <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-1 flex gap-px`}
-        >
-          <div
-            className={`w-0.5 h-full ${
-              isActive ? "bg-white/90" : "bg-white/30"
-            }`}
-          />
-          <div
-            className={`w-0.5 h-full ${
-              isActive ? "bg-white/90" : "bg-white/30"
-            }`}
-          />
-          <div
-            className={`w-0.5 h-full ${
-              isActive ? "bg-white/90" : "bg-white/30"
-            }`}
-          />
-        </div>
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute w-0.5 h-0.5 rounded-full ${
-              isActive ? "bg-white/90" : "bg-white/30"
-            }`}
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: `rotate(${
-                i * 45
-              }deg) translate(8px) translate(-50%, -50%)`,
-            }}
-          />
-        ))}
+          className={`w-1 h-2 rounded-[0.5px] ${
+            isActive ? "bg-white/90" : "bg-white/30"
+          }`}
+        />
+        {/* Six outer rectangles forming a wheel */}
+        {[...Array(6)].map((_, i) => {
+          const angle = i * 60; // 0, 60, 120, 180, 240, 300 degrees
+          return (
+            <div
+              key={i}
+              className={`absolute w-1 h-2 rounded-[0.5px] ${
+                isActive ? "bg-white/90" : "bg-white/30"
+              }`}
+              style={{
+                transform: `rotate(${angle}deg) translateY(-7px)`,
+              }}
+            />
+          );
+        })}
       </div>
     ),
     interpretationInstruction:
