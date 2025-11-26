@@ -51,14 +51,14 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
       />
     ),
     interpretationInstruction: `
-"One Card Draw".
-- Card 1: The Insight/Advice.
-Synthesis Goal: This card is the absolute focal point. Do not answer with a simple Yes/No. Instead, interpret the archetype of this card as the core attitude or perspective the seeker needs to adopt regarding their current situation.`,
+The One Card Draw" .
+- Card 1: The Insight regarding the specific topic.
+Synthesis Goal: Do NOT answer with a simple 'Yes' or 'No'. As per the Handbook, focus on the 'appropriateness' of the card drawn . Interpret the card as the specific attitude, perspective, or circumstance the seeker needs to be aware of right now to make the day or situation more rewarding .
+    `,
     defaultQuestions: [
       "关于这件事，我需要留意什么?",
       "今天采取什么样的态度最有用?",
       "这个问题能带给我什么启示?",
-      "我当下的能量状态如何?",
     ],
   },
   THREE: {
@@ -86,11 +86,11 @@ Synthesis Goal: This card is the absolute focal point. Do not answer with a simp
       </div>
     ),
     interpretationInstruction: `
-Classic Trinity Spread".
-- Card 1: Past (Root cause or recent influence).
-- Card 2: Present (Current energy or challenge).
-- Card 3: Future (Likely outcome if path continues).
-Synthesis Goal: Create a linear timeline narrative. Explain how the Past (Card 1) directly shaped the Present (Card 2), and how the current momentum flows into the Future (Card 3).
+The Three Card Spread" .
+- Card 1: Past (Recent occurrences/influences) .
+- Card 2: Present (Current happenings) .
+- Card 3: Future (Situation unfolding) .
+Synthesis Goal: Distill the interpretation to the most important events or influences within the timeframe . Connect the cards linearly: explain how the recent Past shaped the Present, and how the Present momentum flows into the Future.
     `,
     defaultQuestions: [
       "关于这段关系，我需要了解什么?",
@@ -123,12 +123,13 @@ Synthesis Goal: Create a linear timeline narrative. Explain how the Past (Card 1
       </div>
     ),
     interpretationInstruction: `
-"Simple Four Card Spread".
-- Card 1: The Situation (Current reality).
-- Card 2: Cons/Obstacles (What blocks you).
-- Card 3: Pros/Helpful (What supports you).
-- Card 4: The Answer (Final Outcome).
-Synthesis Goal: Perform a strategic analysis. Contrast the Cons (Card 2) against the Pros (Card 3) to explain why the Situation (Card 1) leads to the final Answer (Card 4).`,
+Simple Four Card Spread" .
+- Card 1: The Situation (Current reality/Relationship to question) .
+- Card 2: Cons (Obstacles/What is against you) .
+- Card 3: Pro (Helpful influences/What supports you) .
+- Card 4: The Answer (The Outcome) .
+Synthesis Goal: Perform a strategic analysis. Contrast the Cons (Card 2) against the Pros (Card 3) to explain why the current Situation (Card 1) evolves into the final Answer (Card 4) .
+    `,
     defaultQuestions: [
       "未来三个月我的新恋情会如何发展?",
       "关于目前的财务状况，我需要知道什么?",
@@ -160,13 +161,14 @@ Synthesis Goal: Perform a strategic analysis. Contrast the Cons (Card 2) against
       </div>
     ),
     interpretationInstruction: `
-"Five Card Spread".
-- Card 1: Past.
-- Card 2: Present.
-- Card 3: Hidden (Subconscious drive or unknown factor).
-- Card 4: Advice (Action to take).
-- Card 5: Outcome.
-Synthesis Goal: The pivot point is Card 3 (Hidden). Interpret the reading by revealing how this hidden factor is influencing the Present, and how following the Advice (Card 4) will lead to the Outcome.`,
+Five Card Spread" .
+- Card 1: Past (Emotional/Intellectual shaping) .
+- Card 2: Present (Significant current influence) .
+- Card 3: What's Hidden (Unconscious driving forces/Unknown aspects - Crucial) .
+- Card 4: Advice (Action required to overcome negative hidden aspects or capitalize on positive ones) .
+- Card 5: Outcome (Possibility dependent on following Advice) .
+Synthesis Goal: The pivot point is Card 3 (Hidden). Reveal this unknown factor to the seeker, then explain how following the Advice (Card 4) allows them to navigate from the Present to the desired Outcome .
+    `,
     defaultQuestions: [
       "这件事背后有什么我没看到的隐性影响?",
       "我应该采取什么行动来改善现状?",
@@ -201,13 +203,13 @@ Synthesis Goal: The pivot point is Card 3 (Hidden). Interpret the reading by rev
       </div>
     ),
     interpretationInstruction: `
-"Timeline Spread".
-- Card 1: Time Unit 1 (The beginning).
-- Card 2: Time Unit 2 (Development).
-- Card 3: Time Unit 3 (The Peak/Turning Point).
-- Card 4: Time Unit 4 (Resolution phase).
-- Card 5: Time Unit 5 (Culmination).
-Synthesis Goal: Describe the energy as a flowing river or story arc. Identify where the tension peaks (Card 3) and how it resolves by the end (Card 5).
+Timeline Spread" .
+- Card 1: Time Unit 1 (The beginning/Current day) .
+- Card 2: Time Unit 2 (Progression).
+- Card 3: Time Unit 3 (Middle phase).
+- Card 4: Time Unit 4 (Later phase).
+- Card 5: Time Unit 5 (Culmination/Final outcome) .
+Synthesis Goal: Read the cards as a chronological story or sequence of events . Identify the flow of energy—where it starts, how it develops, and where it peaks or resolves in the final unit.
     `,
     defaultQuestions: [
       "未来五个月我的工作情况会如何变化?",
@@ -259,13 +261,14 @@ Synthesis Goal: Describe the energy as a flowing river or story arc. Identify wh
       </div>
     ),
     interpretationInstruction: `
-"Five Dimensions Spread".
-- Card 1 (Cups): Romance & Emotions.
-- Card 2 (Pentacles): Finances & Material Security.
-- Card 3 (Swords): Mental State & Decisions.
-- Card 4 (Wands): Career & Energy.
-- Card 5 (Major Arcana): Spiritual Lesson.
-Synthesis Goal: Provide a holistic check-up. Weave these five distinct aspects into a unified description of the seeker's current life state. Note any imbalances (e.g., negative cards in positive positions).`,
+Mister Tarot's Five Dimensions Spread" .
+- Card 1 (Cups): Relationships & Emotions .
+- Card 2 (Pentacles): Finances, Assets & Physical Security .
+- Card 3 (Swords): Mental State & Decision Making .
+- Card 4 (Wands): Career, Energy & Work Effectiveness .
+- Card 5 (Major Arcana): Spiritual Path & Higher Self .
+Synthesis Goal: Provide a holistic life scan. Treat each card as a specific diagnosis for that 'dimension' of life. Check for harmony or conflict between the dimensions (e.g., career stress affecting relationships) .
+    `,
     defaultQuestions: [
       "我下个月的生活重心应该放在哪里?",
       "全面扫描我目前的能量状态。",
@@ -325,10 +328,11 @@ Synthesis Goal: Provide a holistic check-up. Weave these five distinct aspects i
       </div>
     ),
     interpretationInstruction: `
-"Celtic Cross Spread".
-- The Cross: 1.Issue, 2.Obstacle, 3.Past(Top), 4.Present(Left), 5.Near Future(Bottom), 6.Far Future(Right).
-- The Staff: 7.Self, 8.Environment, 9.Hopes/Fears, 10.Outcome.
-Synthesis Goal: First, synthesize the 'Cross' to explain the flow of events. Then, use the 'Staff' to explain the seeker's psychology. Contrast their Hopes/Fears (Card 9) with the actual Outcome (Card 10).`,
+Mister Tarot's Celtic Cross (Modified)" .
+- The Cross: 1.Issue, 2.Obstacle (Crosses 1), 3.Past (Top), 4.Present (Left), 5.Near Future (Bottom), 6.Far Future (Right) .
+- The Staff: 7.Yourself (Attitude), 8.Environment (Support), 9.Hopes/Fears, 10.Outcome .
+Synthesis Goal: First, analyze the 'Cross' to see the event flow (Issue -> Past -> Present -> Future). Then use the 'Staff' to analyze the seeker's agency. Contrast Card 9 (Hopes/Fears) with Card 10 (Outcome). Note: Card 1 has an overriding effect on the whole spread .
+    `,
     defaultQuestions: [
       "What should I be aware of regarding [complex situation]?",
       "我未来一年的职业发展全貌是怎样的?",
@@ -399,11 +403,11 @@ Synthesis Goal: First, synthesize the 'Cross' to explain the flow of events. The
       </div>
     ),
     interpretationInstruction: `
-"Relationship Spread".
-- Seeker's Column: 1.Seeker Now, 2.Seeker's Weakness, 3.Seeker's Strength, 4.Seeker's View of Partner.
-- Partner's Column: 5.Partner Now, 6.Partner's Weakness, 7.Partner's Strength, 8.Partner's View of Seeker.
-- Relationship Column: 9.Relationship Status, 10.Near Future, 11.Outcome.
-Synthesis Goal: Compare and contrast. Analyze the dynamic between Seeker's View (4) and Partner's View (8). Explain how their combined Strengths/Weaknesses form the central Relationship entity (Cards 9-11).
+Mister Tarot's Relationship Spread" .
+- Left Col (Seeker): 1.You Now, 2.Your Weakness, 3.Your Strength, 4.Your View .
+- Right Col (Partner): 5.Them Now, 6.Their Weakness, 7.Their Strength, 8.Their View .
+- Center (Bond): 9.Relationship Present, 10.Near Future, 11.Outcome .
+Synthesis Goal: Compare parallel cards. Contrast 'Your View' (4) vs 'Their View' (8). Analyze how 'Your Weakness' (2) interacts with 'Their Strength' (7). Interpret the Center Column as the 'Third Entity'—the relationship itself .
     `,
     defaultQuestions: [
       "对方目前对这段关系最真实的看法是什么?",
@@ -444,11 +448,11 @@ Synthesis Goal: Compare and contrast. Analyze the dynamic between Seeker's View 
       </div>
     ),
     interpretationInstruction: `
-"Court Card Behavior Spread".
-- Card 1: Situation (Trigger event).
-- Card 2: Persona (The Court Card mask/role).
-- Card 3: Cause (Deep psychological root).
-Synthesis Goal: Use this narrative structure: 'When [Card 1 Situation] occurs, you tend to adopt the persona of [Card 2], because deep down [Card 3] is driving you.' Focus on the psychological shift.
+Court Card Spread" .
+- Card 1 (Pip): The Situation (Daily life trigger) .
+- Card 2 (Court): The Persona (The mask/role you adopt) .
+- Card 3 (Major): The Cause (Deep psychological root) .
+Synthesis Goal: Strictly follow this narrative formula: "When [Card 1 Situation] arises, you become [Card 2 Persona] because of [Card 3 Cause]." Focus on the psychological shift and the underlying root cause .
     `,
     defaultQuestions: [
       "我在面对压力时会变成什么样?",
@@ -486,12 +490,12 @@ Synthesis Goal: Use this narrative structure: 'When [Card 1 Situation] occurs, y
       </div>
     ),
     interpretationInstruction: `
-"Action Plan".
-- Card 1: Q1 (Months 1-3) Focus.
-- Card 2: Q2 (Months 4-6) Focus.
-- Card 3: Q3 (Months 7-9) Focus.
-- Card 4: Q4 (Months 10-12) Focus.
-Synthesis Goal: Focus purely on strategy. For each quarter, translate the card into a specific strategic action or mindset the seeker must adopt to achieve their yearly goal.
+Mister Tarot's Action Plan Spread" .
+- Card 1: Q1 Focus (Months 1-3).
+- Card 2: Q2 Focus (Months 4-6).
+- Card 3: Q3 Focus (Months 7-9).
+- Card 4: Q4 Focus (Months 10-12) .
+Synthesis Goal: This is a strategy spread. For each quarter, interpret the card as a specific "Action" or "Focus" required to achieve the yearly goal, rather than just a prediction of events .
     `,
     defaultQuestions: [
       "未来一年我该如何达成我的目标?",
@@ -580,11 +584,11 @@ Synthesis Goal: Focus purely on strategy. For each quarter, translate the card i
       </div>
     ),
     interpretationInstruction: `
-"Kicking Goals".
-- Top Row (Conscious): 1.Focus, 3.Action, 5.Helpful.
-- Middle Row (Subconscious): 2.Hidden Self, 4.Hidden Challenge, 6.Inspiration Source.
-- Bottom: 7.Outcome.
-Synthesis Goal: Reveal the gap between the Conscious and Subconscious. Contrast what the seeker 'thinks' they are doing (Top Row) with what is actually happening underneath (Middle Row), and how this interplay leads to the Outcome.
+Mister Tarot's Kicking Goals Spread" .
+- Top Row: 1.Focus (Present), 3.Action (To stay true), 5.Helpful Influence.
+- Middle Row: 2.Hidden Self (What you need to know), 4.Challenge (To avoid), 6.Inspiration (Motivation).
+- Bottom: 7.Outcome (after 1 year) .
+Synthesis Goal: Reveal the psychological gap. Contrast the Conscious efforts (Top Row) with the Subconscious/Hidden factors (Middle Row). Explain how aligning these leads to the Outcome .
     `,
     defaultQuestions: [
       "我如何才能建立成功的副业?",
@@ -658,10 +662,10 @@ Synthesis Goal: Reveal the gap between the Conscious and Subconscious. Contrast 
       </div>
     ),
     interpretationInstruction: `
-Yearly Wheel".
-- Center: 1.Main Theme, 2.Challenge, 3.Support.
-- Outer Ring: Card 4 to Card 15 represent Month 1 to Month 12 sequentially.
-Synthesis Goal: Start by defining the year's overall Theme based on the Center cards. Then, weave the monthly cards into a seasonal narrative, highlighting key energetic shifts throughout the year.
+Mister Tarot's Yearly Spread" .
+- Center: 1.Trend (Overall focus), 2.Challenge (Left), 3.Helpful (Right) .
+- Outer Ring: Cards 4-15 represent Month 1 to Month 12 (Clockwise) .
+Synthesis Goal: Start by defining the 'Trend' (Card 1) as the year's theme. Contrast the Challenge (2) and Help (3). Then, weave the monthly cards into a narrative of seasonal progression .
     `,
     defaultQuestions: [
       "我的年度运势如何?",
