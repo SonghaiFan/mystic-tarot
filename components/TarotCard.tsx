@@ -214,18 +214,17 @@ const TarotCard: React.FC<TarotCardProps> = ({
                   </div>
                 </div>
               )}
+              <div className="flex items-center justify-center gap-4 mb-8 opacity-30">
+                <div className="h-px w-12 bg-white" />
+                <div className="w-1.5 h-1.5 rotate-45 border border-white" />
+                <div className="h-px w-12 bg-white" />
+              </div>
             </div>
 
             {/* Scrollable Description Section */}
             {isDetailed && "keywords" in card && (
               <div className="flex-1 w-full overflow-y-auto px-6 pb-10 md:px-16 md:pb-16">
                 <div className="w-full max-w-lg mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 relative z-10">
-                  <div className="flex items-center justify-center gap-4 mb-8 opacity-30">
-                    <div className="h-px w-12 bg-white" />
-                    <div className="w-1.5 h-1.5 rotate-45 border border-white" />
-                    <div className="h-px w-12 bg-white" />
-                  </div>
-
                   <p className="text-sm md:text-base text-neutral-300 font-light leading-loose text-justify tracking-wide">
                     {isDetailed ? (
                       <>
