@@ -47,6 +47,8 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
 }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
+  const spreadConfig = SPREADS[spread];
+  const displayedCards = pickedCards.slice(0, spreadConfig.cardCount);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -68,9 +70,7 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyPrompt = async () => {
-    const spreadConfig = SPREADS[spread];
-    const cardsList = pickedCards
-      .slice(0, spreadConfig.cardCount)
+    const cardsList = displayedCards
       .map((card, index) => {
         const positionLabel =
           spreadConfig.layoutType === "absolute"
@@ -107,6 +107,20 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
   };
 
   const allCardsRevealed = revealedCardIds.size === pickedCards.length;
+  const hoveredCard =
+    hoveredCardId !== null
+      ? displayedCards.find((c) => c.id === hoveredCardId)
+      : null;
+  const hoveredCardIndex =
+    hoveredCardId !== null
+      ? displayedCards.findIndex((c) => c.id === hoveredCardId)
+      : -1;
+  const hoveredCardLabel =
+    hoveredCardIndex >= 0
+      ? spreadConfig.layoutType === "absolute"
+        ? spreadConfig.positions?.[hoveredCardIndex]?.label
+        : spreadConfig.labels?.[hoveredCardIndex]
+      : undefined;
 
   const renderThinkingPhrase = () => {
     const allKeywords = pickedCards.flatMap((c) => {
@@ -132,7 +146,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
     >
       <div
         className={`${
-          SPREADS[spread].layoutType === "absolute" && !isMobile
+          spreadConfig.layoutType === "absolute" && !isMobile
             ? "relative w-full h-[80vh] max-w-4xl mx-auto"
             : `flex flex-wrap justify-center gap-12 ${
                 spread === "THREE" ? "items-start" : "items-center"
@@ -140,68 +154,65 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
         }`}
       >
         <AnimatePresence>
-          {pickedCards
-            .slice(0, SPREADS[spread].cardCount)
-            .map((card, index) => {
-              const isHovered =
-                hoveredCardId === card.id && selectedCardId === null;
-              const spreadConfig = SPREADS[spread];
-              const position = spreadConfig.positions?.[index];
+          {displayedCards.map((card, index) => {
+            const isHovered =
+              hoveredCardId === card.id && selectedCardId === null;
+            const position = spreadConfig.positions?.[index];
 
-              const absoluteStyle =
-                spreadConfig.layoutType === "absolute" && !isMobile && position
-                  ? {
-                      position: "absolute" as const,
-                      left:
-                        typeof position.x === "number"
-                          ? `${position.x}%`
-                          : position.x,
-                      top:
-                        typeof position.y === "number"
-                          ? `${position.y}%`
-                          : position.y,
-                      marginLeft: "-3.5rem", // Half of w-28 (7rem)
-                      marginTop: "-5.5rem", // Half of h-44 (11rem)
-                      zIndex: isHovered ? 100 : position.zIndex || 5,
-                      rotate: position.rotation || 0,
-                    }
-                  : undefined;
-
-              const label =
-                spreadConfig.layoutType === "absolute"
-                  ? position?.label
-                  : spreadConfig.labels?.[index];
-
-              const labelPosition =
-                spreadConfig.layoutType === "absolute" && !isMobile
-                  ? position?.labelPosition || "bottom"
-                  : "bottom";
-
-              return (
-                <TarotCard
-                  key={card.id}
-                  layoutId={`card-${card.id}`}
-                  card={card}
-                  isRevealed={revealedCardIds.has(card.id)}
-                  isHovered={isHovered}
-                  isHorizontal={!!position?.rotation && !isMobile}
-                  onHover={onCardHover}
-                  onClick={() => handleCardClick(card.id)}
-                  style={absoluteStyle}
-                  label={label}
-                  labelPosition={labelPosition}
-                  className={
-                    isMobile
-                      ? spreadConfig.cardSize.mobile
-                      : spreadConfig.cardSize.desktop
+            const absoluteStyle =
+              spreadConfig.layoutType === "absolute" && !isMobile && position
+                ? {
+                    position: "absolute" as const,
+                    left:
+                      typeof position.x === "number"
+                        ? `${position.x}%`
+                        : position.x,
+                    top:
+                      typeof position.y === "number"
+                        ? `${position.y}%`
+                        : position.y,
+                    marginLeft: "-3.5rem", // Half of w-28 (7rem)
+                    marginTop: "-5.5rem", // Half of h-44 (11rem)
+                    zIndex: isHovered ? 100 : position.zIndex || 5,
+                    rotate: position.rotation || 0,
                   }
-                  animate={{
-                    scale: isHovered ? 1.1 : 1,
-                    zIndex: isHovered ? 100 : absoluteStyle?.zIndex || "auto",
-                  }}
-                />
-              );
-            })}
+                : undefined;
+
+            const label =
+              spreadConfig.layoutType === "absolute"
+                ? position?.label
+                : spreadConfig.labels?.[index];
+
+            const labelPosition =
+              spreadConfig.layoutType === "absolute" && !isMobile
+                ? position?.labelPosition || "bottom"
+                : "bottom";
+
+            return (
+              <TarotCard
+                key={card.id}
+                layoutId={`card-${card.id}`}
+                card={card}
+                isRevealed={revealedCardIds.has(card.id)}
+                isHovered={isHovered}
+                isHorizontal={!!position?.rotation && !isMobile}
+                onHover={onCardHover}
+                onClick={() => handleCardClick(card.id)}
+                style={absoluteStyle}
+                label={label}
+                labelPosition={labelPosition}
+                className={
+                  isMobile
+                    ? spreadConfig.cardSize.mobile
+                    : spreadConfig.cardSize.desktop
+                }
+                animate={{
+                  scale: isHovered ? 1.1 : 1,
+                  zIndex: isHovered ? 100 : absoluteStyle?.zIndex || "auto",
+                }}
+              />
+            );
+          })}
         </AnimatePresence>
       </div>
 
@@ -213,6 +224,8 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               x={mousePos.x + 15}
               y={mousePos.y + 15}
               isRevealed={revealedCardIds.has(hoveredCardId)}
+              card={hoveredCard || undefined}
+              positionLabel={hoveredCardLabel}
             />
           )}
         </AnimatePresence>,

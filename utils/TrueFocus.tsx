@@ -81,7 +81,7 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.5, ease: SILKY_EASE }}
-      className="text-7xl md:text-9xl font-cinzel tracking-tighter text-white mix-blend-difference opacity-90 relative flex gap-4 justify-center items-center flex-wrap"
+      className="text-7xl md:text-9xl tracking-tighter text-white mix-blend-difference opacity-90 relative flex gap-4 justify-center items-center flex-wrap"
       ref={containerRef}
       style={{ outline: "none", userSelect: "none" }}
     >
@@ -93,10 +93,10 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
             ref={(el) => {
               wordRefs.current[index] = el;
             }}
-            className="relative font-cinzel font-semibold cursor-pointer select-none"
+            className="relative font-semibold cursor-pointer select-none"
             style={
               {
-                fontSize: "clamp(2.5rem, 8vw, 7rem)",
+                fontSize: "clamp(8rem, 8vw, 10rem)",
                 letterSpacing: "0.18em",
                 color: isActive ? "#f5f5f5" : "#a3a3a3",
                 filter: isActive ? "blur(0px)" : `blur(${blurAmount}px)`,

@@ -103,7 +103,7 @@ const InputSection: React.FC<InputSectionProps> = ({
             {/* Spread Grid */}
             <div className="w-full space-y-6">
               <Label text="Choose your spread" />
-              <SubLabel text="牌阵决定解读角度：感情、决策、全局扫描、关系镜像…先选对题材再发问。" />
+              <SubLabel text="牌阵决定解读角度：感情、决策、全局扫描、关系镜像…先选对牌阵再发问。" />
 
               <div className="grid grid-cols-4 gap-3 md:gap-4">
                 {Object.values(SPREADS).map((s) => (

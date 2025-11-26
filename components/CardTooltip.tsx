@@ -1,19 +1,25 @@
 import React, { useRef, useLayoutEffect, useState } from "react";
 import { motion } from "motion/react";
+import { PickedCard } from "../types";
 
 interface CardTooltipProps {
   x: number;
   y: number;
   isRevealed?: boolean;
+  positionLabel?: string;
+  card?: PickedCard;
 }
 
 const CardTooltip: React.FC<CardTooltipProps> = ({
   x,
   y,
   isRevealed = true,
+  positionLabel,
+  card,
 }) => {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x, y });
+  const keywords = card?.keywords?.slice(0, 6) || [];
 
   useLayoutEffect(() => {
     if (tooltipRef.current) {
@@ -44,7 +50,7 @@ const CardTooltip: React.FC<CardTooltipProps> = ({
 
       setPos({ x: newX, y: newY });
     }
-  }, [x, y, isRevealed]);
+  }, [x, y, isRevealed, card]);
 
   return (
     <motion.div
@@ -60,11 +66,46 @@ const CardTooltip: React.FC<CardTooltipProps> = ({
         pointerEvents: "none",
         zIndex: 9999,
       }}
-      className="bg-black/80 border border-white/10 rounded px-3 py-2 backdrop-blur-sm shadow-xl whitespace-nowrap"
+      className="bg-black/80 border border-white/10 rounded-md px-3 py-2.5 backdrop-blur-sm shadow-xl w-64 whitespace-normal"
     >
-      <p className="text-[10px] text-white/80 tracking-[0.2em] uppercase font-light">
-        {!isRevealed ? "Click to Reveal" : "Click to Inspect"}
-      </p>
+      <div className="space-y-1.5">
+        {positionLabel && (
+          <div className="text-[9px] uppercase tracking-[0.24em] text-white/50 flex items-center gap-2">
+            <span className="h-px w-4 bg-white/20" />
+            <span>{positionLabel}</span>
+          </div>
+        )}
+
+        {isRevealed && card ? (
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2 text-[10px] text-white/70 tracking-[0.2em] uppercase font-light">
+              <span className="text-white/80">{card.nameEn}</span>
+              <span className="text-white/40">/ {card.nameCn}</span>
+            </div>
+            {keywords.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {keywords.map((keyword) => (
+                  <span
+                    key={keyword}
+                    className="px-2 py-0.5 text-[10px] uppercase tracking-[0.16em] text-white/80 bg-white/5 border border-white/10 rounded-sm"
+                  >
+                    {keyword}
+                  </span>
+                ))}
+              </div>
+            )}
+            <p className="text-[9px] text-white/50 tracking-[0.18em] uppercase pt-0.5">
+              Click to see more details
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-0.5">
+            <p className="text-[10px] text-white/80 tracking-[0.2em] uppercase font-light">
+              Click to Reveal
+            </p>
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 };

@@ -91,7 +91,7 @@ const PickingSection: React.FC<PickingSectionProps> = ({
               card={card}
               isRevealed={false}
               width={isMobile ? "w-12" : "w-24"}
-              height={isMobile ? "h-18" : "h-36"}
+              height="aspect-[300/519]"
               style={{
                 position: "absolute",
                 left: x,

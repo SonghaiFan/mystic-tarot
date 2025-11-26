@@ -526,6 +526,7 @@ const App: React.FC = () => {
   const bgOpacity = gameState === GameState.INTRO ? 0.9 : 0.3;
 
   const renderPhase = () => {
+    const fallbackSpread: SpreadType = spread || "THREE";
     switch (gameState) {
       case GameState.INTRO:
         return <IntroSection onEnter={enterInputPhase} />;
@@ -544,7 +545,9 @@ const App: React.FC = () => {
       case GameState.SHUFFLING:
         return (
           <ShufflingSection
-            cardCount={spread ? SPREADS[spread].cardCount : 7}
+            cardCount={SPREADS[fallbackSpread].cardCount}
+            spread={fallbackSpread}
+            isMobile={isMobile}
           />
         );
       case GameState.PICKING:

@@ -33,7 +33,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     id: "SINGLE",
     name: "One Card Draw",
     description:
-      "这个牌阵是最简单直接的指引，只用到一张大阿卡纳。\n建议避免单纯的“是/否”提问，而是用“我需要注意什么...”来获得更深层的当下指引。",
+      "这个牌阵是最简单直接的指引，只用到一张塔罗牌。\n建议避免单纯的“是/否”提问，而是用“我需要注意什么...”来获得更深层的当下指引。",
     cardCount: 1,
     layoutType: "flex",
     labels: ["Insight"],
@@ -53,7 +53,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     interpretationInstruction: `
 The One Card Draw" .
 - Card 1: The Insight regarding the specific topic.
-Synthesis Goal: Do NOT answer with a simple 'Yes' or 'No'. As per the Handbook, focus on the 'appropriateness' of the card drawn . Interpret the card as the specific attitude, perspective, or circumstance the seeker needs to be aware of right now to make the day or situation more rewarding .
+Synthesis Goal: Do NOT answer with a simple 'Yes' or 'No'. Focus on the 'appropriateness' of the card drawn . Interpret the card as the specific attitude, perspective, or circumstance the seeker needs to be aware of right now to make the day or situation more rewarding .
     `,
     defaultQuestions: [
       "关于这件事，我需要留意什么?",
@@ -221,7 +221,7 @@ Synthesis Goal: Read the cards as a chronological story or sequence of events . 
     id: "DIMENSION",
     name: "Five Dimensions",
     description:
-      "这是用到五种不同塔罗牌花色（圣杯、钱币、宝剑、权杖、大阿卡纳）的牌阵，全面扫描生活的五个维度（情感、财务、思维、事业和灵性）。\n适合提问需要全方位了解当前生活状态的情境，帮助你找到各个维度的平衡点。",
+      "这是用到五种不同塔罗牌花色的牌阵，全面扫描生活的五个维度（情感、财务、思维、事业和灵性）。\n适合提问需要全方位了解当前生活状态的情境，帮助你找到各个维度的平衡点。",
     cardCount: 5,
     layoutType: "flex",
     labels: [
@@ -512,10 +512,10 @@ Synthesis Goal: This is a strategy spread. For each quarter, interpret the card 
     layoutType: "absolute",
     positions: [
       // Column 1: Focus (1) & Hidden (2)
-      { x: 20, y: 25, label: "1. Focus", labelPosition: "top", zIndex: 10 },
+      { x: 20, y: 30, label: "1. Focus", labelPosition: "top", zIndex: 10 },
       {
         x: 20,
-        y: 35,
+        y: 40,
         label: "2. Hidden",
         labelPosition: "bottom",
         rotation: 90,
@@ -523,10 +523,10 @@ Synthesis Goal: This is a strategy spread. For each quarter, interpret the card 
       },
 
       // Column 2: Action (3) & Challenge (4)
-      { x: 50, y: 25, label: "3. Action", labelPosition: "top", zIndex: 10 },
+      { x: 50, y: 30, label: "3. Action", labelPosition: "top", zIndex: 10 },
       {
         x: 50,
-        y: 35,
+        y: 40,
         label: "4. Challenge",
         labelPosition: "bottom",
         rotation: 90,
@@ -534,10 +534,10 @@ Synthesis Goal: This is a strategy spread. For each quarter, interpret the card 
       },
 
       // Column 3: Helpful (5) & Inspiration (6)
-      { x: 80, y: 25, label: "5. Helpful", labelPosition: "top", zIndex: 10 },
+      { x: 80, y: 30, label: "5. Helpful", labelPosition: "top", zIndex: 10 },
       {
         x: 80,
-        y: 35,
+        y: 40,
         label: "6. Inspiration",
         labelPosition: "bottom",
         rotation: 90,
@@ -545,7 +545,7 @@ Synthesis Goal: This is a strategy spread. For each quarter, interpret the card 
       },
 
       // Footer: Outcome (7)
-      { x: 50, y: 75, label: "7. Outcome", labelPosition: "bottom" },
+      { x: 50, y: 70, label: "7. Outcome", labelPosition: "bottom" },
     ],
     cardSize: {
       mobile: "w-14 aspect-[300/519]",
