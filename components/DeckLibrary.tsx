@@ -78,31 +78,27 @@ const DeckLibrary: React.FC<DeckLibraryProps> = ({ onClose }) => {
         </div>
       </div>
 
-      {/* Detail View Overlay */}
+      {/* Card Detail Overlay */}
       <AnimatePresence>
-        {selectedCard && (
+        {selectedCardId !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 md:p-8"
+            className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
+            style={{ zIndex: 9999 }}
             onClick={() => setSelectedCardId(null)}
           >
-            <div
-              className="w-full h-[60vh] max-w-4xl relative"
+            <TarotCard
+              card={selectedCard!}
+              isRevealed={true}
+              isDetailed={true}
+              width="w-full max-w-md md:max-w-5xl"
+              height="h-[80vh] md:h-[75vh]"
+              className="shadow-2xl cursor-default"
               onClick={(e) => e.stopPropagation()}
-            >
-              <TarotCard
-                card={selectedCard}
-                isRevealed={true}
-                isDetailed={true}
-                width="w-full"
-                height="h-full"
-                layoutId={`detail-${selectedCard.id}`}
-                priority={true}
-              />
-            </div>
+            />
           </motion.div>
         )}
       </AnimatePresence>

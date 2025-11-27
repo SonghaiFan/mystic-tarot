@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Download, RefreshCw, Volume2, Copy, Check, X } from "lucide-react";
+import { Download, RefreshCw, Volume2, Copy, Check } from "lucide-react";
 import { SpreadType, PickedCard } from "../types";
 import { SILKY_EASE } from "../constants/ui";
 import { SPREADS } from "../constants/spreads";
@@ -232,39 +232,6 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
         document.body
       )}
 
-      {/* Card Detail Overlay */}
-      {createPortal(
-        <AnimatePresence>
-          {selectedCardId !== null && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
-              style={{ zIndex: 9999 }}
-              onClick={() => setSelectedCardId(null)}
-            >
-              <TarotCard
-                card={pickedCards.find((c) => c.id === selectedCardId)!}
-                isRevealed={true}
-                isDetailed={true}
-                width="w-full max-w-md md:max-w-5xl"
-                height="h-[60vh] md:h-[65vh]"
-                className="shadow-2xl cursor-default"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <button
-                onClick={() => setSelectedCardId(null)}
-                className="absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors z-50"
-              >
-                <X size={32} />
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body
-      )}
-
       <div className="w-full max-w-4xl min-h-[150px] flex flex-col items-center justify-center text-center pb-12">
         <AnimatePresence mode="wait">
           {!allCardsRevealed ? (
@@ -419,6 +386,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
               style={{ zIndex: 9999 }}
               onClick={() => setSelectedCardId(null)}
@@ -428,16 +396,10 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                 isRevealed={true}
                 isDetailed={true}
                 width="w-full max-w-md md:max-w-5xl"
-                height="h-[80vh] md:h-[85vh]"
+                height="h-[80vh] md:h-[75vh]"
                 className="shadow-2xl cursor-default"
                 onClick={(e) => e.stopPropagation()}
               />
-              <button
-                onClick={() => setSelectedCardId(null)}
-                className="absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors z-50"
-              >
-                <X size={32} />
-              </button>
             </motion.div>
           )}
         </AnimatePresence>,
