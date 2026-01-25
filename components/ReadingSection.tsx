@@ -11,6 +11,7 @@ import CardTooltip from "./CardTooltip";
 interface ReadingSectionProps {
   spread: SpreadType;
   isMobile: boolean;
+  isTablet: boolean;
   pickedCards: PickedCard[];
   revealedCardIds: Set<number>;
   onCardReveal: (id: number) => void;
@@ -30,6 +31,7 @@ interface ReadingSectionProps {
 const ReadingSection: React.FC<ReadingSectionProps> = ({
   spread,
   isMobile,
+  isTablet,
   pickedCards,
   revealedCardIds,
   onCardReveal,
@@ -49,6 +51,19 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const spreadConfig = SPREADS[spread];
   const displayedCards = pickedCards.slice(0, spreadConfig.cardCount);
+
+  // Helper to calculate margins from Tailwind width classes like "w-28"
+  const getMargins = (widthClass: string) => {
+    const match = widthClass.match(/w-(\d+)/);
+    if (!match) return { ml: "-3.5rem", mt: "-5.5rem" };
+    const widthVal = parseInt(match[1]);
+    const remWidth = widthVal / 4;
+    const remHeight = (remWidth * 519) / 300; // Based on aspect-[300/519]
+    return {
+      ml: `-${remWidth / 2}rem`,
+      mt: `-${remHeight / 2}rem`,
+    };
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -159,6 +174,11 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               hoveredCardId === card.id && selectedCardId === null;
             const position = spreadConfig.positions?.[index];
 
+            const cardWidthClass = isMobile
+              ? spreadConfig.cardSize.mobile
+              : spreadConfig.cardSize.desktop;
+            const margins = getMargins(cardWidthClass);
+
             const absoluteStyle =
               spreadConfig.layoutType === "absolute" && !isMobile && position
                 ? {
@@ -171,8 +191,8 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                       typeof position.y === "number"
                         ? `${position.y}%`
                         : position.y,
-                    marginLeft: "-3.5rem", // Half of w-28 (7rem)
-                    marginTop: "-5.5rem", // Half of h-44 (11rem)
+                    marginLeft: margins.ml,
+                    marginTop: margins.mt,
                     zIndex: isHovered ? 100 : position.zIndex || 5,
                     rotate: position.rotation || 0,
                   }
@@ -201,11 +221,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                 style={absoluteStyle}
                 label={label}
                 labelPosition={labelPosition}
-                className={
-                  isMobile
-                    ? spreadConfig.cardSize.mobile
-                    : spreadConfig.cardSize.desktop
-                }
+                width={cardWidthClass}
                 animate={{
                   scale: isHovered ? 1.1 : 1,
                   zIndex: isHovered ? 100 : absoluteStyle?.zIndex || "auto",

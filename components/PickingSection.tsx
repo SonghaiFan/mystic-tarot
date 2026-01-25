@@ -10,6 +10,7 @@ interface PickingSectionProps {
   activeDeck: TarotCardType[];
   pickedCards: PickedCard[];
   isMobile: boolean;
+  isTablet: boolean;
   onCardSelect: (card: TarotCardType) => void;
 }
 
@@ -18,11 +19,12 @@ const PickingSection: React.FC<PickingSectionProps> = ({
   activeDeck,
   pickedCards,
   isMobile,
+  isTablet,
   onCardSelect,
 }) => (
   <motion.div
     key="picking"
-    className="relative w-full h-full flex items-center justify-center overflow-hidden"
+    className="relative w-full h-full flex items-center justify-center"
   >
     {/* Background Elements - Fade out on exit */}
     <motion.div
@@ -32,7 +34,7 @@ const PickingSection: React.FC<PickingSectionProps> = ({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center space-y-2 px-6">
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center space-y-2 px-6 z-50">
         <p className="text-xs text-neutral-300">
           轻点任意卡牌，直到下方格子亮满（共 {SPREADS[spread].cardCount} 张）
         </p>
@@ -42,11 +44,10 @@ const PickingSection: React.FC<PickingSectionProps> = ({
           }).map((_, i) => (
             <div
               key={i}
-              className={`w-2 h-2 border border-white/30 rotate-45 transition-all duration-500 ${
-                i < pickedCards.length
-                  ? "bg-white scale-110"
-                  : "bg-transparent scale-90"
-              }`}
+              className={`w-2 h-2 border border-white/30 rotate-45 transition-all duration-500 ${i < pickedCards.length
+                ? "bg-white scale-110"
+                : "bg-transparent scale-90"
+                }`}
             />
           ))}
         </div>
@@ -71,8 +72,16 @@ const PickingSection: React.FC<PickingSectionProps> = ({
             Math.sin(seed * 2) * 10000 - Math.floor(Math.sin(seed * 2) * 10000);
 
           // Donut distribution to avoid clumping in center
-          const minRadius = isMobile ? 80 : 180;
-          const maxRadius = isMobile ? 180 : 450;
+          let minRadius = 180;
+          let maxRadius = 450;
+          if (isMobile) {
+            minRadius = 80;
+            maxRadius = 180;
+          } else if (isTablet) {
+            minRadius = 140;
+            maxRadius = 320;
+          }
+
           // Square root of random for uniform area distribution, scaled to donut range
           const radius = Math.sqrt(r1) * (maxRadius - minRadius) + minRadius;
           const angle = r2 * 2 * Math.PI;
@@ -84,20 +93,24 @@ const PickingSection: React.FC<PickingSectionProps> = ({
           const floatDuration = 4 + (seed % 4);
           const floatY = 10 + (seed % 10);
 
+          const cardWidth = isMobile ? "w-12" : isTablet ? "w-16" : "w-24";
+          const ml = isMobile ? -24 : isTablet ? -32 : -48;
+          const mt = isMobile ? -36 : isTablet ? -48 : -72;
+
           return (
             <TarotCard
               key={card.id}
               layoutId={`card-${card.id}`}
               card={card}
               isRevealed={false}
-              width={isMobile ? "w-12" : "w-24"}
+              width={cardWidth}
               height="aspect-[300/519]"
               style={{
                 position: "absolute",
                 left: x,
                 top: y,
-                marginLeft: isMobile ? -24 : -48,
-                marginTop: isMobile ? -36 : -72,
+                marginLeft: ml,
+                marginTop: mt,
                 rotate: randomRotate,
               }}
               initial={{ scale: 0, opacity: 0 }}
@@ -130,7 +143,7 @@ const PickingSection: React.FC<PickingSectionProps> = ({
           layoutId={`card-${c.id}`}
           card={c}
           isRevealed={false}
-          width={isMobile ? "w-12" : "w-24"}
+          width={isMobile ? "w-12" : isTablet ? "w-16" : "w-24"}
           height="aspect-[300/519]"
           className="shadow-2xl"
         />

@@ -9,12 +9,14 @@ interface ShufflingSectionProps {
   cardCount: number;
   spread: SpreadType;
   isMobile: boolean;
+  isTablet: boolean;
 }
 
 const ShufflingSection: React.FC<ShufflingSectionProps> = ({
   cardCount,
   spread,
   isMobile,
+  isTablet,
 }) => {
   const shuffleDeck = useMemo(() => {
     const spreadDef = SPREADS[spread];
@@ -55,7 +57,8 @@ const ShufflingSection: React.FC<ShufflingSectionProps> = ({
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
     >
       {shuffleDeck.map((card, i) => {
-        const offset = (i - shuffleDeck.length / 2) * (isMobile ? 8 : 14);
+        const offsetMultiplier = isMobile ? 8 : isTablet ? 11 : 14;
+        const offset = (i - shuffleDeck.length / 2) * offsetMultiplier;
         const tilt = i % 2 === 0 ? 4 : -4;
 
         return (
@@ -80,7 +83,7 @@ const ShufflingSection: React.FC<ShufflingSectionProps> = ({
             <TarotCard
               card={card}
               isRevealed={false}
-              width={isMobile ? "w-36" : "w-48"}
+              width={isMobile ? "w-36" : isTablet ? "w-40" : "w-48"}
               height="aspect-[300/519]"
               className="pointer-events-none drop-shadow-2xl"
             />

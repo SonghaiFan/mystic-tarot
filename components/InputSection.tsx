@@ -11,6 +11,8 @@ interface InputSectionProps {
   onQuestionChange: (value: string) => void;
   onSpreadChange: (spread: SpreadType) => void;
   onStartRitual: () => void;
+  isMobile: boolean;
+  isTablet: boolean;
 }
 
 const InputSection: React.FC<InputSectionProps> = ({
@@ -19,6 +21,8 @@ const InputSection: React.FC<InputSectionProps> = ({
   onQuestionChange,
   onSpreadChange,
   onStartRitual,
+  isMobile,
+  isTablet,
 }) => {
   const [isSpreadConfirmed, setIsSpreadConfirmed] = useState(false);
   const [direction, setDirection] = useState(0); // 0: initial, 1: forward, -1: backward
@@ -105,7 +109,7 @@ const InputSection: React.FC<InputSectionProps> = ({
               <Label text="Choose your spread" />
               <SubLabel text="牌阵决定解读角度：感情、决策、全局扫描、关系镜像…先选对牌阵再发问。" />
 
-              <div className="grid grid-cols-4 gap-3 md:gap-4">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
                 {Object.values(SPREADS).map((s) => (
                   <SpreadCard
                     key={s.id}

@@ -118,6 +118,7 @@ const App: React.FC = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
   const [thinkingKeywordIndex, setThinkingKeywordIndex] = useState(0);
 
@@ -134,10 +135,13 @@ const App: React.FC = () => {
   const hiddenCardIdsRef = useRef<Set<number>>(new Set());
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -540,6 +544,8 @@ const App: React.FC = () => {
             onQuestionChange={setQuestion}
             onSpreadChange={setSpread}
             onStartRitual={startRitual}
+            isMobile={isMobile}
+            isTablet={isTablet}
           />
         );
       case GameState.SHUFFLING:
@@ -548,6 +554,7 @@ const App: React.FC = () => {
             cardCount={SPREADS[fallbackSpread].cardCount}
             spread={fallbackSpread}
             isMobile={isMobile}
+            isTablet={isTablet}
           />
         );
       case GameState.PICKING:
@@ -557,6 +564,7 @@ const App: React.FC = () => {
             activeDeck={activeDeck}
             pickedCards={pickedCards}
             isMobile={isMobile}
+            isTablet={isTablet}
             onCardSelect={handleCardSelect}
           />
         );
@@ -567,6 +575,7 @@ const App: React.FC = () => {
           <ReadingSection
             spread={spread}
             isMobile={isMobile}
+            isTablet={isTablet}
             pickedCards={pickedCards}
             revealedCardIds={revealedCardIds}
             onCardReveal={(id) =>
