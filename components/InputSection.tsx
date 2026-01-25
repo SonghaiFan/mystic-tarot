@@ -24,7 +24,8 @@ const InputSection: React.FC<InputSectionProps> = ({
   isMobile,
   isTablet,
 }) => {
-  const [isSpreadConfirmed, setIsSpreadConfirmed] = useState(false);
+  // Start confirmed if we have a spread (which we now default to specific spread or AUTO)
+  const [isSpreadConfirmed, setIsSpreadConfirmed] = useState(!!spread);
   const [direction, setDirection] = useState(0); // 0: initial, 1: forward, -1: backward
 
   // -- 占位符逻辑 --

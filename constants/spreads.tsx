@@ -29,6 +29,41 @@ export interface SpreadDefinition {
 }
 
 export const SPREADS: Record<SpreadType, SpreadDefinition> = {
+  AUTO: {
+    id: "AUTO",
+    name: "AI Recommendation",
+    description: "不确定选哪个？\n告诉我你的困惑，让我为你推荐最合适的牌阵。",
+    cardCount: 1, // Fallback/Placeholder
+    layoutType: "flex",
+    labels: ["Recommended"],
+    cardSize: {
+      mobile: "w-64 aspect-[300/519]",
+      desktop: "w-80 aspect-[300/519]",
+    },
+    icon: (isActive) => (
+      <div className="relative w-full h-full flex items-center justify-center">
+        <svg
+          viewBox="0 0 24 24"
+          fill={isActive ? "currentColor" : "none"}
+          stroke="currentColor"
+          strokeWidth={1.5}
+          className={`w-5 h-5 transition-all duration-500 ${
+            isActive
+              ? "text-white opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+              : "text-white/40"
+          }`}
+        >
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+        </svg>
+      </div>
+    ),
+    interpretationInstruction: "Auto-selected spread.",
+    defaultQuestions: [
+      "帮我理清目前的混乱状况",
+      "我应该如何做出选择？",
+      "告诉我接下来会发生什么",
+    ],
+  },
   SINGLE: {
     id: "SINGLE",
     name: "One Card Draw",

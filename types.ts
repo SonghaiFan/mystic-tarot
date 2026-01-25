@@ -20,7 +20,8 @@ export type SpreadType =
   | "COURT"
   | "ACTION"
   | "GOALS"
-  | "YEARLY";
+  | "YEARLY"
+  | "AUTO";
 
 export type CardPoolType =
   | "MAJOR"

@@ -20,7 +20,7 @@ import {
   getCardImageUrl,
 } from "./constants/cards";
 import { SPREADS } from "./constants/spreads";
-import { generateTarotReading, generateSpeech } from "./services/gemini";
+import { generateTarotReading, generateSpeech, predictBestSpread } from "./services/gemini";
 import CosmicParticles from "./components/CosmicParticles";
 import HeaderBar from "./components/HeaderBar";
 import IntroSection from "./components/IntroSection";
@@ -102,7 +102,7 @@ const App: React.FC = () => {
 
   // Input State
   const [question, setQuestion] = useState("");
-  const [spread, setSpread] = useState<SpreadType | null>(null);
+  const [spread, setSpread] = useState<SpreadType | null>("AUTO");
 
   // Game Data
   const [pickedCards, setPickedCards] = useState<PickedCard[]>([]);
@@ -292,6 +292,24 @@ const App: React.FC = () => {
   };
 
   const startRitual = async () => {
+    // 0. Auto-Select Spread
+    let selectedSpread = spread;
+    if (!selectedSpread || selectedSpread === "AUTO") {
+        setIsThinking(true);
+        try {
+            selectedSpread = await predictBestSpread(question);
+            setSpread(selectedSpread);
+        } catch (e) {
+            console.error("Spread prediction failed", e);
+            selectedSpread = "SINGLE"; // Safety fallback
+            setSpread("SINGLE");
+        }
+        setIsThinking(false);
+    }
+    
+    // Safety check mostly for TypeScript, practically handled above
+    if (!selectedSpread) selectedSpread = "SINGLE";
+
     setGameState(GameState.SHUFFLING);
     setPickedCards([]);
     setRevealedCardIds(new Set());
@@ -306,7 +324,7 @@ const App: React.FC = () => {
     ritualIdRef.current = currentRitualId;
 
     // 1. Pre-determine cards based on spread rules
-    const spreadDef = SPREADS[spread];
+    const spreadDef = SPREADS[selectedSpread];
     const targets: PickedCard[] = [];
 
     // Generate cards for each position
@@ -347,7 +365,7 @@ const App: React.FC = () => {
     });
 
     // 2. Start Gemini Generation in Background
-    readingPromiseRef.current = generateTarotReading(targets, spread, question)
+    readingPromiseRef.current = generateTarotReading(targets, selectedSpread, question)
       .then((text) => {
         // Check if this result is for the current ritual
         if (ritualIdRef.current !== currentRitualId) return text;

@@ -229,3 +229,56 @@ export const generateSpeech = async (
     return null;
   }
 };
+
+export const predictBestSpread = async (
+  question: string
+): Promise<SpreadType> => {
+  try {
+    const ai = getAiClient();
+    
+    // Construct a concise list of spreads
+    const spreadList = Object.values(SPREADS).map(s => `- ${s.id}: ${s.name} (${s.description})`).join('\n');
+
+    const prompt = `
+      Role: You are a deeply intuitive Tarot Guide.
+      Task: Analyze the user's question and select the ONE most appropriate Tarot Spread from the list below.
+      
+      User Question: "${question}"
+      
+      Available Spreads:
+      ${spreadList}
+      
+      Instructions:
+      - If the question involves time/trends, prefer TIMELINE or ACTION or YEARLY.
+      - If the question involves love/partnerships, prefer RELATION.
+      - If the question is about self-discovery, prefer COURT or FIVE (Dimension/Hidden).
+      - If the question is simple or broad, prefer SINGLE or THREE.
+      - If the question is about decision making, prefer FOUR (Simple Four).
+      - If about goals/career, prefer GOALS or ACTION.
+      
+      Return ONLY the ID of the spread (e.g. "RELATION"). Do not add any explanation or extra text.
+    `;
+
+    console.log("Predict Spread Prompt:", prompt);
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash", 
+      contents: prompt,
+      config: {
+        temperature: 0.3, // Low temp for deterministic selection
+      },
+    });
+    
+    const text = response.text?.trim().toUpperCase() || "SINGLE";
+    
+    // Validate
+    if (Object.keys(SPREADS).includes(text)) {
+        return text as SpreadType;
+    }
+    return "SINGLE"; // Fallback
+
+  } catch (error) {
+    console.warn("Spread prediction failed, defaulting to SINGLE", error);
+    return "SINGLE";
+  }
+};
