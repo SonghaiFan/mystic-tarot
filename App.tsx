@@ -198,7 +198,7 @@ const App: React.FC = () => {
     if (voiceSourceRef.current) {
       try {
         voiceSourceRef.current.stop();
-      } catch (e) {}
+      } catch (e) { }
     }
 
     const source = audioContextRef.current.createBufferSource();
@@ -481,7 +481,7 @@ const App: React.FC = () => {
     if (voiceSourceRef.current) {
       try {
         voiceSourceRef.current.stop();
-      } catch (e) {}
+      } catch (e) { }
     }
     setGameState(GameState.INPUT);
     setPickedCards([]);
@@ -624,25 +624,23 @@ const App: React.FC = () => {
 
       {/* Main Content Area - No Scroll */}
       <main
-        className={`absolute inset-0 z-10 perspective-1000 overflow-hidden ${
-          gameState === GameState.READING ||
-          gameState === GameState.REVEAL ||
-          gameState === GameState.INPUT ||
-          gameState === GameState.LIBRARY
-            ? "overflow-y-auto"
-            : "overflow-hidden"
-        }`}
-      >
-        {/* Inner Container - Full Height Centered */}
-        <div
-          className={`w-full flex flex-col items-center px-4 ${
-            gameState === GameState.READING ||
+        className={`absolute inset-0 z-10 perspective-1000 overflow-hidden ${gameState === GameState.READING ||
             gameState === GameState.REVEAL ||
             gameState === GameState.INPUT ||
             gameState === GameState.LIBRARY
+            ? "overflow-y-auto"
+            : "overflow-hidden"
+          }`}
+      >
+        {/* Inner Container - Full Height Centered */}
+        <div
+          className={`w-full flex flex-col items-center px-4 ${gameState === GameState.READING ||
+              gameState === GameState.REVEAL ||
+              gameState === GameState.INPUT ||
+              gameState === GameState.LIBRARY
               ? "min-h-full py-12 justify-center"
               : "h-full justify-center py-24"
-          }`}
+            }`}
         >
           <AnimatePresence mode="popLayout">{renderPhase()}</AnimatePresence>
         </div>

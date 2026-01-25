@@ -92,15 +92,13 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
             ? spreadConfig.positions?.[index]?.label
             : spreadConfig.labels?.[index];
 
-        return `${index + 1}. ${positionLabel || "Card"}: ${card.nameEn} (${
-          card.isReversed ? "Reversed" : "Upright"
-        }) - ${card.keywords.join(", ")}`;
+        return `${index + 1}. ${positionLabel || "Card"}: ${card.nameEn} (${card.isReversed ? "Reversed" : "Upright"
+          }) - ${card.keywords.join(", ")}`;
       })
       .join("\n");
 
-    const prompt = `I did a tarot reading using the "${
-      spreadConfig.name
-    }" spread.
+    const prompt = `I did a tarot reading using the "${spreadConfig.name
+      }" spread.
 
 Question: ${question || "General Reading"}
 
@@ -160,13 +158,11 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
       layout
     >
       <div
-        className={`${
-          spreadConfig.layoutType === "absolute" && !isMobile
+        className={`${spreadConfig.layoutType === "absolute" && !isMobile
             ? "relative w-full h-[80vh] max-w-4xl mx-auto"
-            : `flex flex-wrap justify-center gap-12 ${
-                spread === "THREE" ? "items-start" : "items-center"
-              }`
-        }`}
+            : `flex flex-wrap justify-center gap-12 ${spread === "THREE" ? "items-start" : "items-center"
+            }`
+          }`}
       >
         <AnimatePresence>
           {displayedCards.map((card, index) => {
@@ -182,20 +178,20 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
             const absoluteStyle =
               spreadConfig.layoutType === "absolute" && !isMobile && position
                 ? {
-                    position: "absolute" as const,
-                    left:
-                      typeof position.x === "number"
-                        ? `${position.x}%`
-                        : position.x,
-                    top:
-                      typeof position.y === "number"
-                        ? `${position.y}%`
-                        : position.y,
-                    marginLeft: margins.ml,
-                    marginTop: margins.mt,
-                    zIndex: isHovered ? 100 : position.zIndex || 5,
-                    rotate: position.rotation || 0,
-                  }
+                  position: "absolute" as const,
+                  left:
+                    typeof position.x === "number"
+                      ? `${position.x}%`
+                      : position.x,
+                  top:
+                    typeof position.y === "number"
+                      ? `${position.y}%`
+                      : position.y,
+                  marginLeft: margins.ml,
+                  marginTop: margins.mt,
+                  zIndex: isHovered ? 100 : position.zIndex || 5,
+                  rotate: position.rotation || 0,
+                }
                 : undefined;
 
             const label =

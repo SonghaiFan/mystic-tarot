@@ -277,19 +277,17 @@ const SpreadCard = ({
 }) => (
   <button
     onClick={onClick}
-    className={`relative p-1 md:p-4 border transition-all duration-500 flex flex-col items-center gap-1 md:gap-4 group ${
-      isSelected
+    className={`relative p-1 md:p-4 border transition-all duration-500 flex flex-col items-center gap-1 md:gap-4 group ${isSelected
         ? "border-white/60 bg-white/5"
         : "border-white/10 hover:border-white/30"
-    }`}
+      }`}
   >
     <div className="flex gap-1 items-center justify-center h-6 w-6 md:h-8 md:w-8 relative">
       {item.icon(isSelected)}
     </div>
     <span
-      className={`text-[9px] md:text-[10px] tracking-widest uppercase transition-colors ${
-        isSelected ? "text-white" : "text-white/40"
-      }`}
+      className={`text-[9px] md:text-[10px] tracking-widest uppercase transition-colors ${isSelected ? "text-white" : "text-white/40"
+        }`}
     >
       {item.id}
     </span>
@@ -322,11 +320,10 @@ const ActionButton = ({
     disabled={disabled}
     whileHover={!disabled ? { scale: 1.05 } : {}}
     whileTap={!disabled ? { scale: 0.95 } : {}}
-    className={`block mx-auto mt-16 px-6 py-2 border text-xs tracking-[0.3em] transition-all ${
-      !disabled
+    className={`block mx-auto mt-16 px-6 py-2 border text-xs tracking-[0.3em] transition-all ${!disabled
         ? "bg-white/5 hover:bg-white/10 border-white/20 text-white cursor-pointer"
         : "bg-transparent border-white/5 text-white/20 cursor-not-allowed"
-    }`}
+      }`}
   >
     {text}
   </motion.button>
