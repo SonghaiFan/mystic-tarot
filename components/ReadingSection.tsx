@@ -134,7 +134,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
   return (
     <motion.div
       key="reading-layout"
-      className="flex flex-col items-center w-full max-w-7xl gap-8 md:gap-16"
+      className="flex flex-col items-center w-full max-w-7xl gap-8 md:gap-16 mt-30 mb-12 px-4 md:px-8"
       layout
     >
       <div
@@ -374,6 +374,19 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               style={{ zIndex: 9999 }}
               onClick={() => setSelectedCardId(null)}
             >
+              {/* Back Arrow Button styled like HeaderBar */}
+              <button
+                aria-label="Back"
+                onClick={(e) => { e.stopPropagation(); setSelectedCardId(null); }}
+                className="text-white/50 hover:text-white transition-colors flex items-center gap-2 absolute left-4 top-4 md:left-8 md:top-8 z-20 p-2 bg-transparent"
+                type="button"
+              >
+                {/* Use Lucide ArrowLeft icon for consistency */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+                <span className="text-[10px] uppercase tracking-widest hidden md:inline">Back</span>
+              </button>
               <TarotCard
                 card={pickedCards.find((c) => c.id === selectedCardId)!}
                 isRevealed={true}
