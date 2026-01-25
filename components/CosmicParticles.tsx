@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import p5 from "p5";
 import { GameState } from "../types";
 
 interface Star {
@@ -9,6 +10,7 @@ interface Star {
   twinkleSpeed: number;
   twinklePhase: number;
   speed: number; // Angular velocity
+  color: p5.Color;
 }
 
 interface CosmicParticlesProps {
@@ -16,7 +18,8 @@ interface CosmicParticlesProps {
 }
 
 const CosmicParticles: React.FC<CosmicParticlesProps> = ({ gameState }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const p5InstanceRef = useRef<p5 | null>(null);
   const targetSpeedRef = useRef(1.0);
   const currentSpeedRef = useRef(1.0);
 
@@ -45,115 +48,107 @@ const CosmicParticles: React.FC<CosmicParticlesProps> = ({ gameState }) => {
   }, [gameState]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!containerRef.current) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    // Define the sketch in instance mode
+    const sketch = (p: p5) => {
+      let stars: Star[] = [];
+      const STAR_COUNT = 800;
+      const BASE_ANGULAR_SPEED = 0.0003;
+      let maxRadius = 0;
 
-    let animationFrameId: number;
-    let stars: Star[] = [];
-    let centerX = 0;
-    let centerY = 0;
-    let maxRadius = 0;
-
-    // Configuration
-    const STAR_COUNT = 800; // Dense starfield
-    const BASE_ANGULAR_SPEED = 0.0003; // Base rotation speed (radians per frame)
-
-    const initStars = () => {
-      stars = [];
-      // Calculate max radius to cover corners
-      maxRadius = Math.sqrt(centerX * centerX + centerY * centerY) + 50;
-
-      for (let i = 0; i < STAR_COUNT; i++) {
-        // Random radius with uniform distribution logic (more stars further out to prevent clustering at center)
-        const r = Math.sqrt(Math.random()) * maxRadius;
-
-        // Depth simulation:
-        // We use 'size' and 'speed' to simulate depth.
-        // Smaller stars (further away) might move slower or just differently.
-        // Here, we'll make the rotation roughly rigid but with slight variance for organic feel.
-        const sizeBase = Math.random();
-        const size = Math.max(0.5, sizeBase * 2); // 0.5 to 2.0
-
-        stars.push({
-          radius: r,
-          angle: Math.random() * Math.PI * 2,
-          size: size,
-          brightness: Math.random(),
-          twinkleSpeed: Math.random() * 0.03 + 0.005,
-          twinklePhase: Math.random() * Math.PI * 2,
-          // Closer stars (larger) appear to move slightly faster angularly for parallax,
-          // or keeping it uniform for a giant structure feel. Let's do uniform for majesty.
-          speed: BASE_ANGULAR_SPEED * (0.8 + Math.random() * 0.4),
-        });
-      }
-    };
-
-    const handleResize = () => {
-      if (canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        centerX = canvas.width / 2;
-        centerY = canvas.height / 2;
-        initStars();
-      }
-    };
-
-    const render = () => {
-      if (!ctx) return;
-
-      // Clear canvas
-      ctx.fillStyle = "#000000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Smoothly interpolate current speed towards target
-      currentSpeedRef.current +=
-        (targetSpeedRef.current - currentSpeedRef.current) * 0.02;
-
-      stars.forEach((star) => {
-        // 1. Update Twinkle
-        star.twinklePhase += star.twinkleSpeed;
-        const twinkleVal = Math.sin(star.twinklePhase);
-
-        // Map sin wave (-1 to 1) to opacity range
-        const opacity = star.brightness * 0.6 + twinkleVal * 0.3 + 0.2;
-
-        // 2. Update Rotation (Clockwise)
-        star.angle += star.speed * currentSpeedRef.current;
-
-        // 3. Calculate Cartesian Position
-        const x = centerX + Math.cos(star.angle) * star.radius;
-        const y = centerY + Math.sin(star.angle) * star.radius;
-
-        // 4. Draw Star (Only if on screen, optimization)
-        if (x >= 0 && x <= canvas.width && y >= 0 && y <= canvas.height) {
-          ctx.beginPath();
-          ctx.arc(x, y, star.size, 0, Math.PI * 2);
-          // Use white with varying opacity
-          ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(
-            0,
-            Math.min(1, opacity)
-          )})`;
-          ctx.fill();
+      const initStars = () => {
+        stars = [];
+        maxRadius = p.dist(0, 0, p.width / 2, p.height / 2) + 50;
+        
+        for (let i = 0; i < STAR_COUNT; i++) {
+          const r = p.sqrt(p.random()) * maxRadius;
+          const sizeBase = p.random();
+          const size = p.max(0.5, sizeBase * 2);
+          
+          stars.push({
+            radius: r,
+            angle: p.random(p.TWO_PI),
+            size: size,
+            brightness: p.random(),
+            twinkleSpeed: p.random(0.005, 0.035),
+            twinklePhase: p.random(p.TWO_PI),
+            speed: BASE_ANGULAR_SPEED * (0.8 + p.random() * 0.4),
+            color: p.color(255), // Can be customized for colorful stars
+          });
         }
-      });
+      };
 
-      animationFrameId = requestAnimationFrame(render);
+      p.setup = () => {
+        p.createCanvas(p.windowWidth, p.windowHeight);
+        p.frameRate(60);
+        p.noStroke();
+        initStars();
+      };
+
+      p.draw = () => {
+        // Create a trailing effect by drawing a semi-transparent background
+        // The opacity allows previous frames to fade out slowly
+        p.background(0, 30); // 30/255 opacity creates a subtle trail
+
+        // Smoothly interpolate current speed
+        currentSpeedRef.current = p.lerp(
+          currentSpeedRef.current,
+          targetSpeedRef.current,
+          0.02
+        );
+
+        // Center of the screen
+        const cx = p.width / 2;
+        const cy = p.height / 2;
+
+        p.translate(cx, cy);
+
+        // Iterate through stars (backwards loop for safe removal if we needed it, though we don't here)
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+
+          // 1. Update Twinkle
+          s.twinklePhase += s.twinkleSpeed;
+          const twinkleVal = p.sin(s.twinklePhase);
+          const opacity = p.map(twinkleVal, -1, 1, 0.2, 1) * s.brightness;
+
+          // 2. Update Rotation
+          s.angle += s.speed * currentSpeedRef.current;
+
+          // 3. Position
+          const x = p.cos(s.angle) * s.radius;
+          const y = p.sin(s.angle) * s.radius;
+
+          // 4. Draw
+          // Check bounds roughly before drawing to save some perf (though GPU is fast)
+          // Since we translated, coordinates are relative to center
+          if (x > -cx - 10 && x < cx + 10 && y > -cy - 10 && y < cy + 10) {
+            p.fill(255, 255, 255, opacity * 255);
+            p.circle(x, y, s.size);
+          }
+        }
+      };
+
+      p.windowResized = () => {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+        initStars(); // Re-distribute stars to cover new area
+      };
     };
 
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initial setup
-    render();
+    // Create the p5 instance
+    p5InstanceRef.current = new p5(sketch, containerRef.current);
 
+    // Cleanup on unmount
     return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
+      if (p5InstanceRef.current) {
+        p5InstanceRef.current.remove();
+        p5InstanceRef.current = null;
+      }
     };
-  }, []);
+  }, []); // Empty dependency array ensures this runs once on mount
 
-  return <canvas ref={canvasRef} className="w-full h-full block" />;
+  return <div ref={containerRef} className="absolute inset-0 w-full h-full" />;
 };
 
 export default CosmicParticles;
