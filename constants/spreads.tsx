@@ -32,7 +32,7 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
   AUTO: {
     id: "AUTO",
     name: "AI Recommendation",
-    description: "不确定选哪个？\n告诉我你的困惑，让我为你推荐最合适的牌阵。",
+    description: "不确定选哪个？\n直接告诉我你的困惑，让我为你选择最合适的牌阵。",
     cardCount: 1, // Fallback/Placeholder
     layoutType: "flex",
     labels: ["Recommended"],
@@ -47,11 +47,10 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
           fill={isActive ? "currentColor" : "none"}
           stroke="currentColor"
           strokeWidth={1.5}
-          className={`w-5 h-5 transition-all duration-500 ${
-            isActive
-              ? "text-white opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
-              : "text-white/40"
-          }`}
+          className={`w-5 h-5 transition-all duration-500 ${isActive
+            ? "text-white opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+            : "text-white/40"
+            }`}
         >
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
         </svg>
@@ -78,11 +77,10 @@ export const SPREADS: Record<SpreadType, SpreadDefinition> = {
     },
     icon: (isActive) => (
       <div
-        className={`w-3 h-5 border rounded-[1px] transition-all duration-300 ${
-          isActive
-            ? "bg-white/90 border-transparent shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-            : "border-white/40"
-        }`}
+        className={`w-3 h-5 border rounded-[1px] transition-all duration-300 ${isActive
+          ? "bg-white/90 border-transparent shadow-[0_0_8px_rgba(255,255,255,0.4)]"
+          : "border-white/40"
+          }`}
       />
     ),
     interpretationInstruction: `
@@ -113,9 +111,8 @@ Synthesis Goal: Do NOT answer with a simple 'Yes' or 'No'. Focus on the 'appropr
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className={`w-2 h-3.5 border rounded-[1px] transition-all duration-300 ${
-              isActive ? "bg-white/90 border-transparent" : "border-white/40"
-            } ${i === 1 ? "-translate-y-0.5" : "translate-y-0.5"}`}
+            className={`w-2 h-3.5 border rounded-[1px] transition-all duration-300 ${isActive ? "bg-white/90 border-transparent" : "border-white/40"
+              } ${i === 1 ? "-translate-y-0.5" : "translate-y-0.5"}`}
           />
         ))}
       </div>
@@ -150,9 +147,8 @@ Synthesis Goal: Distill the interpretation to the most important events or influ
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
-            className={`w-1.5 h-3 border rounded-[1px] transition-all duration-300 ${
-              isActive ? "bg-white/90 border-transparent" : "border-white/40"
-            }`}
+            className={`w-1.5 h-3 border rounded-[1px] transition-all duration-300 ${isActive ? "bg-white/90 border-transparent" : "border-white/40"
+              }`}
           />
         ))}
       </div>
@@ -188,9 +184,8 @@ Synthesis Goal: Perform a strategic analysis. Contrast the Cons (Card 2) against
         {[0, 1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className={`w-1.5 border rounded-[1px] transition-all duration-300 ${
-              isActive ? "bg-white/90 border-transparent" : "border-white/40"
-            } ${i === 2 ? "h-2.5" : "h-3"}`}
+            className={`w-1.5 border rounded-[1px] transition-all duration-300 ${isActive ? "bg-white/90 border-transparent" : "border-white/40"
+              } ${i === 2 ? "h-2.5" : "h-3"}`}
           />
         ))}
       </div>
@@ -227,9 +222,8 @@ Synthesis Goal: The pivot point is Card 3 (Hidden). Reveal this unknown factor t
         {[0, 1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className={`w-1 h-3 border rounded-[1px] transition-all duration-300 ${
-              isActive ? "bg-white/90 border-transparent" : "border-white/40"
-            } ${isActive ? "ml-0.5" : ""}`}
+            className={`w-1 h-3 border rounded-[1px] transition-all duration-300 ${isActive ? "bg-white/90 border-transparent" : "border-white/40"
+              } ${isActive ? "ml-0.5" : ""}`}
           />
         ))}
         <div
@@ -284,9 +278,8 @@ Synthesis Goal: Read the cards as a chronological story or sequence of events . 
           return (
             <div
               key={i}
-              className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-2 border rounded-[1px] transition-all duration-300 ${
-                isActive ? "bg-white/90 border-transparent" : "border-white/40"
-              }`}
+              className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-2 border rounded-[1px] transition-all duration-300 ${isActive ? "bg-white/90 border-transparent" : "border-white/40"
+                }`}
               style={{
                 transform: `rotate(${angle}deg) translateY(-8px)`,
               }}
@@ -340,23 +333,20 @@ Synthesis Goal: Provide a holistic life scan. Treat each card as a specific diag
       <div className="flex gap-1 items-center">
         <div className="relative w-4 h-4">
           <div
-            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-3 rounded-[0.5px] ${
-              isActive ? "bg-white/90" : "bg-white/30"
-            }`}
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-3 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+              }`}
           />
           <div
-            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-1 rounded-[0.5px] ${
-              isActive ? "bg-white/90" : "bg-white/30"
-            }`}
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-1 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+              }`}
           />
         </div>
         <div className="flex flex-col gap-px">
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
-              className={`w-1 h-1 rounded-[0.5px] ${
-                isActive ? "bg-white/90" : "bg-white/30"
-              }`}
+              className={`w-1 h-1 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+                }`}
             />
           ))}
         </div>
@@ -409,9 +399,8 @@ Synthesis Goal: First, analyze the 'Cross' to see the event flow (Issue -> Past 
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
-              className={`w-1 h-1 rounded-[0.5px] ${
-                isActive ? "bg-white/90" : "bg-white/30"
-              }`}
+              className={`w-1 h-1 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+                }`}
             />
           ))}
         </div>
@@ -419,9 +408,8 @@ Synthesis Goal: First, analyze the 'Cross' to see the event flow (Issue -> Past 
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className={`w-1 h-1 rounded-[0.5px] ${
-                isActive ? "bg-white/90" : "bg-white/30"
-              }`}
+              className={`w-1 h-1 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+                }`}
             />
           ))}
         </div>
@@ -429,9 +417,8 @@ Synthesis Goal: First, analyze the 'Cross' to see the event flow (Issue -> Past 
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
-              className={`w-1 h-1 rounded-[0.5px] ${
-                isActive ? "bg-white/90" : "bg-white/30"
-              }`}
+              className={`w-1 h-1 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+                }`}
             />
           ))}
         </div>
@@ -466,19 +453,16 @@ Synthesis Goal: Compare parallel cards. Contrast 'Your View' (4) vs 'Their View'
     icon: (isActive) => (
       <div className="flex gap-1 items-end">
         <div
-          className={`w-1 h-2  transition-all duration-300 ${
-            isActive ? "bg-white/90" : "bg-white/30"
-          }`}
+          className={`w-1 h-2  transition-all duration-300 ${isActive ? "bg-white/90" : "bg-white/30"
+            }`}
         />
         <div
-          className={`w-1 h-2.5 transition-all duration-300 ${
-            isActive ? "bg-white/90" : "bg-white/30"
-          }`}
+          className={`w-1 h-2.5 transition-all duration-300 ${isActive ? "bg-white/90" : "bg-white/30"
+            }`}
         />
         <div
-          className={`w-1 h-3 transition-all duration-300 ${
-            isActive ? "bg-white/90" : "bg-white/30"
-          }`}
+          className={`w-1 h-3 transition-all duration-300 ${isActive ? "bg-white/90" : "bg-white/30"
+            }`}
         />
       </div>
     ),
@@ -493,49 +477,6 @@ Synthesis Goal: Strictly follow this narrative formula: "When [Card 1 Situation]
       "我在面对压力时会变成什么样?",
       "为什么我在这种情况下会这样反应?",
       "我处理日常冲突的典型模式是什么?",
-    ],
-  },
-  ACTION: {
-    id: "ACTION",
-    name: "Action Plan",
-    description:
-      "这是用到四张塔罗牌的牌阵，针对未来12个月的行动计划。每张牌代表一个季度（3个月）的行动重心与建议。\n适合提问需要制定年度计划和分阶段目标的情境，帮助你明确每个季度的重点任务和策略。",
-    cardCount: 4,
-    layoutType: "flex",
-    labels: [
-      "Q1 (Month 1-3)",
-      "Q2 (Month 4-6)",
-      "Q3 (Month 7-9)",
-      "Q4 (Month 10-12)",
-    ],
-    cardSize: {
-      mobile: "w-24 aspect-[300/519]",
-      desktop: "w-36 aspect-[300/519]",
-    },
-    icon: (isActive) => (
-      <div className="grid grid-cols-2 gap-0.5 w-3 h-4">
-        {[0, 1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className={`rounded-[1px] transition-all duration-300 ${
-              isActive ? "bg-white/90" : "bg-white/30"
-            }`}
-          />
-        ))}
-      </div>
-    ),
-    interpretationInstruction: `
-Mister Tarot's Action Plan Spread" .
-- Card 1: Q1 Focus (Months 1-3).
-- Card 2: Q2 Focus (Months 4-6).
-- Card 3: Q3 Focus (Months 7-9).
-- Card 4: Q4 Focus (Months 10-12) .
-Synthesis Goal: This is a strategy spread. For each quarter, interpret the card as a specific "Action" or "Focus" required to achieve the yearly goal, rather than just a prediction of events .
-    `,
-    defaultQuestions: [
-      "未来一年我该如何达成我的目标?",
-      "未来12个月我的行动计划是什么?",
-      "每个季度我应该专注于什么任务?",
     ],
   },
   GOALS: {
@@ -597,24 +538,21 @@ Synthesis Goal: This is a strategy spread. For each quarter, interpret the card 
             >
               {/* Vertical Card (Back) */}
               <div
-                className={`absolute top-0 w-1 h-2 rounded-[0.5px] ${
-                  isActive ? "bg-white/60" : "bg-white/20"
-                }`}
+                className={`absolute top-0 w-1 h-2 rounded-[0.5px] ${isActive ? "bg-white/60" : "bg-white/20"
+                  }`}
               />
               {/* Horizontal Card (Front/Bottom) - Represented as a wider, shorter block overlapping the bottom */}
               <div
-                className={`absolute bottom-0 w-1.5 h-1 rounded-[0.5px] ${
-                  isActive ? "bg-white/90" : "bg-white/40"
-                }`}
+                className={`absolute bottom-0 w-1.5 h-1 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/40"
+                  }`}
               />
             </div>
           ))}
         </div>
         {/* Outcome Card */}
         <div
-          className={`w-1 h-1.5 mt-0.5 rounded-[0.5px] ${
-            isActive ? "bg-white/90" : "bg-white/30"
-          }`}
+          className={`w-1 h-1.5 mt-0.5 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+            }`}
         />
       </div>
     ),
@@ -675,9 +613,8 @@ Synthesis Goal: Reveal the psychological gap. Contrast the Conscious efforts (To
       <div className="relative w-6 h-6 flex items-center justify-center">
         {/* Center rectangle */}
         <div
-          className={`w-1 h-1 rounded-[0.5px] ${
-            isActive ? "bg-white/90" : "bg-white/30"
-          }`}
+          className={`w-1 h-1 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+            }`}
         />
         {/* Six outer rectangles forming a wheel */}
         {[...Array(6)].map((_, i) => {
@@ -685,9 +622,8 @@ Synthesis Goal: Reveal the psychological gap. Contrast the Conscious efforts (To
           return (
             <div
               key={i}
-              className={`absolute w-1 h-2 rounded-[0.5px] ${
-                isActive ? "bg-white/90" : "bg-white/30"
-              }`}
+              className={`absolute w-1 h-2 rounded-[0.5px] ${isActive ? "bg-white/90" : "bg-white/30"
+                }`}
               style={{
                 transform: `rotate(${angle}deg) translateY(-7px)`,
               }}

@@ -151,7 +151,7 @@ const InputSection: React.FC<InputSectionProps> = ({
                 <ChevronUp size={24} />
               </div>
               <span className="text-[9px] tracking-[0.2em] text-white/20 group-hover:text-white/60 transition-colors duration-500 uppercase">
-                RESELECT 选择牌阵
+                RESELECT 重新选择牌阵
               </span>
             </motion.button>
 
@@ -275,8 +275,8 @@ const SpreadCard = ({
   <button
     onClick={onClick}
     className={`relative p-1 md:p-4 border transition-all duration-500 flex flex-col items-center gap-1 md:gap-4 group ${isSelected
-        ? "border-white/60 bg-white/5"
-        : "border-white/10 hover:border-white/30"
+      ? "border-white/60 bg-white/5"
+      : "border-white/10 hover:border-white/30"
       }`}
   >
     <div className="flex gap-1 items-center justify-center h-6 w-6 md:h-8 md:w-8 relative">
@@ -318,8 +318,8 @@ const ActionButton = ({
     whileHover={!disabled ? { scale: 1.05 } : {}}
     whileTap={!disabled ? { scale: 0.95 } : {}}
     className={`block mx-auto mt-16 px-6 py-2 border text-xs tracking-[0.3em] transition-all ${!disabled
-        ? "bg-white/5 hover:bg-white/10 border-white/20 text-white cursor-pointer"
-        : "bg-transparent border-white/5 text-white/20 cursor-not-allowed"
+      ? "bg-white/5 hover:bg-white/10 border-white/20 text-white cursor-pointer"
+      : "bg-transparent border-white/5 text-white/20 cursor-not-allowed"
       }`}
   >
     {text}
