@@ -4,8 +4,7 @@ import { SpreadType, TarotCard as TarotCardType, PickedCard } from "../types";
 import { SILKY_EASE } from "../constants/ui";
 import { SPREADS } from "../constants/spreads";
 import TarotCard from "./TarotCard";
-import { formatMessage } from "../constants/i18n";
-import { useI18n } from "../i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
 
 interface PickingSectionProps {
   spread: SpreadType;
@@ -28,7 +27,7 @@ const PickingSection: React.FC<PickingSectionProps> = ({
   onCardHover,
   onCardSelect,
 }) => {
-  const { ui } = useI18n();
+  const { t } = useTranslation();
 
   return (
   <motion.div
@@ -45,9 +44,7 @@ const PickingSection: React.FC<PickingSectionProps> = ({
     >
       <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center space-y-2 px-6 z-50">
         <p className="text-xs text-neutral-300">
-          {formatMessage(ui.picking.instruction, {
-            count: SPREADS[spread].cardCount,
-          })}
+          {t("picking.instruction", { count: SPREADS[spread].cardCount })}
         </p>
         <div className="flex justify-center gap-2 flex-wrap max-w-md mx-auto px-4">
           {Array.from({

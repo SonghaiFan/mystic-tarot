@@ -4,8 +4,8 @@ import { Check, ChevronUp } from "lucide-react";
 import { SpreadType } from "../types";
 import { SILKY_EASE } from "../constants/ui";
 import { getLocalizedSpread, SPREADS } from "../constants/spreads";
-import { formatMessage } from "../constants/i18n";
-import { useI18n } from "../i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
+import { Locale } from "../types";
 
 interface InputSectionProps {
   question: string;
@@ -28,7 +28,8 @@ const InputSection: React.FC<InputSectionProps> = ({
   isTablet,
   isThinking = false,
 }) => {
-  const { locale, ui } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language as Locale;
   const [isSpreadConfirmed, setIsSpreadConfirmed] = useState(!!spread);
   const [direction, setDirection] = useState(0); // 0: initial, 1: forward, -1: backward
 
@@ -46,11 +47,11 @@ const InputSection: React.FC<InputSectionProps> = ({
   }, [spread]);
 
   const getPlaceholder = () => {
-    if (!spread) return ui.input.fallbackPlaceholder;
+    if (!spread) return t("input.fallbackPlaceholder");
     const questions = getLocalizedSpread(spread, locale).defaultQuestions;
     return questions && questions.length > 0
       ? questions[placeholderIndex % questions.length]
-      : ui.input.fallbackPlaceholder;
+      : t("input.fallbackPlaceholder");
   };
 
   // -- 核心动效变体 (滚动飞出效果) --
@@ -105,8 +106,8 @@ const InputSection: React.FC<InputSectionProps> = ({
 
             {/* Spread Grid */}
             <div className="w-full space-y-6">
-              <Label text={ui.input.chooseSpread} />
-              <SubLabel text={ui.input.chooseSpreadHint} />
+              <Label text={t("input.chooseSpread")} />
+              <SubLabel text={t("input.chooseSpreadHint")} />
 
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
                 {Object.values(SPREADS).map((s) => (
@@ -126,7 +127,7 @@ const InputSection: React.FC<InputSectionProps> = ({
               <ActionButton
                 disabled={!spread}
                 onClick={handleConfirm}
-                text={spread ? ui.input.confirmSpread : ui.input.selectSpread}
+                text={spread ? t("input.confirmSpread") : t("input.selectSpread")}
               />
             </div>
           </motion.div>
@@ -154,7 +155,7 @@ const InputSection: React.FC<InputSectionProps> = ({
                 <ChevronUp size={24} />
               </div>
               <span className="text-[9px] tracking-[0.2em] text-white/20 group-hover:text-white/60 transition-colors duration-500 uppercase">
-                {ui.input.reselect}
+                {t("input.reselect")}
               </span>
             </motion.button>
 
@@ -177,7 +178,7 @@ const InputSection: React.FC<InputSectionProps> = ({
                 <SubLabel
                   text={
                     spread
-                      ? formatMessage(ui.input.selectedSpread, {
+                      ? t("input.selectedSpread", {
                           name: getLocalizedSpread(spread, locale).name,
                         })
                       : ""
@@ -195,9 +196,9 @@ const InputSection: React.FC<InputSectionProps> = ({
             <div className="w-full mt-8 md:mt-12 space-y-6 relative">
               <div className="text-center space-y-2 md:space-y-4">
                 <p className="text-base md:text-lg text-neutral-200 font-serif tracking-wide whitespace-pre-line">
-                  {ui.input.meditation}
+                  {t("input.meditation")}
                 </p>
-                <Label text={ui.input.enterQuestion} />
+                <Label text={t("input.enterQuestion")} />
               </div>
 
               {/* Input Field Container */}
@@ -234,7 +235,7 @@ const InputSection: React.FC<InputSectionProps> = ({
                 <ActionButton
                   disabled={!spread || isThinking}
                   onClick={onStartRitual}
-                  text={isThinking ? ui.input.divining : ui.input.beginRitual}
+                  text={isThinking ? t("input.divining") : t("input.beginRitual")}
                 />
               </div>
             </div>
@@ -258,7 +259,8 @@ const SubLabel = ({ text }: { text: string }) => (
 );
 
 const DescriptionPanel = ({ spread }: { spread: SpreadType | null }) => {
-  const { locale } = useI18n();
+  const { i18n } = useTranslation();
+  const locale = i18n.language as Locale;
   return (
     <div className="h-8 text-center">
       <AnimatePresence mode="wait">

@@ -1,53 +1,26 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { Locale } from "../types";
-import {
-  DEFAULT_LOCALE,
-  LOCALE_STORAGE_KEY,
-  UI_TEXT,
-} from "../constants/i18n";
+import React, { useEffect } from "react";
+import { I18nextProvider, useTranslation } from "react-i18next";
+import i18n, { LOCALE_STORAGE_KEY } from "./config";
 
-interface I18nContextValue {
-  locale: Locale;
-  setLocale: React.Dispatch<React.SetStateAction<Locale>>;
-  ui: (typeof UI_TEXT)[Locale];
-}
+// Syncs localStorage, <html lang>, and <title> with the active language.
+const I18nSideEffects: React.FC = () => {
+  const { i18n: instance, t } = useTranslation();
 
-const I18nContext = createContext<I18nContextValue | null>(null);
+  useEffect(() => {
+    const lang = instance.language;
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, lang);
+    document.documentElement.lang = lang;
+    document.title = t("appTitle");
+  }, [instance.language, t]);
 
-const getInitialLocale = (): Locale => {
-  if (typeof window === "undefined") return DEFAULT_LOCALE;
-  const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-  return stored === "en" || stored === "zh-CN" ? stored : DEFAULT_LOCALE;
+  return null;
 };
 
 export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
-}) => {
-  const [locale, setLocale] = useState<Locale>(getInitialLocale);
-
-  useEffect(() => {
-    window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
-    document.documentElement.lang = locale;
-    document.title = UI_TEXT[locale].appTitle;
-  }, [locale]);
-
-  const value = useMemo(
-    () => ({
-      locale,
-      setLocale,
-      ui: UI_TEXT[locale],
-    }),
-    [locale]
-  );
-
-  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
-};
-
-export const useI18n = () => {
-  const context = useContext(I18nContext);
-  if (!context) {
-    throw new Error("useI18n must be used within an I18nProvider");
-  }
-  return context;
-};
-
+}) => (
+  <I18nextProvider i18n={i18n}>
+    <I18nSideEffects />
+    {children}
+  </I18nextProvider>
+);

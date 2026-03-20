@@ -1,7 +1,7 @@
 import { getCardImageUrl } from "../constants/cards";
 import { getLocalizedSpread } from "../constants/spreads";
 import { Locale } from "../types";
-import { UI_TEXT } from "../constants/i18n";
+import i18n from "../i18n/config";
 
 export default function printTheReading(
   question: any,
@@ -13,7 +13,7 @@ export default function printTheReading(
   return async () => {
     try {
       const { toPng } = await import("html-to-image");
-      const ui = UI_TEXT[locale];
+      const t = i18n.getFixedT(locale);
       const spreadConfig = getLocalizedSpread(spread, locale);
 
       // 创建一个精美的卡牌解读图片
@@ -50,7 +50,7 @@ export default function printTheReading(
         margin-bottom: 12px;
         font-weight: 300;
       `;
-      titleDiv.textContent = ui.print.title;
+      titleDiv.textContent = t("print.title");
 
       const subtitleDiv = document.createElement("div");
       subtitleDiv.style.cssText = `
@@ -59,7 +59,7 @@ export default function printTheReading(
         color: #666;
         text-transform: uppercase;
       `;
-      subtitleDiv.textContent = ui.print.subtitle;
+      subtitleDiv.textContent = t("print.subtitle");
 
       headerDiv.appendChild(titleDiv);
       headerDiv.appendChild(subtitleDiv);
@@ -81,7 +81,7 @@ export default function printTheReading(
           margin-bottom: 12px;
           text-transform: uppercase;
         `;
-        questionLabel.textContent = ui.print.questionLabel;
+        questionLabel.textContent = t("print.questionLabel");
 
         const questionText = document.createElement("div");
         questionText.style.cssText = `
@@ -221,7 +221,7 @@ export default function printTheReading(
         text-align: center;
         text-transform: uppercase;
       `;
-      readingLabel.textContent = ui.print.interpretationLabel;
+      readingLabel.textContent = t("print.interpretationLabel");
 
       const textDiv = document.createElement("div");
       textDiv.style.cssText = `
@@ -250,7 +250,7 @@ export default function printTheReading(
         letter-spacing: 2px;
       `;
       const now = new Date();
-      footerDiv.textContent = now.toLocaleString(ui.print.dateLocale, {
+      footerDiv.textContent = now.toLocaleString(t("print.dateLocale"), {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -298,7 +298,7 @@ export default function printTheReading(
 
       // 下载
       const link = document.createElement("a");
-      link.download = `${ui.print.filename}-${Date.now()}.png`;
+      link.download = `${t("print.filename")}-${Date.now()}.png`;
       link.href = dataUrl;
       link.click();
     } catch (error) {

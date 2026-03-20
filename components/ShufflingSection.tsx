@@ -4,8 +4,7 @@ import TarotCard from "./TarotCard";
 import { SpreadType, TarotCard as TarotCardType } from "../types";
 import { SPREADS } from "../constants/spreads";
 import { FULL_DECK, getDeckForPool } from "../constants/cards";
-import { formatMessage } from "../constants/i18n";
-import { useI18n } from "../i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
 
 interface ShufflingSectionProps {
   cardCount: number;
@@ -20,7 +19,7 @@ const ShufflingSection: React.FC<ShufflingSectionProps> = ({
   isMobile,
   isTablet,
 }) => {
-  const { ui } = useI18n();
+  const { t } = useTranslation();
   const shuffleDeck = useMemo(() => {
     const spreadDef = SPREADS[spread];
     const pools =
@@ -99,10 +98,10 @@ const ShufflingSection: React.FC<ShufflingSectionProps> = ({
         className="absolute bottom-16 text-center space-y-2 px-6"
       >
         <p className="text-xs mt-10  tracking-[0.3em] text-neutral-400 uppercase">
-          {formatMessage(ui.shuffling.title, { count: cardCount })}
+          {t("shuffling.title", { count: cardCount })}
         </p>
         <p className="text-[11px] text-neutral-500">
-          {ui.shuffling.subtitle}
+          {t("shuffling.subtitle")}
         </p>
       </motion.div>
     </motion.div>

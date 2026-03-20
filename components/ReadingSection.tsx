@@ -5,10 +5,10 @@ import { Download, RefreshCw, Volume2, Copy, Check } from "lucide-react";
 import { SpreadType, PickedCard } from "../types";
 import { SILKY_EASE } from "../constants/ui";
 import { getLocalizedSpread, SPREADS } from "../constants/spreads";
-import { formatMessage } from "../constants/i18n";
 import TarotCard from "./TarotCard";
 import CardTooltip from "./CardTooltip";
-import { useI18n } from "../i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
+import { Locale } from "../types";
 
 interface ReadingSectionProps {
   spread: SpreadType;
@@ -49,7 +49,8 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
   onDownload,
   onReset,
 }) => {
-  const { locale, ui } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language as Locale;
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const spreadConfig = getLocalizedSpread(spread, locale);
@@ -87,26 +88,22 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
             : "";
 
         return `${index + 1}. ${
-          positionLabel || ui.reading.copyPrompt.positionFallback
+          positionLabel || t("reading.copyPrompt.positionFallback")
         }: ${card.nameEn} (${card.isReversed ? "Reversed" : "Upright"})${keywordText}`;
       })
       .join("\n");
 
-    const prompt = `${formatMessage(ui.reading.copyPrompt.title, {
-      spreadName: spreadConfig.name,
-    })}
+    const prompt = `${t("reading.copyPrompt.title", { spreadName: spreadConfig.name })}
 
-${formatMessage(ui.reading.copyPrompt.question, {
-      question: question || ui.reading.copyPrompt.defaultQuestion,
-    })}
+${t("reading.copyPrompt.question", { question: question || t("reading.copyPrompt.defaultQuestion") })}
 
-${ui.reading.copyPrompt.cardsDrawn}
+${t("reading.copyPrompt.cardsDrawn")}
 ${cardsList}
 
-${ui.reading.copyPrompt.initialInterpretation}
+${t("reading.copyPrompt.initialInterpretation")}
 ${readingText}
 
-${ui.reading.copyPrompt.request}`;
+${t("reading.copyPrompt.request")}`;
 
     try {
       await navigator.clipboard.writeText(prompt);
@@ -134,7 +131,7 @@ ${ui.reading.copyPrompt.request}`;
       : undefined;
 
   const renderThinkingPhrase = () => {
-    const phrases = ui.reading.thinkingPhrases;
+    const phrases = t("reading.thinkingPhrases", { returnObjects: true }) as string[];
     return phrases[thinkingKeywordIndex % phrases.length];
   };
 
@@ -232,7 +229,7 @@ ${ui.reading.copyPrompt.request}`;
               exit={{ opacity: 0 }}
               className="text-neutral-400 text-sm tracking-widest uppercase"
             >
-              {ui.reading.revealPrompt}
+              {t("reading.revealPrompt")}
             </motion.div>
           ) : isThinking ? (
             <motion.div
@@ -288,7 +285,7 @@ ${ui.reading.copyPrompt.request}`;
               <div className="w-full overflow-y-auto overscroll-y-auto mb-8 pr-4 ">
                 {question && (
                   <p className="text-xs text-neutral-600 mb-4 tracking-widest uppercase text-center sticky top-0 bg-black/90 backdrop-blur-sm py-2 z-10">
-                    {ui.reading.questionPrefix} "{question}"
+                    {t("reading.questionPrefix")} "{question}"
                   </p>
                 )}
                 <div className="w-12 h-px bg-white/20 mx-auto mb-6" />
@@ -315,13 +312,13 @@ ${ui.reading.copyPrompt.request}`;
                       onClick={onReplayAudio}
                       disabled={isAudioPlaying}
                       className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                      title={ui.reading.replayTitle}
+                      title={t("reading.replayTitle")}
                     >
                       <Volume2
                         size={14}
                         className={isAudioPlaying ? "animate-pulse" : ""}
                       />
-                      {ui.reading.replay}
+                      {t("reading.replay")}
                     </motion.button>
                   )}
 
@@ -331,10 +328,10 @@ ${ui.reading.copyPrompt.request}`;
                     transition={{ delay: 2.2 }}
                     onClick={onDownload}
                     className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20"
-                    title={ui.reading.saveTitle}
+                    title={t("reading.saveTitle")}
                   >
                     <Download size={14} />
-                    {ui.reading.save}
+                    {t("reading.save")}
                   </motion.button>
 
                   <motion.button
@@ -343,10 +340,10 @@ ${ui.reading.copyPrompt.request}`;
                     transition={{ delay: 2.4 }}
                     onClick={handleCopyPrompt}
                     className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20"
-                    title={ui.reading.promptTitle}
+                    title={t("reading.promptTitle")}
                   >
                     {isCopied ? <Check size={14} /> : <Copy size={14} />}
-                    {isCopied ? ui.reading.copied : ui.reading.prompt}
+                    {isCopied ? t("reading.copied") : t("reading.prompt")}
                   </motion.button>
                 </div>
 
@@ -361,7 +358,7 @@ ${ui.reading.copyPrompt.request}`;
                     size={12}
                     className="group-hover:rotate-180 transition-transform duration-700"
                   />
-                  {ui.reading.seekAgain}
+                  {t("reading.seekAgain")}
                 </motion.button>
               </div>
             </motion.div>

@@ -3,7 +3,7 @@ import { motion, HTMLMotionProps } from "motion/react";
 import { TarotCard as TarotCardType, PickedCard } from "../types";
 import { getCardImageUrl } from "../constants/cards";
 import { getRomanNumeral } from "../utils/getRomanNumeral";
-import { useI18n } from "../i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
 
 interface TarotCardProps
   extends Omit<
@@ -49,7 +49,8 @@ const TarotCard: React.FC<TarotCardProps> = ({
   priority = false,
   ...motionProps
 }) => {
-  const { locale, ui } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
   const [isImageLoaded, setIsImageLoaded] = React.useState(false);
   const isReversed =
     propIsReversed ??
@@ -137,7 +138,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                     {secondaryName}{" "}
                     {isReversed && (
                       <span className="text-red-400/80 ml-1 italic">
-                        ({ui.card.reversedShort})
+                        ({t("card.reversedShort")})
                       </span>
                     )}
                   </p>
@@ -163,7 +164,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                     {secondaryName}{" "}
                     {isReversed && (
                       <span className="text-red-400/80 opacity-80 inline-block ml-2 italic">
-                        ({ui.card.reversedLong})
+                        ({t("card.reversedLong")})
                       </span>
                     )}
                   </p>
@@ -213,7 +214,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                       {englishDescription && (
                         <div className="pt-2">
                           <h4 className="text-[10px] text-neutral-500 uppercase tracking-[0.3em] mb-4 text-center">
-                            {ui.card.englishInsight}
+                            {t("card.englishInsight")}
                           </h4>
                           <p className="text-sm md:text-base text-neutral-300 font-light leading-relaxed md:leading-loose text-justify tracking-wide italic">
                             {englishDescription}
@@ -223,7 +224,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                       {chineseDescription && card.descriptionCn && (
                         <div className="pt-8 border-t border-white/5">
                           <h4 className="text-[10px] text-neutral-500 uppercase tracking-[0.3em] mb-4 text-center">
-                            {ui.card.chineseInsight}
+                            {t("card.chineseInsight")}
                           </h4>
                           <p className="text-xs md:text-sm text-neutral-400 font-light leading-relaxed text-justify opacity-80">
                             {chineseDescription}
@@ -263,7 +264,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                   {secondaryName}{" "}
                   {isReversed && (
                     <span className="text-red-400/80 ml-1 italic opacity-80">
-                      ({ui.card.reversedShort})
+                      ({t("card.reversedShort")})
                     </span>
                   )}
                 </p>

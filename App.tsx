@@ -29,7 +29,8 @@ import PickingSection from "./components/PickingSection";
 import ReadingSection from "./components/ReadingSection";
 import DeckLibrary from "./components/DeckLibrary";
 import printTheReading from "./utils/printTheReading";
-import { useI18n } from "./i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
+import { Locale } from "./types";
 
 // --- Configuration ---
 const BACKGROUND_VOLUME = 0.06;
@@ -94,7 +95,8 @@ class SoundEngine {
 }
 
 const App: React.FC = () => {
-  const { locale, ui } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language as Locale;
   // --- State ---
   const [gameState, setGameState] = useState<GameState>(GameState.INTRO);
   const [previousGameState, setPreviousGameState] = useState<GameState | null>(
@@ -134,7 +136,13 @@ const App: React.FC = () => {
   const predeterminedCardsRef = useRef<PickedCard[]>([]);
   const predeterminedCardsIndexRef = useRef<number>(0);
   const hiddenCardIdsRef = useRef<Set<number>>(new Set());
-  const staticScripts = ui.staticScripts;
+  const staticScripts = {
+    WELCOME: t("staticScripts.WELCOME"),
+    ASK: t("staticScripts.ASK"),
+    SHUFFLE: t("staticScripts.SHUFFLE"),
+    PICK: t("staticScripts.PICK"),
+    REVEAL: t("staticScripts.REVEAL"),
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -406,7 +414,7 @@ const App: React.FC = () => {
       })
       .catch((err) => {
         console.error("Background generation failed", err);
-        return ui.errors.silentStars;
+        return t("errors.silentStars");
       });
 
     await playVoice(staticScripts.SHUFFLE, "SHUFFLE", "shuffle");

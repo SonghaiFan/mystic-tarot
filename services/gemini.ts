@@ -1,7 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { SpreadType, PickedCard, Locale } from "../types";
 import { SPREADS, getLocalizedSpread } from "../constants/spreads";
-import { UI_TEXT } from "../constants/i18n";
+import i18n from "../i18n/config";
 
 // Helper to create a fresh client instance (important for key updates)
 const getAiClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -79,7 +79,7 @@ export const generateTarotReading = async (
   try {
     const ai = getAiClient();
     const spreadConfig = getLocalizedSpread(spread, locale);
-    const ui = UI_TEXT[locale];
+    const t = i18n.getFixedT(locale);
 
     const cardDetails = cards
       .map((c, i) => {
@@ -216,10 +216,10 @@ export const generateTarotReading = async (
         temperature: 1.0,
       },
     });
-    return response.text || ui.errors.readingSoftFail;
+    return response.text || t("errors.readingSoftFail");
   } catch (error) {
     console.warn("Text generation warning:", error);
-    return UI_TEXT[locale].errors.readingHardFail;
+    return i18n.getFixedT(locale)("errors.readingHardFail");
   }
 };
 

@@ -1,7 +1,8 @@
 import React, { useRef, useLayoutEffect, useState } from "react";
 import { motion } from "motion/react";
 import { PickedCard } from "../types";
-import { useI18n } from "../i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
+import { Locale } from "../types";
 
 interface CardTooltipProps {
   x: number;
@@ -18,7 +19,8 @@ const CardTooltip: React.FC<CardTooltipProps> = ({
   positionLabel,
   card,
 }) => {
-  const { locale, ui } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language as Locale;
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x, y });
   const keywords = locale === "zh-CN" ? card?.keywords?.slice(0, 6) || [] : [];
@@ -97,13 +99,13 @@ const CardTooltip: React.FC<CardTooltipProps> = ({
               </div>
             )}
             <p className="text-[9px] text-white/50 tracking-[0.18em] uppercase pt-0.5">
-              {ui.tooltip.clickForDetails}
+              {t("tooltip.clickForDetails")}
             </p>
           </div>
         ) : (
           <div className="space-y-0.5">
             <p className="text-[10px] text-white/80 tracking-[0.2em] uppercase font-light">
-              {ui.tooltip.clickToReveal}
+              {t("tooltip.clickToReveal")}
             </p>
           </div>
         )}

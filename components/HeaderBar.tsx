@@ -9,7 +9,8 @@ import React, { useState } from "react";
 import AudioVisualizer from "./AudioVisualizer";
 import { GameState } from "../types";
 import { LANGUAGE_LABELS } from "../constants/i18n";
-import { useI18n } from "../i18n/I18nProvider";
+import { useTranslation } from "react-i18next";
+import { Locale } from "../types";
 
 interface HeaderBarProps {
   gameState: GameState;
@@ -24,7 +25,9 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   onLibraryClick,
   onHomeClick,
 }) => {
-  const { locale, setLocale, ui } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language as Locale;
+  const setLocale = (l: Locale) => i18n.changeLanguage(l);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handleFullscreen = () => {
@@ -41,7 +44,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
     }
   };
   const getStateLabel = () => {
-    return ui.header.stateLabels[gameState] || "";
+    return t(`header.stateLabels.${gameState}`) || "";
   };
 
   return (
@@ -52,7 +55,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
           <div className="flex items-center gap-2 text-white/80 group-hover:text-white transition-colors">
             <Sparkles size={14} />
             <h1 className="text-xs font-cinzel tracking-[0.4em] font-bold">
-              {ui.header.brand}
+              {t("header.brand")}
             </h1>
           </div>
           <div className="w-full h-px bg-white/10 group-hover:bg-white/30 transition-colors" />
@@ -95,8 +98,8 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
           }`}
           title={
             gameState === GameState.LIBRARY
-              ? ui.header.closeLibraryTitle
-              : ui.header.openLibraryTitle
+              ? t("header.closeLibraryTitle")
+              : t("header.openLibraryTitle")
           }
         >
           {gameState === GameState.LIBRARY ? (
@@ -106,8 +109,8 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
           )}
           <span className="text-[10px] uppercase tracking-widest hidden md:inline">
             {gameState === GameState.LIBRARY
-              ? ui.header.back
-              : ui.header.library}
+              ? t("header.back")
+              : t("header.library")}
           </span>
         </button>
         {/* Fullscreen Button */}
@@ -116,15 +119,15 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
           className="text-white/50 hover:text-white transition-colors flex items-center gap-2"
           title={
             isFullscreen
-              ? ui.header.exitFullscreen
-              : ui.header.fullscreen
+              ? t("header.exitFullscreen")
+              : t("header.fullscreen")
           }
         >
           {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
           <span className="text-[10px] uppercase tracking-widest hidden md:inline">
             {isFullscreen
-              ? ui.header.exitFullscreen
-              : ui.header.fullscreen}
+              ? t("header.exitFullscreen")
+              : t("header.fullscreen")}
           </span>
         </button>
       </div>
