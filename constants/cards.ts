@@ -23,6 +23,38 @@ const LOCAL_CDN = `${import.meta.env.BASE_URL}images/cards/`;
 // Fallback to Sacred Texts Archive if local images are not available
 const REMOTE_CDN = "https://www.sacred-texts.com/tarot/pkt/img/";
 
+const SUIT_PREFIX_MAP: Record<string, string> = {
+  wa: "wands",
+  cu: "cups",
+  sw: "swords",
+  pe: "pents",
+};
+
+const COURT_SUFFIX_MAP: Record<string, string> = {
+  ac: "01",
+  pa: "11",
+  kn: "12",
+  qu: "13",
+  ki: "14",
+};
+
+const getLocalCardImageName = (image: string) => {
+  if (/^ar\d{2}\.jpg$/i.test(image)) {
+    return image.replace(/^ar/i, "maj");
+  }
+
+  const suitMatch = image.match(/^(wa|cu|sw|pe)(ac|pa|kn|qu|ki|\d{2})\.jpg$/i);
+  if (!suitMatch) {
+    return image;
+  }
+
+  const [, rawSuit, rawRank] = suitMatch;
+  const suit = SUIT_PREFIX_MAP[rawSuit.toLowerCase()];
+  const rank = COURT_SUFFIX_MAP[rawRank.toLowerCase()] ?? rawRank;
+
+  return `${suit}${rank}.jpg`;
+};
+
 export const MAJOR_ARCANA: TarotCard[] = [
   {
     id: 0,
@@ -1067,7 +1099,8 @@ export const MINOR_ARCANA: TarotCard[] = [
 
 // Helper to get image URL with fallback support
 // Tries local image first, falls back to remote CDN if not available
-export const getCardImageUrl = (image: string) => `${LOCAL_CDN}${image}`;
+export const getCardImageUrl = (image: string) =>
+  `${LOCAL_CDN}${getLocalCardImageName(image)}`;
 export const getCardImageFallbackUrl = (image: string) =>
   `${REMOTE_CDN}${image}`;
 
