@@ -4,6 +4,8 @@ import { SpreadType, TarotCard as TarotCardType, PickedCard } from "../types";
 import { SILKY_EASE } from "../constants/ui";
 import { SPREADS } from "../constants/spreads";
 import TarotCard from "./TarotCard";
+import { formatMessage } from "../constants/i18n";
+import { useI18n } from "../i18n/I18nProvider";
 
 interface PickingSectionProps {
   spread: SpreadType;
@@ -25,7 +27,10 @@ const PickingSection: React.FC<PickingSectionProps> = ({
   hoveredCardId,
   onCardHover,
   onCardSelect,
-}) => (
+}) => {
+  const { ui } = useI18n();
+
+  return (
   <motion.div
     key="picking"
     className="relative w-full h-full flex items-center justify-center"
@@ -40,7 +45,9 @@ const PickingSection: React.FC<PickingSectionProps> = ({
     >
       <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center space-y-2 px-6 z-50">
         <p className="text-xs text-neutral-300">
-          轻点任意卡牌，直到下方格子亮满（共 {SPREADS[spread].cardCount} 张）
+          {formatMessage(ui.picking.instruction, {
+            count: SPREADS[spread].cardCount,
+          })}
         </p>
         <div className="flex justify-center gap-2 flex-wrap max-w-md mx-auto px-4">
           {Array.from({
@@ -157,6 +164,7 @@ const PickingSection: React.FC<PickingSectionProps> = ({
       ))}
     </div>
   </motion.div>
-);
+  );
+};
 
 export default PickingSection;

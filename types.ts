@@ -23,6 +23,8 @@ export type SpreadType =
   | "YEARLY"
   | "AUTO";
 
+export type Locale = "zh-CN" | "en";
+
 export type CardPoolType =
   | "MAJOR"
   | "MINOR_PIP"

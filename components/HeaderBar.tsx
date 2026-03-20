@@ -8,6 +8,8 @@ import {
 import React, { useState } from "react";
 import AudioVisualizer from "./AudioVisualizer";
 import { GameState } from "../types";
+import { LANGUAGE_LABELS } from "../constants/i18n";
+import { useI18n } from "../i18n/I18nProvider";
 
 interface HeaderBarProps {
   gameState: GameState;
@@ -22,6 +24,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   onLibraryClick,
   onHomeClick,
 }) => {
+  const { locale, setLocale, ui } = useI18n();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handleFullscreen = () => {
@@ -38,23 +41,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
     }
   };
   const getStateLabel = () => {
-    switch (gameState) {
-      case GameState.LIBRARY:
-        return "牌库";
-      case GameState.INPUT:
-        return "Step 1 · 提问与牌阵";
-      case GameState.SHUFFLING:
-        return "Step 2 · 洗牌";
-      case GameState.PICKING:
-        return "Step 3 · 抽牌";
-      case GameState.REVEAL:
-      case GameState.READING:
-        return "Step 4 · 解读";
-      case GameState.INTRO:
-        return "";
-      default:
-        return "";
-    }
+    return ui.header.stateLabels[gameState] || "";
   };
 
   return (
@@ -65,7 +52,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
           <div className="flex items-center gap-2 text-white/80 group-hover:text-white transition-colors">
             <Sparkles size={14} />
             <h1 className="text-xs font-cinzel tracking-[0.4em] font-bold">
-              MYSTIC塔罗
+              {ui.header.brand}
             </h1>
           </div>
           <div className="w-full h-px bg-white/10 group-hover:bg-white/30 transition-colors" />
@@ -82,6 +69,23 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
 
       {/* Right: Controls */}
       <div className="flex items-center gap-6 pointer-events-auto">
+        <div className="flex items-center gap-1 border border-white/10 p-1">
+          {(Object.keys(LANGUAGE_LABELS) as Array<keyof typeof LANGUAGE_LABELS>).map(
+            (option) => (
+              <button
+                key={option}
+                onClick={() => setLocale(option)}
+                className={`px-2 py-1 text-[10px] tracking-[0.2em] uppercase transition-colors ${
+                  locale === option
+                    ? "bg-white text-black"
+                    : "text-white/50 hover:text-white"
+                }`}
+              >
+                {LANGUAGE_LABELS[option]}
+              </button>
+            )
+          )}
+        </div>
         <AudioVisualizer isPlaying={isAudioPlaying} />
         <div className="w-px h-4 bg-white/10 hidden md:block" />
         <button
@@ -90,7 +94,9 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
             gameState === GameState.LIBRARY ? "text-white" : ""
           }`}
           title={
-            gameState === GameState.LIBRARY ? "Close Library" : "Open Library"
+            gameState === GameState.LIBRARY
+              ? ui.header.closeLibraryTitle
+              : ui.header.openLibraryTitle
           }
         >
           {gameState === GameState.LIBRARY ? (
@@ -99,18 +105,26 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
             <Library size={16} />
           )}
           <span className="text-[10px] uppercase tracking-widest hidden md:inline">
-            {gameState === GameState.LIBRARY ? "Back" : "Library"}
+            {gameState === GameState.LIBRARY
+              ? ui.header.back
+              : ui.header.library}
           </span>
         </button>
         {/* Fullscreen Button */}
         <button
           onClick={handleFullscreen}
           className="text-white/50 hover:text-white transition-colors flex items-center gap-2"
-          title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+          title={
+            isFullscreen
+              ? ui.header.exitFullscreen
+              : ui.header.fullscreen
+          }
         >
           {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
           <span className="text-[10px] uppercase tracking-widest hidden md:inline">
-            {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+            {isFullscreen
+              ? ui.header.exitFullscreen
+              : ui.header.fullscreen}
           </span>
         </button>
       </div>

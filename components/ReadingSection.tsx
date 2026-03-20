@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from "motion/react";
 import { Download, RefreshCw, Volume2, Copy, Check } from "lucide-react";
 import { SpreadType, PickedCard } from "../types";
 import { SILKY_EASE } from "../constants/ui";
-import { SPREADS } from "../constants/spreads";
+import { getLocalizedSpread, SPREADS } from "../constants/spreads";
+import { formatMessage } from "../constants/i18n";
 import TarotCard from "./TarotCard";
 import CardTooltip from "./CardTooltip";
+import { useI18n } from "../i18n/I18nProvider";
 
 interface ReadingSectionProps {
   spread: SpreadType;
@@ -47,9 +49,10 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
   onDownload,
   onReset,
 }) => {
+  const { locale, ui } = useI18n();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
-  const spreadConfig = SPREADS[spread];
+  const spreadConfig = getLocalizedSpread(spread, locale);
   const displayedCards = pickedCards.slice(0, spreadConfig.cardCount);
 
   useEffect(() => {
@@ -78,23 +81,32 @@ const ReadingSection: React.FC<ReadingSectionProps> = ({
           spreadConfig.layoutType === "absolute"
             ? spreadConfig.positions?.[index]?.label
             : spreadConfig.labels?.[index];
+        const keywordText =
+          locale === "zh-CN" && card.keywords.length > 0
+            ? ` - ${card.keywords.join(", ")}`
+            : "";
 
-        return `${index + 1}. ${positionLabel || "Card"}: ${card.nameEn} (${card.isReversed ? "Reversed" : "Upright"
-          }) - ${card.keywords.join(", ")}`;
+        return `${index + 1}. ${
+          positionLabel || ui.reading.copyPrompt.positionFallback
+        }: ${card.nameEn} (${card.isReversed ? "Reversed" : "Upright"})${keywordText}`;
       })
       .join("\n");
 
-    const prompt = `I did a tarot reading using the "${spreadConfig.name}" spread.
+    const prompt = `${formatMessage(ui.reading.copyPrompt.title, {
+      spreadName: spreadConfig.name,
+    })}
 
-Question: ${question || "General Reading"}
+${formatMessage(ui.reading.copyPrompt.question, {
+      question: question || ui.reading.copyPrompt.defaultQuestion,
+    })}
 
-Cards Drawn:
+${ui.reading.copyPrompt.cardsDrawn}
 ${cardsList}
 
-Initial Interpretation:
+${ui.reading.copyPrompt.initialInterpretation}
 ${readingText}
 
-Please provide a deeper, more detailed analysis of this reading, focusing on hidden connections between the cards and practical advice.`;
+${ui.reading.copyPrompt.request}`;
 
     try {
       await navigator.clipboard.writeText(prompt);
@@ -122,12 +134,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
       : undefined;
 
   const renderThinkingPhrase = () => {
-    const phrases = [
-      "Consulting the Stars...",
-      "Weaving the Threads of Fate...",
-      "Listening to the Whispers...",
-      "Aligning with the Cosmos...",
-    ];
+    const phrases = ui.reading.thinkingPhrases;
     return phrases[thinkingKeywordIndex % phrases.length];
   };
 
@@ -225,7 +232,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               exit={{ opacity: 0 }}
               className="text-neutral-400 text-sm tracking-widest uppercase"
             >
-              翻开每一张卡牌以显示解读
+              {ui.reading.revealPrompt}
             </motion.div>
           ) : isThinking ? (
             <motion.div
@@ -281,7 +288,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
               <div className="w-full overflow-y-auto overscroll-y-auto mb-8 pr-4 ">
                 {question && (
                   <p className="text-xs text-neutral-600 mb-4 tracking-widest uppercase text-center sticky top-0 bg-black/90 backdrop-blur-sm py-2 z-10">
-                    Reflecting on: "{question}"
+                    {ui.reading.questionPrefix} "{question}"
                   </p>
                 )}
                 <div className="w-12 h-px bg-white/20 mx-auto mb-6" />
@@ -308,13 +315,13 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                       onClick={onReplayAudio}
                       disabled={isAudioPlaying}
                       className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                      title="重播解读音频"
+                      title={ui.reading.replayTitle}
                     >
                       <Volume2
                         size={14}
                         className={isAudioPlaying ? "animate-pulse" : ""}
                       />
-                      REPLAY 再念一次
+                      {ui.reading.replay}
                     </motion.button>
                   )}
 
@@ -324,10 +331,10 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                     transition={{ delay: 2.2 }}
                     onClick={onDownload}
                     className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20"
-                    title="下载解读图片"
+                    title={ui.reading.saveTitle}
                   >
                     <Download size={14} />
-                    SAVE 保存图文
+                    {ui.reading.save}
                   </motion.button>
 
                   <motion.button
@@ -336,10 +343,10 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                     transition={{ delay: 2.4 }}
                     onClick={handleCopyPrompt}
                     className="inline-flex items-center gap-2 text-xs tracking-[0.2em] text-neutral-600 hover:text-white transition-colors group px-4 py-2 border border-neutral-800 hover:border-white/20"
-                    title="Copy prompt for other AI"
+                    title={ui.reading.promptTitle}
                   >
                     {isCopied ? <Check size={14} /> : <Copy size={14} />}
-                    {isCopied ? "COPIED 复制成功" : "PROMPT 提示词"}
+                    {isCopied ? ui.reading.copied : ui.reading.prompt}
                   </motion.button>
                 </div>
 
@@ -354,7 +361,7 @@ Please provide a deeper, more detailed analysis of this reading, focusing on hid
                     size={12}
                     className="group-hover:rotate-180 transition-transform duration-700"
                   />
-                  SEEK AGAIN 再次探索
+                  {ui.reading.seekAgain}
                 </motion.button>
               </div>
             </motion.div>

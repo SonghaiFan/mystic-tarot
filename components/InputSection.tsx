@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { Check, ChevronUp } from "lucide-react";
 import { SpreadType } from "../types";
 import { SILKY_EASE } from "../constants/ui";
-import { SPREADS } from "../constants/spreads";
+import { getLocalizedSpread, SPREADS } from "../constants/spreads";
+import { formatMessage } from "../constants/i18n";
+import { useI18n } from "../i18n/I18nProvider";
 
 interface InputSectionProps {
   question: string;
@@ -26,6 +28,7 @@ const InputSection: React.FC<InputSectionProps> = ({
   isTablet,
   isThinking = false,
 }) => {
+  const { locale, ui } = useI18n();
   const [isSpreadConfirmed, setIsSpreadConfirmed] = useState(!!spread);
   const [direction, setDirection] = useState(0); // 0: initial, 1: forward, -1: backward
 
@@ -43,11 +46,11 @@ const InputSection: React.FC<InputSectionProps> = ({
   }, [spread]);
 
   const getPlaceholder = () => {
-    if (!spread) return "在此输入你心中的疑惑...";
-    const questions = SPREADS[spread].defaultQuestions;
+    if (!spread) return ui.input.fallbackPlaceholder;
+    const questions = getLocalizedSpread(spread, locale).defaultQuestions;
     return questions && questions.length > 0
       ? questions[placeholderIndex % questions.length]
-      : "在此输入你心中的疑惑...";
+      : ui.input.fallbackPlaceholder;
   };
 
   // -- 核心动效变体 (滚动飞出效果) --
@@ -102,8 +105,8 @@ const InputSection: React.FC<InputSectionProps> = ({
 
             {/* Spread Grid */}
             <div className="w-full space-y-6">
-              <Label text="Choose your spread" />
-              <SubLabel text="牌阵决定解读角度：感情、决策、全局扫描、关系镜像…先选对牌阵再发问。" />
+              <Label text={ui.input.chooseSpread} />
+              <SubLabel text={ui.input.chooseSpreadHint} />
 
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
                 {Object.values(SPREADS).map((s) => (
@@ -123,7 +126,7 @@ const InputSection: React.FC<InputSectionProps> = ({
               <ActionButton
                 disabled={!spread}
                 onClick={handleConfirm}
-                text={spread ? "CONFIRM SPREAD 确认牌阵" : "SELECT A SPREAD"}
+                text={spread ? ui.input.confirmSpread : ui.input.selectSpread}
               />
             </div>
           </motion.div>
@@ -151,7 +154,7 @@ const InputSection: React.FC<InputSectionProps> = ({
                 <ChevronUp size={24} />
               </div>
               <span className="text-[9px] tracking-[0.2em] text-white/20 group-hover:text-white/60 transition-colors duration-500 uppercase">
-                RESELECT 重新选择牌阵
+                {ui.input.reselect}
               </span>
             </motion.button>
 
@@ -171,7 +174,15 @@ const InputSection: React.FC<InputSectionProps> = ({
               )}
 
               <div className="flex flex-col items-center gap-2">
-                <SubLabel text={`已选择 "${spread}" 牌阵`} />
+                <SubLabel
+                  text={
+                    spread
+                      ? formatMessage(ui.input.selectedSpread, {
+                          name: getLocalizedSpread(spread, locale).name,
+                        })
+                      : ""
+                  }
+                />
                 {/* Description Panel (Phase 2 - Reduced Opacity) */}
                 <div className="h-20 opacity-60 transform scale-95">
                   <DescriptionPanel spread={spread} />
@@ -183,11 +194,10 @@ const InputSection: React.FC<InputSectionProps> = ({
             {/* mt-8 md:mt-12 拉开与上方牌阵信息的距离，强调现在的重点是提问 */}
             <div className="w-full mt-8 md:mt-12 space-y-6 relative">
               <div className="text-center space-y-2 md:space-y-4">
-                <p className="text-base md:text-lg text-neutral-200 font-serif tracking-wide">
-                  请闭上双眼，深呼吸三次<br />
-                  在心中默念你的困惑，保持虔诚与专注
+                <p className="text-base md:text-lg text-neutral-200 font-serif tracking-wide whitespace-pre-line">
+                  {ui.input.meditation}
                 </p>
-                <Label text="Enter your question" />
+                <Label text={ui.input.enterQuestion} />
               </div>
 
               {/* Input Field Container */}
@@ -224,7 +234,7 @@ const InputSection: React.FC<InputSectionProps> = ({
                 <ActionButton
                   disabled={!spread || isThinking}
                   onClick={onStartRitual}
-                  text={isThinking ? "DIVINING... 感知中" : "BEGIN RITUAL 开始洗牌"}
+                  text={isThinking ? ui.input.divining : ui.input.beginRitual}
                 />
               </div>
             </div>
@@ -247,21 +257,24 @@ const SubLabel = ({ text }: { text: string }) => (
   <p className="text-center text-xs text-neutral-400">{text}</p>
 );
 
-const DescriptionPanel = ({ spread }: { spread: SpreadType | null }) => (
-  <div className="h-8 text-center">
-    <AnimatePresence mode="wait">
-      <motion.p
-        key={spread || "none"}
-        initial={{ opacity: 0, y: 5 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -5 }}
-        className="text-xs text-white/40 font-light tracking-wide whitespace-pre-line"
-      >
-        {spread ? SPREADS[spread].description : ""}
-      </motion.p>
-    </AnimatePresence>
-  </div>
-);
+const DescriptionPanel = ({ spread }: { spread: SpreadType | null }) => {
+  const { locale } = useI18n();
+  return (
+    <div className="h-8 text-center">
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={spread || "none"}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          className="text-xs text-white/40 font-light tracking-wide whitespace-pre-line"
+        >
+          {spread ? getLocalizedSpread(spread, locale).description : ""}
+        </motion.p>
+      </AnimatePresence>
+    </div>
+  );
+};
 
 const SpreadCard = ({
   item,

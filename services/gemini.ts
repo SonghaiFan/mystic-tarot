@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
-import { TarotCard, SpreadType, PickedCard } from "../types";
-import { SPREADS } from "../constants/spreads";
+import { SpreadType, PickedCard, Locale } from "../types";
+import { SPREADS, getLocalizedSpread } from "../constants/spreads";
+import { UI_TEXT } from "../constants/i18n";
 
 // Helper to create a fresh client instance (important for key updates)
 const getAiClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -72,13 +73,14 @@ const loadLocalAudio = async (
 export const generateTarotReading = async (
   cards: PickedCard[],
   spread: SpreadType,
-  question: string
+  question: string,
+  locale: Locale
 ): Promise<string> => {
   try {
     const ai = getAiClient();
-    const spreadConfig = SPREADS[spread];
+    const spreadConfig = getLocalizedSpread(spread, locale);
+    const ui = UI_TEXT[locale];
 
-    // Include keywords to help ground the model's knowledge
     const cardDetails = cards
       .map((c, i) => {
         let position = `Position ${i + 1}`;
@@ -88,12 +90,34 @@ export const generateTarotReading = async (
           position = spreadConfig.labels[i] || position;
         }
 
-        const description = c.isReversed ? c.negative : c.positive;
+        const meaningHints =
+          locale === "en"
+            ? c.descriptionEn || c.descriptionCn || ""
+            : (c.isReversed ? c.negative : c.positive) ||
+              c.descriptionCn ||
+              c.descriptionEn ||
+              "";
 
-        return `Card ${i + 1} [${position}]: ${c.nameCn} (${c.nameEn})
-        - Orientation: ${c.isReversed ? "REVERSED (逆位)" : "UPRIGHT (正位)"}
-        - Core Keywords: ${c.keywords.join(", ")}
-        ${description ? `- Meaning Hints: ${description}` : ""}`;
+        const orientation =
+          locale === "en"
+            ? c.isReversed
+              ? "REVERSED"
+              : "UPRIGHT"
+            : c.isReversed
+              ? "REVERSED (逆位)"
+              : "UPRIGHT (正位)";
+
+        const title =
+          locale === "en"
+            ? `${c.nameEn}${c.nameCn ? ` (${c.nameCn})` : ""}`
+            : `${c.nameCn} (${c.nameEn})`;
+
+        const keywordLine =
+          locale === "en" ? "" : `\n        - Core Keywords: ${c.keywords.join(", ")}`;
+
+        return `Card ${i + 1} [${position}]: ${title}
+        - Orientation: ${orientation}${keywordLine}
+        ${meaningHints ? `- Meaning Hints: ${meaningHints}` : ""}`;
       })
       .join("\n");
 
@@ -101,48 +125,85 @@ export const generateTarotReading = async (
 
     const userQuestion = question.trim()
       ? `Seeker's Question: "${question}"`
-      : "Seeker's Question: General guidance for the path ahead.";
+      : locale === "en"
+        ? "Seeker's Question: General guidance for the path ahead."
+        : "Seeker's Question: 关于接下来道路的综合指引。";
 
-    const prompt = `
-      Role: You are a Grand Tarot Master and Ancient Sage (塔罗大师 / 智者). 
-      Your voice is deep, mystical, and empathetic, but grounded in centuries of occult knowledge.
-      You are interpreting the cards based on the "Handbook of Tarot Spreads" methodology, focusing on the interplay between positions, not just isolated meanings.
+    const prompt =
+      locale === "en"
+        ? `
+      Role: You are a Grand Tarot Master and ancient sage.
+      Your voice is mystical, emotionally intelligent, and grounded rather than theatrical.
+      You interpret spreads by how the card positions interact, not by listing separate dictionary meanings.
 
       Task: Provide a Tarot reading for the seeker based on the following details.
 
       ${userQuestion}
-      
+
       ${spreadContext}
-      
+
       Cards Drawn:
       ${cardDetails}
 
       Strict Interpretation Guidelines:
-      1. **Upright vs. Reversed (Crucial):**
-         - If a card is **Upright (正位)**: Interpret its energy as external, flowing, active, or fully manifested.
-         - If a card is **Reversed (逆位)**: Do NOT just say it is "bad". Interpret it as:
-           * Internalized energy (happening inside the seeker's mind).
-           * Blocked or delayed energy.
-           * The need to reflect before acting.
-           * Or the excess/extreme version of the upright meaning.
-      
-      2. **Contextualize to Question:** 
-         - Connect the card meanings DIRECTLY to the Seeker's specific question (Love, Career, Life, etc.).
-         - Do not give generic definitions. Apply the symbolism to their specific situation.
-      
+      1. Upright vs. Reversed:
+         - Upright means energy that is active, direct, or clearly manifest.
+         - Reversed does NOT automatically mean bad. It may indicate blocked energy, delay, inner conflict, internalization, or excess.
+
+      2. Context:
+         - Connect the reading directly to the seeker's specific question.
+         - Avoid generic textbook meanings.
+
       3. **Narrative Flow & Synthesis:**
-         - **Do not list cards one by one like a dictionary.**
+         - Do not list cards one by one like a dictionary.
          - Weave them into a single, fluid story or message.
-         - Look for "Elemental Dignities" (e.g., Fire and Water clashing, or Air and Fire fueling each other) if relevant.
+         - Mention elemental harmony or tension only if it naturally helps the reading.
 
       4. **Tone & Format:**
-         - Language: Chinese (Simplified) - Poetic, Deep, Insightful.
-         - Format: ONE single cohesive paragraph. No bullet points. No "Card 1 says..."
-         - Speak directly to "You" (你).
-         - End with a short, empowering piece of advice or a "mantra" for the seeker. but NO prefix.
-         - Length: 120-160 words.
-      
+         - Language: English.
+         - Format: One cohesive paragraph. No bullet points. No card-by-card numbering.
+         - Speak directly to "you".
+         - End with a short empowering line or mantra, without a label.
+         - Length: 130-180 words.
+
       Start your interpretation immediately.
+    `
+        : `
+      Role: 你是一位塔罗大师与古老智者。
+      你的声音应当深邃、神秘、富有同理心，同时保持清晰与稳重。
+      你解读牌阵时要关注牌位之间的互动，而不是把每张牌拆成字典式定义。
+
+      Task: 请根据以下信息，为求问者提供一段塔罗解读。
+
+      ${userQuestion}
+
+      ${spreadContext}
+
+      Cards Drawn:
+      ${cardDetails}
+
+      Strict Interpretation Guidelines:
+      1. 正位与逆位：
+         - 正位代表外显、流动、主动或充分显化的能量。
+         - 逆位不等于“坏”，也可以表示内化、阻滞、延迟、过度，或需要先反思再行动。
+
+      2. 贴合问题：
+         - 必须直接回应求问者的问题与处境。
+         - 不要给泛泛而谈的牌义解释。
+
+      3. 叙事与综合：
+         - 不要逐张牌拆开说明。
+         - 请把它们编织成一段完整、流动、有连贯性的解读。
+         - 如果合适，可以提到元素之间的助力或冲突。
+
+      4. 语气与格式：
+         - 语言：简体中文。
+         - 格式：一整段完整文字，不要项目符号，不要写“第一张牌表示……”。
+         - 直接对“你”说话。
+         - 结尾给一句简短但有力量的建议或箴言，不要加前缀。
+         - 长度：120-180字。
+
+      直接开始解读。
     `;
 
     console.log("Tarot Reading Prompt:", prompt);
@@ -155,23 +216,22 @@ export const generateTarotReading = async (
         temperature: 1.0,
       },
     });
-    return response.text || "迷雾太浓，我看不到前路...";
+    return response.text || ui.errors.readingSoftFail;
   } catch (error) {
-    // If quota exceeded for text generation, return fallback text
     console.warn("Text generation warning:", error);
-    return "命运的丝线暂时纠缠不清，请静心片刻后再试。";
+    return UI_TEXT[locale].errors.readingHardFail;
   }
 };
 
 export const generateSpeech = async (
   text: string,
   audioContext: AudioContext,
-  staticKey?: string // 可选: 'welcome' | 'ask' | 'shuffle' | 'pick' | 'reveal'
+  staticKey?: string,
+  locale: Locale = "zh-CN"
 ): Promise<AudioBuffer | null> => {
   if (!text) return null;
 
-  // 1. Try Local Audio (if staticKey provided)
-  if (staticKey) {
+  if (staticKey && locale === "zh-CN") {
     const localAudio = await loadLocalAudio(`${staticKey}.mp3`, audioContext);
     if (localAudio) {
       return localAudio;
@@ -231,13 +291,18 @@ export const generateSpeech = async (
 };
 
 export const predictBestSpread = async (
-  question: string
+  question: string,
+  locale: Locale
 ): Promise<SpreadType> => {
   try {
     const ai = getAiClient();
-    
-    // Construct a concise list of spreads
-    const spreadList = Object.values(SPREADS).map(s => `- ${s.id}: ${s.name} (${s.description})`).join('\n');
+
+    const spreadList = Object.values(SPREADS)
+      .map((s) => {
+        const localized = getLocalizedSpread(s.id, locale);
+        return `- ${localized.id}: ${localized.name} (${localized.description})`;
+      })
+      .join("\n");
 
     const prompt = `
       Role: You are a deeply intuitive Tarot Guide.
@@ -249,12 +314,12 @@ export const predictBestSpread = async (
       ${spreadList}
       
       Instructions:
-      - If the question involves time/trends, prefer TIMELINE or ACTION or YEARLY.
+      - If the question involves time/trends, prefer TIMELINE or YEARLY.
       - If the question involves love/partnerships, prefer RELATION.
-      - If the question is about self-discovery, prefer COURT or FIVE (Dimension/Hidden).
+      - If the question is about self-discovery, prefer COURT, FIVE, or DIMENSION.
       - If the question is simple or broad, prefer SINGLE or THREE.
       - If the question is about decision making, prefer FOUR (Simple Four).
-      - If about goals/career, prefer GOALS or ACTION.
+      - If the question is about goals or career, prefer GOALS, TIMELINE, or YEARLY.
       
       Return ONLY the ID of the spread (e.g. "RELATION"). Do not add any explanation or extra text.
     `;
@@ -265,18 +330,16 @@ export const predictBestSpread = async (
       model: "gemini-2.5-flash", 
       contents: prompt,
       config: {
-        temperature: 0.3, // Low temp for deterministic selection
+        temperature: 0.3,
       },
     });
-    
-    const text = response.text?.trim().toUpperCase() || "SINGLE";
-    
-    // Validate
-    if (Object.keys(SPREADS).includes(text)) {
-        return text as SpreadType;
-    }
-    return "SINGLE"; // Fallback
 
+    const text = response.text?.trim().toUpperCase() || "SINGLE";
+
+    if (Object.keys(SPREADS).includes(text)) {
+      return text as SpreadType;
+    }
+    return "SINGLE";
   } catch (error) {
     console.warn("Spread prediction failed, defaulting to SINGLE", error);
     return "SINGLE";

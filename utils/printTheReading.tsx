@@ -1,15 +1,20 @@
 import { getCardImageUrl, getCardImageFallbackUrl } from "../constants/cards";
-import { SPREADS } from "../constants/spreads";
+import { getLocalizedSpread } from "../constants/spreads";
+import { Locale } from "../types";
+import { UI_TEXT } from "../constants/i18n";
 
 export default function printTheReading(
   question: any,
   spread: any,
   pickedCards: any,
-  readingText: any
+  readingText: any,
+  locale: Locale
 ) {
   return async () => {
     try {
       const { toPng } = await import("html-to-image");
+      const ui = UI_TEXT[locale];
+      const spreadConfig = getLocalizedSpread(spread, locale);
 
       // 创建一个精美的卡牌解读图片
       const container = document.createElement("div");
@@ -45,7 +50,7 @@ export default function printTheReading(
         margin-bottom: 12px;
         font-weight: 300;
       `;
-      titleDiv.textContent = "塔罗解读";
+      titleDiv.textContent = ui.print.title;
 
       const subtitleDiv = document.createElement("div");
       subtitleDiv.style.cssText = `
@@ -54,7 +59,7 @@ export default function printTheReading(
         color: #666;
         text-transform: uppercase;
       `;
-      subtitleDiv.textContent = "TAROT READING";
+      subtitleDiv.textContent = ui.print.subtitle;
 
       headerDiv.appendChild(titleDiv);
       headerDiv.appendChild(subtitleDiv);
@@ -76,7 +81,7 @@ export default function printTheReading(
           margin-bottom: 12px;
           text-transform: uppercase;
         `;
-        questionLabel.textContent = "Your Question";
+        questionLabel.textContent = ui.print.questionLabel;
 
         const questionText = document.createElement("div");
         questionText.style.cssText = `
@@ -108,7 +113,7 @@ export default function printTheReading(
         text-align: center;
         text-transform: uppercase;
       `;
-      cardsLabel.textContent = SPREADS[spread].name;
+      cardsLabel.textContent = spreadConfig.name;
       cardsSection.appendChild(cardsLabel);
 
       const cardsContainer = document.createElement("div");
@@ -150,7 +155,7 @@ export default function printTheReading(
           letter-spacing: 1px;
           margin-bottom: 6px;
         `;
-        nameDiv.textContent = card.nameCn;
+        nameDiv.textContent = locale === "en" ? card.nameEn : card.nameCn;
 
         // 英文名和逆位标识
         const enNameDiv = document.createElement("div");
@@ -160,9 +165,12 @@ export default function printTheReading(
           letter-spacing: 1px;
           margin-bottom: 12px;
         `;
-        enNameDiv.textContent = card.isReversed
-          ? `${card.nameEn} (Reversed)`
-          : card.nameEn;
+        enNameDiv.textContent =
+          locale === "en"
+            ? card.nameCn
+            : card.isReversed
+              ? `${card.nameEn} (Reversed)`
+              : card.nameEn;
 
         // 关键词
         const keywordsDiv = document.createElement("div");
@@ -173,19 +181,21 @@ export default function printTheReading(
           justify-content: center;
         `;
 
-        card.keywords.slice(0, 4).forEach((keyword) => {
-          const keywordSpan = document.createElement("span");
-          keywordSpan.style.cssText = `
-            font-size: 9px;
-            color: #999;
-            padding: 4px 8px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-            letter-spacing: 1px;
-          `;
-          keywordSpan.textContent = keyword;
-          keywordsDiv.appendChild(keywordSpan);
-        });
+        if (locale === "zh-CN") {
+          card.keywords.slice(0, 4).forEach((keyword) => {
+            const keywordSpan = document.createElement("span");
+            keywordSpan.style.cssText = `
+              font-size: 9px;
+              color: #999;
+              padding: 4px 8px;
+              border: 1px solid rgba(255,255,255,0.08);
+              background: rgba(255,255,255,0.03);
+              letter-spacing: 1px;
+            `;
+            keywordSpan.textContent = keyword;
+            keywordsDiv.appendChild(keywordSpan);
+          });
+        }
 
         cardDiv.appendChild(img);
         cardDiv.appendChild(nameDiv);
@@ -214,7 +224,7 @@ export default function printTheReading(
         text-align: center;
         text-transform: uppercase;
       `;
-      readingLabel.textContent = "Interpretation";
+      readingLabel.textContent = ui.print.interpretationLabel;
 
       const textDiv = document.createElement("div");
       textDiv.style.cssText = `
@@ -243,7 +253,7 @@ export default function printTheReading(
         letter-spacing: 2px;
       `;
       const now = new Date();
-      footerDiv.textContent = now.toLocaleString("zh-CN", {
+      footerDiv.textContent = now.toLocaleString(ui.print.dateLocale, {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -291,7 +301,7 @@ export default function printTheReading(
 
       // 下载
       const link = document.createElement("a");
-      link.download = `tarot-reading-${Date.now()}.png`;
+      link.download = `${ui.print.filename}-${Date.now()}.png`;
       link.href = dataUrl;
       link.click();
     } catch (error) {

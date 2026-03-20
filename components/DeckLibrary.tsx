@@ -3,24 +3,25 @@ import { motion, AnimatePresence } from "motion/react";
 import { TarotCard as TarotCardType, CardPoolType } from "../types";
 import { FULL_DECK, getDeckForPool } from "../constants/cards";
 import TarotCard from "./TarotCard";
+import { useI18n } from "../i18n/I18nProvider";
 
 interface DeckLibraryProps {
   onClose: () => void;
 }
 
-const CATEGORIES: { id: CardPoolType; label: string }[] = [
-  { id: "FULL", label: "All Cards" },
-  { id: "MAJOR", label: "Major Arcana" },
-  { id: "SUIT_WANDS", label: "Wands" },
-  { id: "SUIT_CUPS", label: "Cups" },
-  { id: "SUIT_SWORDS", label: "Swords" },
-  { id: "SUIT_PENTACLES", label: "Pentacles" },
-];
-
 const DeckLibrary: React.FC<DeckLibraryProps> = ({ onClose }) => {
+  const { ui } = useI18n();
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<CardPoolType>("FULL");
+  const categories: { id: CardPoolType; label: string }[] = [
+    { id: "FULL", label: ui.deck.categories.FULL },
+    { id: "MAJOR", label: ui.deck.categories.MAJOR },
+    { id: "SUIT_WANDS", label: ui.deck.categories.SUIT_WANDS },
+    { id: "SUIT_CUPS", label: ui.deck.categories.SUIT_CUPS },
+    { id: "SUIT_SWORDS", label: ui.deck.categories.SUIT_SWORDS },
+    { id: "SUIT_PENTACLES", label: ui.deck.categories.SUIT_PENTACLES },
+  ];
 
   const selectedCard =
     selectedCardId !== null
@@ -34,12 +35,12 @@ const DeckLibrary: React.FC<DeckLibraryProps> = ({ onClose }) => {
     <div className="w-full pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-2xl font-cinzel text-center mb-8 tracking-[0.2em] text-white/80">
-          Tarot Deck Library
+          {ui.deck.title}
         </h2>
 
         {/* Category Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-8 top-24 z-30 py-4 bg-black/80 backdrop-blur-md -mx-4 px-4 border-b border-white/5">
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}

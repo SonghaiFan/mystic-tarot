@@ -1,5 +1,5 @@
 import React from "react";
-import { SpreadType, CardPoolType } from "../types";
+import { SpreadType, CardPoolType, Locale } from "../types";
 
 export interface SpreadPosition {
   x: number | string; // Percentage (0-100) or specific unit (e.g. "50px")
@@ -644,4 +644,134 @@ Synthesis Goal: Start by defining the 'Trend' (Card 1) as the year's theme. Cont
       "今年我面临的最大挑战和机遇是什么?",
     ],
   },
+};
+
+const EN_SPREAD_OVERRIDES: Record<
+  SpreadType,
+  Pick<SpreadDefinition, "description" | "defaultQuestions">
+> = {
+  AUTO: {
+    description:
+      "Not sure which spread fits? Tell me what is weighing on you, and I will choose the most suitable spread for your question.",
+    defaultQuestions: [
+      "Help me make sense of the confusion I'm in right now.",
+      "How should I approach this choice?",
+      "What is likely to unfold next?",
+    ],
+  },
+  SINGLE: {
+    description:
+      "A simple and direct one-card reading. Instead of asking a strict yes-or-no question, try asking what you need to notice, shift, or understand right now.",
+    defaultQuestions: [
+      "What do I need to pay attention to here?",
+      "What attitude would serve me best today?",
+      "What insight is this situation offering me?",
+    ],
+  },
+  THREE: {
+    description:
+      "A classic three-card spread for Past, Present, and Future. It works well when you want to understand a timeline, trace the roots of a situation, or see where things are heading.",
+    defaultQuestions: [
+      "What do I need to understand about this relationship?",
+      "How is my work likely to develop in the near future?",
+      "What is the past, present, and future of this situation?",
+    ],
+  },
+  FOUR: {
+    description:
+      "A clear decision-making spread that maps the current situation, what works against you, what helps you, and the final answer. Ideal when you need clarity before choosing.",
+    defaultQuestions: [
+      "How might this new romance develop over the next three months?",
+      "What do I need to know about my finances right now?",
+      "How should I make this decision?",
+    ],
+  },
+  FIVE: {
+    description:
+      "A five-card spread with a hidden center card that reveals unseen motives, subconscious patterns, or missing factors. It is useful when you want the deeper truth beneath the surface.",
+    defaultQuestions: [
+      "What hidden influence am I missing in this situation?",
+      "What action would improve my current circumstances?",
+      "What do I most need to understand about where I am now?",
+    ],
+  },
+  TIMELINE: {
+    description:
+      "A five-stage timeline spread that follows how a situation evolves across consecutive time points, such as days, weeks, or months. Helpful for planning and reading momentum over time.",
+    defaultQuestions: [
+      "How will my work situation change over the next five months?",
+      "What should I watch for over the next five days?",
+      "How is this project likely to develop from here?",
+    ],
+  },
+  DIMENSION: {
+    description:
+      "A five-dimension life scan covering emotions, money, mind, career, and spirit. It gives a broad overview of your current balance and shows where attention is most needed.",
+    defaultQuestions: [
+      "What should be the center of my life next month?",
+      "Give me a full scan of my current energy.",
+      "How balanced are the different areas of my life right now?",
+    ],
+  },
+  CELTIC: {
+    description:
+      "The classic Celtic Cross uses ten cards to examine a complex issue in depth. It is ideal when you need a comprehensive view of a major situation, along with its hidden pressures and likely outcome.",
+    defaultQuestions: [
+      "What should I be aware of in this complex situation?",
+      "What does the bigger picture of my career look like over the next year?",
+      "What is the outcome of the path I am on now?",
+    ],
+  },
+  RELATION: {
+    description:
+      "An eleven-card relationship spread that explores both sides of a connection, including hidden needs, strengths, blind spots, and the direction of the bond itself. It works for romance, family, friendship, or partnership.",
+    defaultQuestions: [
+      "What is their truest feeling about this relationship right now?",
+      "Where is our relationship heading?",
+      "What obstacle do we need to overcome together?",
+    ],
+  },
+  COURT: {
+    description:
+      "A three-card behavior pattern spread that reveals the situation, the role or persona you adopt, and the deeper cause behind it. It helps you understand your habitual reactions more clearly.",
+    defaultQuestions: [
+      "What do I become when I am under pressure?",
+      "Why do I react this way in this kind of situation?",
+      "What is my usual pattern when handling everyday conflict?",
+    ],
+  },
+  GOALS: {
+    description:
+      "A seven-card spread for goals, ambition, and execution. It highlights both the visible actions and the hidden psychological dynamics involved in making something real.",
+    defaultQuestions: [
+      "How can I build a successful side business?",
+      "What deep psychological factor is blocking my goal?",
+      "What do I need to understand in order to make this wish real?",
+    ],
+  },
+  YEARLY: {
+    description:
+      "A fifteen-card wheel spread for the year ahead, including the central theme, major challenge, support, and a month-by-month forecast. Best for long-range planning and timing.",
+    defaultQuestions: [
+      "What does my year ahead look like?",
+      "Which months of the coming year will be the luckiest for me?",
+      "What are the biggest challenge and opportunity I will face this year?",
+    ],
+  },
+};
+
+export const getLocalizedSpread = (
+  spread: SpreadType,
+  locale: Locale
+): SpreadDefinition => {
+  const base = SPREADS[spread];
+
+  if (locale !== "en") {
+    return base;
+  }
+
+  return {
+    ...base,
+    ...EN_SPREAD_OVERRIDES[spread],
+  };
 };

@@ -15,7 +15,6 @@ import {
 } from "./types";
 import {
   FULL_DECK,
-  STATIC_SCRIPTS,
   getDeckForPool,
   getCardImageUrl,
 } from "./constants/cards";
@@ -30,6 +29,7 @@ import PickingSection from "./components/PickingSection";
 import ReadingSection from "./components/ReadingSection";
 import DeckLibrary from "./components/DeckLibrary";
 import printTheReading from "./utils/printTheReading";
+import { useI18n } from "./i18n/I18nProvider";
 
 // --- Configuration ---
 const BACKGROUND_VOLUME = 0.06;
@@ -94,6 +94,7 @@ class SoundEngine {
 }
 
 const App: React.FC = () => {
+  const { locale, ui } = useI18n();
   // --- State ---
   const [gameState, setGameState] = useState<GameState>(GameState.INTRO);
   const [previousGameState, setPreviousGameState] = useState<GameState | null>(
@@ -133,6 +134,7 @@ const App: React.FC = () => {
   const predeterminedCardsRef = useRef<PickedCard[]>([]);
   const predeterminedCardsIndexRef = useRef<number>(0);
   const hiddenCardIdsRef = useRef<Set<number>>(new Set());
+  const staticScripts = ui.staticScripts;
 
   useEffect(() => {
     const handleResize = () => {
@@ -225,54 +227,59 @@ const App: React.FC = () => {
     ): Promise<void> => {
       if (!audioContextRef.current) return;
 
-      // 1. Check Cache
-      if (cacheKey && audioCacheRef.current.has(cacheKey)) {
-        playBuffer(audioCacheRef.current.get(cacheKey)!);
+      const localeCacheKey = cacheKey ? `${locale}:${cacheKey}` : undefined;
+
+      if (localeCacheKey && audioCacheRef.current.has(localeCacheKey)) {
+        playBuffer(audioCacheRef.current.get(localeCacheKey)!);
         return;
       }
 
-      // 2. Generate with Gemini (will try local first if staticKey provided)
       try {
         const buffer = await generateSpeech(
           text,
           audioContextRef.current,
-          staticKey
+          staticKey,
+          locale
         );
         if (buffer) {
-          if (cacheKey) audioCacheRef.current.set(cacheKey, buffer);
+          if (localeCacheKey) audioCacheRef.current.set(localeCacheKey, buffer);
           playBuffer(buffer);
         } else {
-          // Silence on error/timeout (No Fallback)
           console.warn("TTS unavailable. Staying silent.");
         }
       } catch (err) {
         console.error("Voice generation exception", err);
       }
     },
-    [playBuffer]
+    [locale, playBuffer]
   );
 
-  // Prefetch static scripts silently (tries local first, then Gemini)
   const prefetchStaticAudio = useCallback(async () => {
     if (!audioContextRef.current) return;
     const scripts = [
-      { k: "ASK", t: STATIC_SCRIPTS.ASK },
-      { k: "SHUFFLE", t: STATIC_SCRIPTS.SHUFFLE },
-      { k: "PICK", t: STATIC_SCRIPTS.PICK },
-      { k: "REVEAL", t: STATIC_SCRIPTS.REVEAL },
+      { k: "ASK", t: staticScripts.ASK },
+      { k: "SHUFFLE", t: staticScripts.SHUFFLE },
+      { k: "PICK", t: staticScripts.PICK },
+      { k: "REVEAL", t: staticScripts.REVEAL },
     ];
     for (const s of scripts) {
-      if (!audioCacheRef.current.has(s.k)) {
-        generateSpeech(s.t, audioContextRef.current, s.k.toLowerCase())
+      const cacheKey = `${locale}:${s.k}`;
+      if (!audioCacheRef.current.has(cacheKey)) {
+        generateSpeech(
+          s.t,
+          audioContextRef.current,
+          s.k.toLowerCase(),
+          locale
+        )
           .then((buf) => {
-            if (buf) audioCacheRef.current.set(s.k, buf);
+            if (buf) audioCacheRef.current.set(cacheKey, buf);
           })
           .catch(() => {
             /* Ignore prefetch errors */
           });
       }
     }
-  }, []);
+  }, [locale, staticScripts]);
 
   // --- Flow Handlers ---
 
@@ -287,8 +294,8 @@ const App: React.FC = () => {
     prefetchStaticAudio();
 
     // Play WELCOME first, then ASK after a delay
-    await playVoice(STATIC_SCRIPTS.WELCOME, "WELCOME", "welcome");
-    setTimeout(() => playVoice(STATIC_SCRIPTS.ASK, "ASK", "ask"), 1500);
+    await playVoice(staticScripts.WELCOME, "WELCOME", "welcome");
+    setTimeout(() => playVoice(staticScripts.ASK, "ASK", "ask"), 1500);
   };
 
   const startRitual = async () => {
@@ -297,7 +304,7 @@ const App: React.FC = () => {
     if (!selectedSpread || selectedSpread === "AUTO") {
         setIsThinking(true);
         try {
-            selectedSpread = await predictBestSpread(question);
+            selectedSpread = await predictBestSpread(question, locale);
             setSpread(selectedSpread);
         } catch (e) {
             console.error("Spread prediction failed", e);
@@ -365,7 +372,12 @@ const App: React.FC = () => {
     });
 
     // 2. Start Gemini Generation in Background
-    readingPromiseRef.current = generateTarotReading(targets, selectedSpread, question)
+    readingPromiseRef.current = generateTarotReading(
+      targets,
+      selectedSpread,
+      question,
+      locale
+    )
       .then((text) => {
         // Check if this result is for the current ritual
         if (ritualIdRef.current !== currentRitualId) return text;
@@ -394,15 +406,15 @@ const App: React.FC = () => {
       })
       .catch((err) => {
         console.error("Background generation failed", err);
-        return "The stars are silent...";
+        return ui.errors.silentStars;
       });
 
-    await playVoice(STATIC_SCRIPTS.SHUFFLE, "SHUFFLE", "shuffle");
+    await playVoice(staticScripts.SHUFFLE, "SHUFFLE", "shuffle");
 
     // Auto advance after shuffle (5s)
     setTimeout(() => {
       setGameState(GameState.PICKING);
-      playVoice(STATIC_SCRIPTS.PICK, "PICK", "pick");
+      playVoice(staticScripts.PICK, "PICK", "pick");
     }, 5000);
   };
 
@@ -446,7 +458,7 @@ const App: React.FC = () => {
   const startRevealProcess = async (finalCards: PickedCard[]) => {
     // Transition to Reading state immediately so user can flip cards
     setGameState(GameState.READING);
-    playVoice(STATIC_SCRIPTS.REVEAL, "REVEAL", "reveal");
+    playVoice(staticScripts.REVEAL, "REVEAL", "reveal");
 
     // Start Thinking Process (for the text generation)
     if (!readingReadyRef.current) {
@@ -459,8 +471,7 @@ const App: React.FC = () => {
     if (readingPromiseRef.current) {
       text = await readingPromiseRef.current;
     } else {
-      // Fallback if something went wrong
-      text = await generateTarotReading(finalCards, spread, question);
+      text = await generateTarotReading(finalCards, spread, question, locale);
     }
     setReadingText(text);
 
@@ -509,8 +520,7 @@ const App: React.FC = () => {
     setReadingAudioBuffer(null);
     setQuestion("");
     setPreviousGameState(null);
-    // Keep drone playing
-    playVoice(STATIC_SCRIPTS.ASK, "ASK", "ask");
+    playVoice(staticScripts.ASK, "ASK", "ask");
   };
 
   // Replay reading audio
@@ -525,7 +535,8 @@ const App: React.FC = () => {
     question,
     spread,
     pickedCards,
-    readingText
+    readingText,
+    locale
   );
 
   const toggleLibrary = () => {
