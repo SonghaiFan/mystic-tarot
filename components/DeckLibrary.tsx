@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { CardPoolType } from "../types";
 import { FULL_DECK, getDeckForPool } from "../constants/cards";
 import TarotCard from "./TarotCard";
@@ -33,10 +33,11 @@ const DeckLibrary: React.FC<DeckLibraryProps> = (_props) => {
   }, [activeCategory]);
   return (
     <div className="w-full pt-24 pb-12">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-cinzel text-center mb-8 tracking-[0.2em] text-white/80">
-          {t("deck.title")}
-        </h2>
+      <LayoutGroup id="deck-cards">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-2xl font-cinzel text-center mb-8 tracking-[0.2em] text-white/80">
+            {t("deck.title")}
+          </h2>
 
         {/* Category Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-8 top-24 z-30 py-4 bg-black/80 backdrop-blur-md -mx-4 px-4 border-b border-white/5">
@@ -58,51 +59,54 @@ const DeckLibrary: React.FC<DeckLibraryProps> = (_props) => {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">
-          {filteredCards.map((card) => (
-            <div
-              key={card.id}
-              className="flex justify-center"
-              onClick={() => setSelectedCardId(card.id)}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">
+            {filteredCards.map((card) => (
+              <div
+                key={card.id}
+                className="flex justify-center"
+                onClick={() => setSelectedCardId(card.id)}
+              >
+                <TarotCard
+                  layoutId={`card-${card.id}`}
+                  card={card}
+                  isRevealed={true}
+                  isHovered={hoveredCardId === card.id}
+                  onHover={setHoveredCardId}
+                  width="w-full"
+                  height="aspect-[300/519]"
+                  className="hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Card Detail Overlay */}
+        <AnimatePresence>
+          {selectedCardId !== null && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.14 }}
+              className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
+              style={{ zIndex: 9999 }}
+              onClick={() => setSelectedCardId(null)}
             >
               <TarotCard
-                card={card}
+                card={selectedCard!}
+                layoutId={`card-${selectedCardId}`}
                 isRevealed={true}
-                isHovered={hoveredCardId === card.id}
-                onHover={setHoveredCardId}
-                width="w-full"
-                height="aspect-[300/519]"
-                className="hover:scale-105 transition-transform duration-300"
+                isDetailed={true}
+                width="w-full max-w-md md:max-w-5xl"
+                height="h-[80vh] md:h-[75vh]"
+                className="shadow-2xl cursor-default"
+                onClick={(e) => e.stopPropagation()}
               />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Card Detail Overlay */}
-      <AnimatePresence>
-        {selectedCardId !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
-            style={{ zIndex: 9999 }}
-            onClick={() => setSelectedCardId(null)}
-          >
-            <TarotCard
-              card={selectedCard!}
-              isRevealed={true}
-              isDetailed={true}
-              width="w-full max-w-md md:max-w-5xl"
-              height="h-[80vh] md:h-[75vh]"
-              className="shadow-2xl cursor-default"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </LayoutGroup>
     </div>
   );
 };

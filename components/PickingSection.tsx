@@ -6,6 +6,74 @@ import { SPREADS } from "../constants/spreads";
 import TarotCard from "./TarotCard";
 import { useTranslation } from "react-i18next";
 
+interface CloudCardRenderData {
+  card: TarotCardType;
+  x: number;
+  y: number;
+  randomRotate: number;
+  cardWidth: string;
+}
+
+interface PickingCloudCardProps {
+  card: TarotCardType;
+  layoutId: string;
+  isHovered: boolean;
+  width: string;
+  height: string;
+  style: React.CSSProperties;
+  onHover: (id: number | null) => void;
+  onClick: () => void;
+}
+
+const PickingCloudCard: React.FC<PickingCloudCardProps> = React.memo(
+  ({ card, layoutId, isHovered, width, height, style, onHover, onClick }) => {
+    return (
+      <motion.div
+        style={{
+          transformStyle: "preserve-3d",
+          willChange: "transform",
+          ...style,
+        }}
+        className={`relative cursor-pointer group ${width} ${height}`}
+        onMouseEnter={() => onHover(card.id)}
+        onMouseLeave={() => onHover(null)}
+        onClick={onClick}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: isHovered ? 1.04 : 1, opacity: 1 }}
+        transition={{ scale: { duration: 0.22, ease: SILKY_EASE }, opacity: { duration: 0.4 } }}
+      >
+        <motion.div
+          className="w-full h-full relative"
+          layoutId={layoutId}
+          transition={{ layout: { type: "tween", duration: 0.18, ease: [0.16, 1, 0.3, 1] } }}
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          <div className="absolute inset-0 overflow-hidden bg-black border border-black/80">
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
+                backgroundSize: "6px 6px",
+              }}
+            />
+            <div className="w-4 h-4 border border-white/10 rotate-45 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div
+            aria-hidden
+            className={`pointer-events-none absolute inset-0 z-10 border transition-all duration-200 ${
+              isHovered
+                ? "border-white/55 shadow-[0_0_18px_rgba(255,255,255,0.26)]"
+                : "border-white/0"
+            }`}
+          />
+        </motion.div>
+      </motion.div>
+    );
+  }
+);
+
+PickingCloudCard.displayName = "PickingCloudCard";
+
 interface PickingSectionProps {
   spread: SpreadType;
   activeDeck: TarotCardType[];
@@ -28,6 +96,49 @@ const PickingSection: React.FC<PickingSectionProps> = ({
   onCardSelect,
 }) => {
   const { t } = useTranslation();
+
+  const pickedIdSet = React.useMemo(() => {
+    return new Set(pickedCards.map((c) => c.id));
+  }, [pickedCards]);
+
+  const cloudCards = React.useMemo<CloudCardRenderData[]>(() => {
+    let minRadius = 180;
+    let maxRadius = 450;
+    let stretchX = 1.4;
+
+    if (isMobile) {
+      minRadius = 80;
+      maxRadius = 180;
+      stretchX = 1;
+    } else if (isTablet) {
+      minRadius = 140;
+      maxRadius = 320;
+      stretchX = 1.25;
+    }
+
+    const cardWidth = isMobile ? "w-12" : isTablet ? "w-16" : "w-24";
+
+    return activeDeck
+      .filter((card) => !pickedIdSet.has(card.id))
+      .map((card) => {
+        const seed = card.id * 123.45;
+        const r1 = Math.sin(seed) * 10000 - Math.floor(Math.sin(seed) * 10000);
+        const r2 = Math.cos(seed) * 10000 - Math.floor(Math.cos(seed) * 10000);
+        const r3 =
+          Math.sin(seed * 2) * 10000 - Math.floor(Math.sin(seed * 2) * 10000);
+
+        const radius = Math.sqrt(r1) * (maxRadius - minRadius) + minRadius;
+        const angle = r2 * 2 * Math.PI;
+
+        return {
+          card,
+          x: Math.cos(angle) * radius * stretchX,
+          y: Math.sin(angle) * radius,
+          randomRotate: r3 * 360,
+          cardWidth,
+        };
+      });
+  }, [activeDeck, isMobile, isTablet, pickedIdSet]);
 
   return (
   <motion.div
@@ -66,83 +177,25 @@ const PickingSection: React.FC<PickingSectionProps> = ({
         animate={{ rotate: 360 }}
         transition={{ duration: 240, ease: "linear", repeat: Infinity }}
       >
-        {activeDeck.map((card, i) => {
-          const isPicked = pickedCards.some((c) => c.id === card.id);
-          if (isPicked) return null; // Don't render picked cards in the cloud
-
-          // Deterministic random based on card ID
-          const seed = card.id * 123.45;
-          const r1 =
-            Math.sin(seed) * 10000 - Math.floor(Math.sin(seed) * 10000);
-          const r2 =
-            Math.cos(seed) * 10000 - Math.floor(Math.cos(seed) * 10000);
-          const r3 =
-            Math.sin(seed * 2) * 10000 - Math.floor(Math.sin(seed * 2) * 10000);
-
-          // Donut distribution to avoid clumping in center
-          let minRadius = 180;
-          let maxRadius = 450;
-          let stretchX = 1.4; // Fill horizontal space in landscape
-
-          if (isMobile) {
-            minRadius = 80;
-            maxRadius = 180;
-            stretchX = 1; // Square for portrait mobile
-          } else if (isTablet) {
-            minRadius = 140;
-            maxRadius = 320;
-            stretchX = 1.25;
-          }
-
-          // Square root of random for uniform area distribution, scaled to donut range
-          const radius = Math.sqrt(r1) * (maxRadius - minRadius) + minRadius;
-          const angle = r2 * 2 * Math.PI;
-
-          const x = Math.cos(angle) * radius * stretchX;
-          const y = Math.sin(angle) * radius;
-          const randomRotate = r3 * 360;
-
-          const floatDuration = 4 + (seed % 4);
-          const floatY = 10 + (seed % 10);
-
-          const cardWidth = isMobile ? "w-12" : isTablet ? "w-16" : "w-24";
-
-          return (
-            <TarotCard
-              key={card.id}
-              layoutId={`card-${card.id}`}
-              card={card}
-              isRevealed={false}
-              isHovered={hoveredCardId === card.id}
-              onHover={onCardHover}
-              width={cardWidth}
-              height="aspect-[300/519]"
-              style={{
-                position: "absolute",
-                left: x,
-                top: y,
-                transform: "translate(-50%, -50%)",
-                rotate: randomRotate,
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-                y: [0, -floatY, 0],
-              }}
-              transition={{
-                scale: { duration: 0.5 },
-                opacity: { duration: 0.5 },
-                y: {
-                  duration: floatDuration,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
-              }}
-              onClick={() => onCardSelect(card)}
-            />
-          );
-        })}
+        {cloudCards.map(({ card, x, y, randomRotate, cardWidth }) => (
+          <PickingCloudCard
+            key={card.id}
+            layoutId={`card-${card.id}`}
+            card={card}
+            isHovered={hoveredCardId === card.id}
+            onHover={onCardHover}
+            width={cardWidth}
+            height="aspect-[300/519]"
+            style={{
+              position: "absolute",
+              left: x,
+              top: y,
+              transform: "translate(-50%, -50%)",
+              rotate: randomRotate,
+            }}
+            onClick={() => onCardSelect(card)}
+          />
+        ))}
       </motion.div>
     </motion.div>
 

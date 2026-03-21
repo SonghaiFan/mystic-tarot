@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { Download, RefreshCw, Volume2, Copy, Check } from "lucide-react";
 import { SpreadType, PickedCard } from "../types";
 import { SILKY_EASE } from "../constants/ui";
@@ -181,43 +181,44 @@ ${t("reading.copyPrompt.request")}`;
       className="flex flex-col items-center w-full max-w-7xl gap-8 md:gap-16 mt-30 mb-12 px-4 md:px-8"
       layout
     >
-      <div
-        className={`${spreadConfig.layoutType === "absolute" && !isMobile
-          ? "relative w-full h-[70vh] md:h-[80vh] max-w-4xl lg:max-w-6xl mx-auto"
-          : "flex flex-wrap justify-center items-center gap-6 md:gap-12"
-          }`}
-      >
-        <AnimatePresence mode="popLayout">
-          {displayedCards.map((card, index) => {
-            const isHovered =
-              hoveredCardId === card.id && selectedCardId === null;
-            const position = spreadConfig.positions?.[index];
+      <LayoutGroup id="reading-cards">
+        <div
+          className={`${spreadConfig.layoutType === "absolute" && !isMobile
+            ? "relative w-full h-[70vh] md:h-[80vh] max-w-4xl lg:max-w-6xl mx-auto"
+            : "flex flex-wrap justify-center items-center gap-6 md:gap-12"
+            }`}
+        >
+          <AnimatePresence mode="popLayout">
+            {displayedCards.map((card, index) => {
+              const isHovered =
+                hoveredCardId === card.id && selectedCardId === null;
+              const position = spreadConfig.positions?.[index];
 
-            const cardWidthClass = isMobile
-              ? spreadConfig.cardSize.mobile
-              : spreadConfig.cardSize.desktop;
+              const cardWidthClass = isMobile
+                ? spreadConfig.cardSize.mobile
+                : spreadConfig.cardSize.desktop;
 
-            const absoluteStyle = getAbsoluteCardStyle(position, isHovered);
+              const absoluteStyle = getAbsoluteCardStyle(position, isHovered);
 
-            const label =
-              spreadConfig.layoutType === "absolute"
-                ? position?.label
-                : spreadConfig.labels?.[index];
+              const label =
+                spreadConfig.layoutType === "absolute"
+                  ? position?.label
+                  : spreadConfig.labels?.[index];
 
-            const labelPosition =
-              spreadConfig.layoutType === "absolute" && !isMobile
-                ? position?.labelPosition || "bottom"
-                : "bottom";
+              const labelPosition =
+                spreadConfig.layoutType === "absolute" && !isMobile
+                  ? position?.labelPosition || "bottom"
+                  : "bottom";
 
-            return (
-              <TarotCard
-                key={card.id}
-                layoutId={`card-${card.id}`}
-                card={card}
-                isRevealed={revealedCardIds.has(card.id)}
-                isHovered={isHovered}
-                isHorizontal={!!position?.rotation && !isMobile}
-                onHover={onCardHover}
+              return (
+                <TarotCard
+                  key={card.id}
+                  layoutId={`card-${card.id}`}
+                  card={card}
+                  isRevealed={revealedCardIds.has(card.id)}
+                  isHovered={isHovered}
+                  isHorizontal={!!position?.rotation && !isMobile}
+                  onHover={onCardHover}
                 onClick={() => handleCardClick(card.id)}
                 style={absoluteStyle}
                 label={label}
@@ -227,11 +228,11 @@ ${t("reading.copyPrompt.request")}`;
                   scale: isHovered ? 1.1 : 1,
                   zIndex: isHovered ? 100 : absoluteStyle?.zIndex || "auto",
                 }}
-              />
-            );
-          })}
-        </AnimatePresence>
-      </div>
+                />
+              );
+            })}
+          </AnimatePresence>
+        </div>
 
       {/* Tooltip Portal */}
       {createPortal(
@@ -396,45 +397,47 @@ ${t("reading.copyPrompt.request")}`;
         </AnimatePresence>
       </div>
       {/* Card Detail Overlay */}
-      {createPortal(
-        <AnimatePresence>
-          {selectedCardId !== null && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
-              style={{ zIndex: 9999 }}
-              onClick={() => setSelectedCardId(null)}
-            >
-              {/* Back Arrow Button styled like HeaderBar */}
-              <button
-                aria-label="Back"
-                onClick={(e) => { e.stopPropagation(); setSelectedCardId(null); }}
-                className="text-white/50 hover:text-white transition-colors flex items-center gap-2 absolute left-4 top-4 md:left-8 md:top-8 z-20 p-2 bg-transparent"
-                type="button"
+        {createPortal(
+          <AnimatePresence>
+            {selectedCardId !== null && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.14 }}
+                className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
+                style={{ zIndex: 9999 }}
+                onClick={() => setSelectedCardId(null)}
               >
-                {/* Use Lucide ArrowLeft icon for consistency */}
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-                <span className="text-[10px] uppercase tracking-widest hidden md:inline">Back</span>
-              </button>
-              <TarotCard
-                card={pickedCards.find((c) => c.id === selectedCardId)!}
-                isRevealed={true}
-                isDetailed={true}
-                width="w-full max-w-md md:max-w-5xl"
-                height="h-[80vh] md:h-[75vh]"
-                className="shadow-2xl cursor-default"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body
-      )}
+                {/* Back Arrow Button styled like HeaderBar */}
+                <button
+                  aria-label="Back"
+                  onClick={(e) => { e.stopPropagation(); setSelectedCardId(null); }}
+                  className="text-white/50 hover:text-white transition-colors flex items-center gap-2 absolute left-4 top-4 md:left-8 md:top-8 z-20 p-2 bg-transparent"
+                  type="button"
+                >
+                  {/* Use Lucide ArrowLeft icon for consistency */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                  <span className="text-[10px] uppercase tracking-widest hidden md:inline">Back</span>
+                </button>
+                <TarotCard
+                  card={pickedCards.find((c) => c.id === selectedCardId)!}
+                  layoutId={`card-${selectedCardId}`}
+                  isRevealed={true}
+                  isDetailed={true}
+                  width="w-full max-w-md md:max-w-5xl"
+                  height="h-[80vh] md:h-[75vh]"
+                  className="shadow-2xl cursor-default"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
+      </LayoutGroup>
     </motion.div>
   );
 };

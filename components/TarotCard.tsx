@@ -42,6 +42,12 @@ interface TarotCardProps
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
+const CARD_LAYOUT_TRANSITION = {
+  type: "tween" as const,
+  duration: 0.18,
+  ease: [0.16, 1, 0.3, 1] as const,
+};
+
 const TarotCard: React.FC<TarotCardProps> = ({
   card,
   isRevealed = false,
@@ -75,6 +81,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
   const positiveMeaning = isEnglish ? card.positiveEn : card.positive;
   const negativeMeaning = isEnglish ? card.negativeEn : card.negative;
   const descriptionContent = isEnglish ? card.descriptionEn : card.descriptionCn;
+  const sharedLayoutId = layoutId || `card-${card.id}`;
 
   const labelClasses = {
     top: "bottom-full mb-2 left-1/2 -translate-x-1/2",
@@ -197,8 +204,8 @@ const TarotCard: React.FC<TarotCardProps> = ({
 
   return (
     <motion.div
-      layoutId={!isDetailed ? (layoutId || `card-${card.id}`) : undefined}
-      layout={!isDetailed}
+      layout={!isDetailed ? "position" : false}
+      transition={{ layout: CARD_LAYOUT_TRANSITION }}
       style={{
         transformStyle: "preserve-3d",
         perspective: isDetailed ? "2200px" : "1400px",
@@ -228,6 +235,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
       >
         <motion.div
           className="w-full h-full relative"
+          layoutId={!isDetailed ? sharedLayoutId : undefined}
           style={{ transformStyle: "preserve-3d" }}
           initial={{
             rotateY: isRevealed ? 0 : 180,
@@ -237,172 +245,167 @@ const TarotCard: React.FC<TarotCardProps> = ({
             rotateY: isRevealed ? 0 : 180,
             rotateZ: isReversed && !isDetailed ? 180 : 0,
           }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ layout: CARD_LAYOUT_TRANSITION, duration: 0.34, ease: "easeInOut" }}
         >
         {/* Front Face */}
         <div
-          className={`absolute inset-0 bg-black border border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.05)] overflow-hidden ${isDetailed ? "flex flex-col md:flex-row" : "flex"}`}
+          className={`absolute inset-0 overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)] ${isDetailed ? "border border-white/15 bg-black" : "bg-white p-[4px]"}`}
           style={{ backfaceVisibility: "hidden" }}
         >
+          <div className={`relative h-full w-full overflow-hidden ${isDetailed ? "bg-black" : "border border-black/80 bg-black"} ${isDetailed ? "flex flex-col md:flex-row" : "flex"}`}>
           {isDetailed ? (
-            <>
-              {/* Image & Header Section */}
-              <div className="flex flex-row md:flex-col w-full md:w-[42%] h-[40%] md:h-full shrink-0 border-b md:border-b-0 md:border-r border-white/10 bg-black relative overflow-hidden">
-                {/* Background Glow */}
+            <div className="relative flex h-full w-full flex-col overflow-hidden bg-neutral-950 md:flex-row">
+              <div className="relative flex w-full items-center justify-center overflow-hidden border-b border-white/10 bg-black/80 px-6 py-8 md:w-[36%] md:border-b-0 md:border-r md:px-8 md:py-10">
                 <img
                   src={getCardImageUrl(card.image)}
                   alt=""
-                  className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-30 scale-125 pointer-events-none"
+                  className="absolute inset-0 h-full w-full scale-125 object-cover opacity-20 blur-3xl pointer-events-none"
                 />
-
-                {/* Card Art Panel */}
                 <div
-                  className="w-[45%] md:w-full h-full flex items-center justify-center p-4 md:p-8 relative z-10"
+                  className="relative z-10 flex w-full items-center justify-center"
                   onPointerMove={handleDetailPointerMove}
                   onPointerLeave={resetDetailTilt}
                 >
-                  <div className="absolute inset-x-8 bottom-3 md:bottom-10 h-16 md:h-28 rounded-full bg-amber-100/10 blur-3xl opacity-40 pointer-events-none" />
-
+                  <div className="absolute inset-x-[18%] bottom-[6%] h-[12%] rounded-full bg-black/60 blur-2xl opacity-80 pointer-events-none" />
                   <motion.div
-                    className="relative w-full max-w-[17rem] md:max-w-[24rem] aspect-[300/519] flex-none"
+                    className="relative w-full max-w-[15rem] md:max-w-[21rem] aspect-[300/519]"
+                    layoutId={sharedLayoutId}
                     style={{
                       transformStyle: "preserve-3d",
                       rotateX: prefersReducedMotion ? 0 : smoothDetailTiltX,
                       rotateY: prefersReducedMotion ? 0 : smoothDetailTiltY,
                       willChange: "transform",
                     }}
-                    transition={{ duration: 0.45, ease: SILKY_EASE }}
+                    transition={{ layout: CARD_LAYOUT_TRANSITION, duration: 0.18, ease: SILKY_EASE }}
                   >
                     <div
-                      className="absolute inset-x-[14%] bottom-[3%] h-[10%] rounded-full bg-black/60 blur-2xl opacity-80 pointer-events-none"
-                      style={{ transform: "translateZ(2px) translateY(18px)" }}
-                    />
-
-                    <div
-                      className="relative w-full h-full overflow-hidden border border-white/20 bg-neutral-900 shadow-[0_28px_60px_rgba(0,0,0,0.55)]"
+                      className="absolute inset-0 overflow-hidden bg-white p-[4px] shadow-[0_28px_60px_rgba(0,0,0,0.55)]"
                       style={{ transform: "translateZ(24px)" }}
                     >
-                      <div className="absolute inset-1.5 md:inset-2 overflow-hidden bg-neutral-950">
+                      <div className="relative h-full w-full overflow-hidden border border-black/80 bg-neutral-950">
                         <img
                           src={getCardImageUrl(card.image)}
                           alt={card.nameEn}
                           loading="eager"
-                          className="absolute inset-0 w-full h-full object-cover"
+                          onLoad={() => setIsImageLoaded(true)}
+                          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
                           style={{ filter: imageFilter }}
                         />
+                        {!isImageLoaded && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/60" />
+                          </div>
+                        )}
                         <motion.div
                           aria-hidden
                           className="absolute inset-0 pointer-events-none mix-blend-screen"
                           style={{ background: detailSurface }}
                         />
-                        <div className="absolute inset-0 bg-linear-to-t from-black/92 via-black/10 to-black/25 pointer-events-none" />
-                      </div>
-                      <div className="absolute inset-1.5 md:inset-2 border border-white/20 pointer-events-none">
+                        <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/20 to-black/40" />
+                        <div className="absolute bottom-0 w-full p-4 text-center">
+                          {getRomanNumeral(card.id) && (
+                            <div className="mb-1 text-[10px] text-white/60 font-cinzel tracking-[0.2em]">
+                              {getRomanNumeral(card.id)}
+                            </div>
+                          )}
+                          <h2 className="mb-0.5 truncate text-sm text-white font-cinzel tracking-widest">
+                            {primaryName}
+                          </h2>
+                          {(secondaryName || isReversed) && (
+                            <p className="truncate text-[10px] text-neutral-400 font-serif">
+                              {secondaryName}
+                              {secondaryName && isReversed ? " " : ""}
+                              {isReversed && (
+                                <span className="ml-1 italic text-red-400/80 opacity-80">
+                                  ({t("card.reversedShort")})
+                                </span>
+                              )}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
                 </div>
-
-                {/* Mobile Meta (Visible next to art on mobile, hidden on desktop) */}
-                <div className="flex-1 md:hidden flex flex-col justify-center px-4 py-6 bg-neutral-950/40 relative z-10 border-l border-white/5">
-                  {getRomanNumeral(card.id) && (
-                    <div className="text-[10px] mb-1 text-amber-50/60 font-cinzel tracking-[0.2em]">{getRomanNumeral(card.id)}</div>
-                  )}
-                  <h3 className="text-xl font-cinzel text-amber-50/90 tracking-widest leading-tight mb-2">{primaryName}</h3>
-                  {(secondaryName || isReversed) && (
-                    <p className="text-[10px] text-neutral-400 font-serif mb-4 uppercase tracking-widest">
-                      {secondaryName}
-                      {secondaryName && isReversed ? " " : ""}
-                      {isReversed && (
-                        <span className="text-red-400/80 ml-1 italic">
-                          ({t("card.reversedShort")})
-                        </span>
-                      )}
-                    </p>
-                  )}
-                  {detailKeywords.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {detailKeywords.slice(0, 3).map((kw) => (
-                        <span key={kw} className="text-[7px] px-1.5 py-0.5 bg-white/5 border border-white/10 text-neutral-400 uppercase tracking-tighter">{kw}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
               </div>
 
-              {/* Main Info Section (Scrollable Area) */}
-              <div className="flex-1 flex flex-col bg-neutral-950 overflow-hidden relative">
-                {/* Desktop Header (Only md+) */}
-                <div className="hidden md:flex flex-none flex-col items-center text-center px-12 pt-16 pb-8 border-b border-white/5">
-                  {getRomanNumeral(card.id) && (
-                    <div className="text-sm md:text-base mb-2 text-amber-50/60 font-cinzel tracking-[0.2em]">{getRomanNumeral(card.id)}</div>
-                  )}
-                  <h2 className="text-4xl md:text-5xl mb-3 text-amber-50/90 font-cinzel tracking-widest drop-shadow-md">{primaryName}</h2>
-                  {(secondaryName || isReversed) && (
-                    <p className="text-sm md:text-lg mb-6 text-neutral-400 font-serif tracking-wide">
-                      {secondaryName}
-                      {secondaryName && isReversed ? " " : ""}
-                      {isReversed && (
-                        <span className="text-red-400/80 opacity-80 inline-block ml-2 italic">
-                          ({t("card.reversedLong")})
-                        </span>
-                      )}
-                    </p>
-                  )}
-
-                  {detailKeywords.length > 0 && (
-                    <div className="flex flex-wrap justify-center gap-3 mb-6">
-                      {detailKeywords.map((kw) => (
-                        <span key={kw} className="text-xs px-3 py-1 bg-white/5 border border-white/10 rounded-sm text-neutral-300 tracking-[0.15em] uppercase">{kw}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Shared Scrollable Content */}
-                <div className="flex-1 overflow-y-auto p-6 md:p-16 space-y-8 overscroll-contain touch-pan-y relative z-10 pointer-events-auto">
-                  <div className="max-w-lg mx-auto space-y-8">
-            
-                    {(positiveMeaning || negativeMeaning) && (
-                      <div className="pt-8 ">
-                        <h4 className="text-[10px] text-neutral-500 uppercase tracking-[0.3em] mb-4 text-center">
-                          {t("card.interpretationTitle")}
-                        </h4>
-                        <p className="text-sm md:text-base text-neutral-300 font-light leading-relaxed md:leading-loose text-justify tracking-wide">
-                          {positiveMeaning && (
-                            <span className="block mb-2 text-neutral-200">
-                              <span className="mr-2 text-xs text-neutral-400 align-middle">＋</span>
-                              {positiveMeaning}
-                            </span>
-                          )}
-                          {negativeMeaning && (
-                            <span className="block text-neutral-400">
-                              <span className="mr-2 text-xs text-neutral-500 align-middle">－</span>
-                              {negativeMeaning}
-                            </span>
-                          )}
-                        </p>
+              <div className="flex-1 overflow-hidden bg-neutral-950">
+                <div className="flex h-full flex-col">
+                  <div className="flex-none border-b border-white/5 px-6 pb-6 pt-8 text-center md:px-12 md:pb-8 md:pt-12">
+                    {getRomanNumeral(card.id) && (
+                      <div className="mb-2 text-sm md:text-base text-amber-50/60 font-cinzel tracking-[0.2em]">
+                        {getRomanNumeral(card.id)}
                       </div>
                     )}
+                    <h2 className="mb-3 text-3xl md:text-5xl text-amber-50/90 font-cinzel tracking-widest drop-shadow-md">
+                      {primaryName}
+                    </h2>
+                    {(secondaryName || isReversed) && (
+                      <p className="mb-5 text-sm md:text-lg text-neutral-400 font-serif tracking-wide">
+                        {secondaryName}
+                        {secondaryName && isReversed ? " " : ""}
+                        {isReversed && (
+                          <span className="ml-2 inline-block italic text-red-400/80 opacity-80">
+                            ({t("card.reversedLong")})
+                          </span>
+                        )}
+                      </p>
+                    )}
 
-                    {descriptionContent && (
-                      <div className="pt-8 border-t border-white/5">
-                        <h4 className="text-[10px] text-neutral-500 uppercase tracking-[0.3em] mb-4 text-center">
-                          {t("card.arcanaWisdom")}
-                        </h4>
-                        <p className={`text-sm md:text-base text-neutral-300 font-light leading-relaxed md:leading-loose text-justify tracking-wide ${isEnglish ? 'italic' : ''}`}>
-                          {descriptionContent}
-                        </p>
+                    {detailKeywords.length > 0 && (
+                      <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+                        {detailKeywords.map((kw) => (
+                          <span key={kw} className="rounded-sm border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] md:px-3 md:text-xs text-neutral-300 tracking-[0.15em] uppercase">
+                            {kw}
+                          </span>
+                        ))}
                       </div>
                     )}
                   </div>
+
+                  <div className="relative z-10 flex-1 overflow-y-auto p-6 md:p-12 lg:p-14 overscroll-contain touch-pan-y">
+                    <div className="mx-auto max-w-2xl space-y-8">
+                      {(positiveMeaning || negativeMeaning) && (
+                        <div>
+                          <h4 className="mb-4 text-center text-[10px] text-neutral-500 uppercase tracking-[0.3em]">
+                            {t("card.interpretationTitle")}
+                          </h4>
+                          <p className="text-sm md:text-base text-neutral-300 font-light leading-relaxed md:leading-loose text-justify tracking-wide">
+                            {positiveMeaning && (
+                              <span className="mb-2 block text-neutral-200">
+                                <span className="mr-2 align-middle text-xs text-neutral-400">＋</span>
+                                {positiveMeaning}
+                              </span>
+                            )}
+                            {negativeMeaning && (
+                              <span className="block text-neutral-400">
+                                <span className="mr-2 align-middle text-xs text-neutral-500">－</span>
+                                {negativeMeaning}
+                              </span>
+                            )}
+                          </p>
+                        </div>
+                      )}
+
+                      {descriptionContent && (
+                        <div className="border-t border-white/5 pt-8">
+                          <h4 className="mb-4 text-center text-[10px] text-neutral-500 uppercase tracking-[0.3em]">
+                            {t("card.arcanaWisdom")}
+                          </h4>
+                          <p className={`text-sm md:text-base text-neutral-300 font-light leading-relaxed md:leading-loose text-justify tracking-wide ${isEnglish ? "italic" : ""}`}>
+                            {descriptionContent}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </>
+            </div>
           ) : (
             /* Standard Card View */
-            <div className="relative w-full h-full bg-neutral-900">
-              <div className="absolute inset-1.5 md:inset-2 overflow-hidden bg-neutral-950">
+            <div className="relative h-full w-full overflow-hidden bg-neutral-950">
+              <div className="absolute inset-0 overflow-hidden bg-neutral-950">
                 <img
                   src={getCardImageUrl(card.image)}
                   alt={card.nameEn}
@@ -428,9 +431,6 @@ const TarotCard: React.FC<TarotCardProps> = ({
                   style={{ background: cardGlare }}
                 />
               </div>
-              <div className="absolute inset-1.5 md:inset-2 border border-white/20 pointer-events-none">
-           
-              </div>
 
               <div className={`absolute bottom-0 w-full p-3 md:p-4 text-center transition-opacity duration-500 ${isRevealed ? "opacity-100" : "opacity-0"}`}>
                 {getRomanNumeral(card.id) && (
@@ -451,17 +451,29 @@ const TarotCard: React.FC<TarotCardProps> = ({
               </div>
             </div>
           )}
+          </div>
         </div>
 
         {/* Back Face */}
         <div
-          className="absolute inset-0 bg-neutral-950 border border-white/10 flex items-center justify-center overflow-hidden group-hover:border-white/40 transition-all duration-300"
+          className={`absolute inset-0 overflow-hidden transition-all duration-300 ${isDetailed ? "border border-white/15 bg-black" : "bg-black"}`}
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "6px 6px" }} />
-          <div className="absolute inset-1 border-[0.5px] border-white/5" />
-          <div className="w-4 h-4 border border-white/10 rotate-45 group-hover:rotate-90 transition-transform duration-700" />
+          <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-neutral-950 ${isDetailed ? "" : "border border-black/80"}`}>
+            <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "6px 6px" }} />
+            <div className="w-4 h-4 border border-white/10 rotate-45 group-hover:rotate-90 transition-transform duration-700" />
+          </div>
         </div>
+        {!isDetailed && (
+          <div
+            aria-hidden
+            className={`pointer-events-none absolute inset-0 z-10 border transition-all duration-300 ${
+              isHovered
+                ? "border-white/55 shadow-[0_0_24px_rgba(255,255,255,0.3),0_0_42px_rgba(255,255,255,0.12),inset_0_0_18px_rgba(255,255,255,0.08)]"
+                : "border-white/0 shadow-none group-hover:border-white/55 group-hover:shadow-[0_0_24px_rgba(255,255,255,0.3),0_0_42px_rgba(255,255,255,0.12),inset_0_0_18px_rgba(255,255,255,0.08)]"
+            }`}
+          />
+        )}
       </motion.div>
       </motion.div>
 
