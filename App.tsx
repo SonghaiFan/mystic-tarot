@@ -24,7 +24,6 @@ import CosmicParticles from "./components/CosmicParticles";
 import HeaderBar from "./components/HeaderBar";
 import IntroSection from "./components/IntroSection";
 import InputSection from "./components/InputSection";
-import ShufflingSection from "./components/ShufflingSection";
 import PickingSection from "./components/PickingSection";
 import ReadingSection from "./components/ReadingSection";
 import DeckLibrary from "./components/DeckLibrary";
@@ -139,7 +138,6 @@ const App: React.FC = () => {
   const staticScripts = {
     WELCOME: t("staticScripts.WELCOME"),
     ASK: t("staticScripts.ASK"),
-    SHUFFLE: t("staticScripts.SHUFFLE"),
     PICK: t("staticScripts.PICK"),
     REVEAL: t("staticScripts.REVEAL"),
   };
@@ -266,7 +264,6 @@ const App: React.FC = () => {
     if (!audioContextRef.current) return;
     const scripts = [
       { k: "ASK", t: staticScripts.ASK },
-      { k: "SHUFFLE", t: staticScripts.SHUFFLE },
       { k: "PICK", t: staticScripts.PICK },
       { k: "REVEAL", t: staticScripts.REVEAL },
     ];
@@ -325,7 +322,7 @@ const App: React.FC = () => {
     // Safety check mostly for TypeScript, practically handled above
     if (!selectedSpread) selectedSpread = "SINGLE";
 
-    setGameState(GameState.SHUFFLING);
+    setGameState(GameState.PICKING);
     setPickedCards([]);
     setRevealedCardIds(new Set());
     setHasPlayedReadingAudio(false);
@@ -417,13 +414,7 @@ const App: React.FC = () => {
         return t("errors.silentStars");
       });
 
-    await playVoice(staticScripts.SHUFFLE, "SHUFFLE", "shuffle");
-
-    // Auto advance after shuffle (5s)
-    setTimeout(() => {
-      setGameState(GameState.PICKING);
-      playVoice(staticScripts.PICK, "PICK", "pick");
-    }, 5000);
+    playVoice(staticScripts.PICK, "PICK", "pick");
   };
 
   const handleCardSelect = async (visualCard: TarotCard) => {
@@ -567,7 +558,6 @@ const App: React.FC = () => {
   const bgOpacity = gameState === GameState.INTRO ? 0.9 : 0.3;
 
   const renderPhase = () => {
-    const fallbackSpread: SpreadType = spread || "THREE";
     switch (gameState) {
       case GameState.INTRO:
         return <IntroSection onEnter={enterInputPhase} />;
@@ -584,15 +574,6 @@ const App: React.FC = () => {
             isMobile={isMobile}
             isTablet={isTablet}
             isThinking={isThinking}
-          />
-        );
-      case GameState.SHUFFLING:
-        return (
-          <ShufflingSection
-            cardCount={SPREADS[fallbackSpread].cardCount}
-            spread={fallbackSpread}
-            isMobile={isMobile}
-            isTablet={isTablet}
           />
         );
       case GameState.PICKING:

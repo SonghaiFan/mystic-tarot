@@ -17,10 +17,9 @@
       "INTRO": "",
       "LIBRARY": "Library",
       "INPUT": "Step 1 · Question & Spread",
-      "SHUFFLING": "Step 2 · Shuffle",
-      "PICKING": "Step 3 · Draw",
-      "REVEAL": "Step 4 · Reading",
-      "READING": "Step 4 · Reading"
+      "PICKING": "Step 2 · Draw",
+      "REVEAL": "Step 3 · Reading",
+      "READING": "Step 3 · Reading"
     }
   },
   "input": {
@@ -38,10 +37,6 @@
   },
   "picking": {
     "instruction": "Tap any floating card until all {{count}} slots below are lit."
-  },
-  "shuffling": {
-    "title": "Shuffling... you will draw {{count}} card(s) soon.",
-    "subtitle": "Keep breathing and prepare to choose from the drifting cards."
   },
   "reading": {
     "revealPrompt": "Reveal every card to unlock the reading",
@@ -103,7 +98,6 @@
   "staticScripts": {
     "WELCOME": "Be still and gaze into the void. When your intuition awakens, step through the gate of fate.",
     "ASK": "The question in your heart is the key to truth. Tell me, what are you seeking?",
-    "SHUFFLE": "The stars are returning to their places. Order is forming within the chaos. Focus on your question.",
     "PICK": "From the moving currents of fate, choose your guides.",
     "REVEAL": "Now it appears. The echo of destiny."
   },

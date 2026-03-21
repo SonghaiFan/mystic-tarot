@@ -1,7 +1,6 @@
 export enum GameState {
   INTRO = "INTRO",
   INPUT = "INPUT",
-  SHUFFLING = "SHUFFLING",
   PICKING = "PICKING",
   REVEAL = "REVEAL",
   READING = "READING",

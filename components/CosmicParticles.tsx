@@ -29,9 +29,6 @@ const CosmicParticles: React.FC<CosmicParticlesProps> = ({ gameState }) => {
       case GameState.INPUT:
         targetSpeedRef.current = 5.0; // Normal drift
         break;
-      case GameState.SHUFFLING:
-        targetSpeedRef.current = 60.0; // Warp speed
-        break;
       case GameState.PICKING:
         targetSpeedRef.current = 1.0; // Time slows down
         break;
