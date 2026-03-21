@@ -6,9 +6,13 @@ import { useTranslation } from "react-i18next";
 
 interface IntroSectionProps {
   onEnter: () => void;
+  onEnterHover: () => void;
 }
 
-const IntroSection: React.FC<IntroSectionProps> = ({ onEnter }) => {
+const IntroSection: React.FC<IntroSectionProps> = ({
+  onEnter,
+  onEnterHover,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -44,6 +48,8 @@ const IntroSection: React.FC<IntroSectionProps> = ({ onEnter }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
+        onMouseEnter={onEnterHover}
+        onFocus={onEnterHover}
         onClick={onEnter}
         className="group relative px-10 py-4 border border-white/10 hover:border-white/40 transition-all duration-700 bg-black/50 backdrop-blur-md"
       >

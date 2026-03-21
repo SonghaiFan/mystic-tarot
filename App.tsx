@@ -129,12 +129,16 @@ const App: React.FC = () => {
   const soundEngineRef = useRef<SoundEngine | null>(null);
   const audioCacheRef = useRef<Map<string, AudioBuffer>>(new Map());
   const voiceSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const voicePlaybackRef = useRef<Promise<void> | null>(null);
+  const introWelcomePromiseRef = useRef<Promise<void> | null>(null);
+  const introGreetingKeyRef = useRef<"WELCOME" | "ASK" | null>(null);
   const readingPromiseRef = useRef<Promise<string> | null>(null);
   const readingReadyRef = useRef<boolean>(false);
   const ritualIdRef = useRef<number>(0);
   const predeterminedCardsRef = useRef<PickedCard[]>([]);
   const predeterminedCardsIndexRef = useRef<number>(0);
   const hiddenCardIdsRef = useRef<Set<number>>(new Set());
+  const hasPlayedIntroWelcomeRef = useRef(false);
   const staticScripts = {
     WELCOME: t("staticScripts.WELCOME"),
     ASK: t("staticScripts.ASK"),
@@ -199,7 +203,7 @@ const App: React.FC = () => {
 
   // --- Playback Logic ---
 
-  const playBuffer = useCallback((buffer: AudioBuffer) => {
+  const playBufferAndWait = useCallback((buffer: AudioBuffer) => {
     if (!audioContextRef.current) return;
 
     // Stop previous voice if any
@@ -221,9 +225,29 @@ const App: React.FC = () => {
 
     voiceSourceRef.current = source;
     setIsAudioPlaying(true);
-    source.start();
-    source.onended = () => setIsAudioPlaying(false);
+    const playback = new Promise<void>((resolve) => {
+      source.onended = () => {
+        if (voiceSourceRef.current === source) {
+          voiceSourceRef.current = null;
+          setIsAudioPlaying(false);
+        }
+        if (voicePlaybackRef.current === playback) {
+          voicePlaybackRef.current = null;
+        }
+        resolve();
+      };
+      source.start();
+    });
+    voicePlaybackRef.current = playback;
+    return playback;
   }, []);
+
+  const playBuffer = useCallback(
+    (buffer: AudioBuffer) => {
+      void playBufferAndWait(buffer);
+    },
+    [playBufferAndWait]
+  );
 
   const playVoice = useCallback(
     async (
@@ -260,6 +284,79 @@ const App: React.FC = () => {
     [locale, playBuffer]
   );
 
+  const playVoiceAndWait = useCallback(
+    async (
+      text: string,
+      cacheKey?: string,
+      staticKey?: string
+    ): Promise<void> => {
+      if (!audioContextRef.current) return;
+
+      const localeCacheKey = cacheKey ? `${locale}:${cacheKey}` : undefined;
+
+      if (localeCacheKey && audioCacheRef.current.has(localeCacheKey)) {
+        await playBufferAndWait(audioCacheRef.current.get(localeCacheKey)!);
+        return;
+      }
+
+      try {
+        const buffer = await generateSpeech(
+          text,
+          audioContextRef.current,
+          staticKey,
+          locale
+        );
+        if (buffer) {
+          if (localeCacheKey) audioCacheRef.current.set(localeCacheKey, buffer);
+          await playBufferAndWait(buffer);
+        } else {
+          console.warn("TTS unavailable. Staying silent.");
+        }
+      } catch (err) {
+        console.error("Voice generation exception", err);
+      }
+    },
+    [locale, playBufferAndWait]
+  );
+
+  const waitForVoiceToFinish = useCallback(async () => {
+    if (voicePlaybackRef.current) {
+      await voicePlaybackRef.current;
+    }
+  }, []);
+
+  const playIntroWelcome = useCallback(async () => {
+    if (introWelcomePromiseRef.current) {
+      await introWelcomePromiseRef.current;
+      return;
+    }
+
+    if (hasPlayedIntroWelcomeRef.current) return;
+
+    hasPlayedIntroWelcomeRef.current = true;
+    introWelcomePromiseRef.current = (async () => {
+      initAudio();
+
+      // Give the resumed AudioContext a beat before starting playback.
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      const selectedKey =
+        introGreetingKeyRef.current ??
+        (Math.random() < 0.5 ? "WELCOME" : "ASK");
+      introGreetingKeyRef.current = selectedKey;
+
+      const selectedScript =
+        selectedKey === "WELCOME" ? staticScripts.WELCOME : staticScripts.ASK;
+
+      await playVoiceAndWait(
+        selectedScript,
+        selectedKey,
+        selectedKey.toLowerCase()
+      );
+    })();
+
+    await introWelcomePromiseRef.current;
+  }, [initAudio, playVoiceAndWait, staticScripts.ASK, staticScripts.WELCOME]);
+
   const prefetchStaticAudio = useCallback(async () => {
     if (!audioContextRef.current) return;
     const scripts = [
@@ -289,6 +386,10 @@ const App: React.FC = () => {
   // --- Flow Handlers ---
 
   const enterInputPhase = async () => {
+    if (!hasPlayedIntroWelcomeRef.current) {
+      await playIntroWelcome();
+    }
+
     initAudio();
 
     // Wait a bit for AudioContext to be ready
@@ -298,9 +399,11 @@ const App: React.FC = () => {
     setGameState(GameState.INPUT);
     prefetchStaticAudio();
 
-    // Play WELCOME first, then ASK after a delay
-    await playVoice(staticScripts.WELCOME, "WELCOME", "welcome");
-    setTimeout(() => playVoice(staticScripts.ASK, "ASK", "ask"), 1500);
+    if (introWelcomePromiseRef.current) {
+      await introWelcomePromiseRef.current;
+    } else {
+      await waitForVoiceToFinish();
+    }
   };
 
   const startRitual = async () => {
@@ -560,7 +663,14 @@ const App: React.FC = () => {
   const renderPhase = () => {
     switch (gameState) {
       case GameState.INTRO:
-        return <IntroSection onEnter={enterInputPhase} />;
+        return (
+          <IntroSection
+            onEnter={enterInputPhase}
+            onEnterHover={() => {
+              void playIntroWelcome();
+            }}
+          />
+        );
       case GameState.LIBRARY:
         return <DeckLibrary onClose={toggleLibrary} />;
       case GameState.INPUT:

@@ -68,6 +68,9 @@ const loadLocalAudio = async (
   }
 };
 
+const getStaticAudioFilename = (staticKey: string, locale: Locale): string =>
+  locale === "zh-CN" ? `${staticKey}_cn.mp3` : `${staticKey}.mp3`;
+
 // --- API Functions ---
 
 export const generateTarotReading = async (
@@ -188,12 +191,15 @@ export const generateSpeech = async (
 ): Promise<AudioBuffer | null> => {
   if (!text) return null;
 
-  if (staticKey && locale === "zh-CN") {
-    const localAudio = await loadLocalAudio(`${staticKey}.mp3`, audioContext);
+  if (staticKey) {
+    const localAudio = await loadLocalAudio(
+      getStaticAudioFilename(staticKey, locale),
+      audioContext
+    );
     if (localAudio) {
       return localAudio;
     }
-    console.warn(`本地音频不可用: ${staticKey}`);
+    console.warn(`本地音频不可用: ${staticKey} (${locale})`);
   }
 
   // 2. Try Gemini TTS
