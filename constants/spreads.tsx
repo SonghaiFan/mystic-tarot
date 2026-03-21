@@ -2,8 +2,8 @@ import React from "react";
 import { SpreadType, CardPoolType, Locale } from "../types";
 
 export interface SpreadPosition {
-  x: number | string; // Percentage (0-100) or specific unit (e.g. "50px")
-  y: number | string; // Percentage (0-100) or specific unit (e.g. "50px")
+  x: number | string; // Tailwind spacing units for absolute layouts, where 1 = 0.25rem
+  y: number | string; // Tailwind spacing units for absolute layouts, where 1 = 0.25rem
   label: string;
   rotation?: number; // Degrees
   labelPosition?: "top" | "bottom" | "left" | "right";
@@ -22,6 +22,7 @@ export interface SpreadData {
   cardCount: number;
   layoutType: "flex" | "absolute";
   positions?: SpreadPositionLayout[]; // For absolute layouts — shared geometry
+  layoutOffset?: { x: number; y: number }; // Tailwind spacing units, where 1 = 0.25rem
   positionLabels_en?: string[]; // For absolute layouts — English labels
   positionLabels_cn?: string[]; // For absolute layouts — Chinese labels
   labels_en?: string[]; // For flex layouts — English labels
@@ -46,6 +47,7 @@ export interface SpreadDefinition {
   cardCount: number;
   layoutType: "flex" | "absolute";
   positions?: SpreadPosition[];
+  layoutOffset?: { x: number; y: number };
   labels?: string[];
   cardPools?: CardPoolType[];
   cardSize: {
@@ -450,17 +452,18 @@ Synthesis Goal: Provide a holistic life scan. Treat each card as a specific diag
       "这是经典的凯尔特十字牌阵，总共用到十张牌，提供对复杂问题的深入洞察。\n适合提问需要全面分析某个重要议题的情境，帮助你理清思路，找到解决方案。",
     cardCount: 10,
     layoutType: "absolute",
+    layoutOffset: { x: 0, y: -27 },
     positions: [
-      { x: 35, y: 53, zIndex: 10 },
-      { x: 35, y: 53, rotation: 90, zIndex: 20 },
-      { x: 35, y: 20 },
-      { x: 10, y: 53 },
-      { x: 35, y: 85 },
-      { x: 60, y: 53 },
-      { x: 85, y: 90 },
-      { x: 85, y: 65 },
-      { x: 85, y: 40 },
-      { x: 85, y: 15 },
+      { x: -42, y: 0, zIndex: 10 },
+      { x: -42, y: 0, rotation: 90, zIndex: 20 },
+      { x: -42, y: -98 },
+      { x: -118, y: 0 },
+      { x: -42, y: 98 },
+      { x: 34, y: 0 },
+      { x: 84, y: 98 },
+      { x: 84, y: 33 },
+      { x: 84, y: -33 },
+      { x: 84, y: -98 },
     ],
     positionLabels_en: [
       "1. Issue",
@@ -488,7 +491,7 @@ Synthesis Goal: Provide a holistic life scan. Treat each card as a specific diag
     ],
     cardSize: {
       mobile: "w-12 aspect-[300/519]",
-      desktop: "w-16 aspect-[300/519]",
+      desktop: "w-28 aspect-[300/519]",
     },
     icon: (isActive) => (
       <div className="flex gap-1 items-center">
@@ -547,18 +550,19 @@ Synthesis Goal: First, analyze the 'Cross' to see the event flow (Issue -> Past 
       "这是需要用到11张塔罗牌的牌阵，深入探索双方的潜意识、阻碍与优势。\n提问不限于情感关系，也适用于合作伙伴、亲子关系等。可以换位思考，帮助你理解对方的视角与需求。",
     cardCount: 11,
     layoutType: "absolute",
+    layoutOffset: { x: 0, y: -30 },
     positions: [
-      { x: 20, y: 80, labelPosition: "bottom" },
-      { x: 20, y: 60, labelPosition: "right" },
-      { x: 20, y: 40, labelPosition: "right" },
-      { x: 20, y: 20, labelPosition: "top" },
-      { x: 80, y: 80, labelPosition: "bottom" },
-      { x: 80, y: 60, labelPosition: "left" },
-      { x: 80, y: 40, labelPosition: "left" },
-      { x: 80, y: 20, labelPosition: "top" },
-      { x: 50, y: 80, labelPosition: "top" },
-      { x: 50, y: 50, labelPosition: "top" },
-      { x: 50, y: 20, labelPosition: "top" },
+      { x: -80, y: 77, labelPosition: "bottom" },
+      { x: -80, y: 26, labelPosition: "right" },
+      { x: -80, y: -26, labelPosition: "right" },
+      { x: -80, y: -77, labelPosition: "top" },
+      { x: 80, y: 77, labelPosition: "bottom" },
+      { x: 80, y: 26, labelPosition: "left" },
+      { x: 80, y: -26, labelPosition: "left" },
+      { x: 80, y: -77, labelPosition: "top" },
+      { x: 0, y: 77, labelPosition: "top" },
+      { x: 0, y: 0, labelPosition: "top" },
+      { x: 0, y: -77, labelPosition: "top" },
     ],
     positionLabels_en: [
       "1. You Now",
@@ -588,7 +592,7 @@ Synthesis Goal: First, analyze the 'Cross' to see the event flow (Issue -> Past 
     ],
     cardSize: {
       mobile: "w-14 aspect-[300/519]",
-      desktop: "w-20 aspect-[300/519]",
+      desktop: "w-25 aspect-[300/519]",
     },
     icon: (isActive) => (
       <div className="flex gap-0.5 justify-center items-end h-5">
@@ -712,14 +716,15 @@ Synthesis Goal: Strictly follow this narrative formula: "When [Card 1 Situation]
       "这是用到七张塔罗牌的牌阵，深入分析实现目标过程中的心理与行动要素。\n适合提问需要设定并实现具体目标的情境，帮助你识别关键的心理动力和提供实际的方法论。",
     cardCount: 7,
     layoutType: "absolute",
+    layoutOffset: { x: 0, y: -54 },
     positions: [
-      { x: 20, y: 30, labelPosition: "top", zIndex: 10 },
-      { x: 20, y: 40, labelPosition: "bottom", rotation: 90, zIndex: 20 },
-      { x: 50, y: 30, labelPosition: "top", zIndex: 10 },
-      { x: 50, y: 40, labelPosition: "bottom", rotation: 90, zIndex: 20 },
-      { x: 80, y: 30, labelPosition: "top", zIndex: 10 },
-      { x: 80, y: 40, labelPosition: "bottom", rotation: 90, zIndex: 20 },
-      { x: 50, y: 70, labelPosition: "bottom" },
+      { x: -80, y: -27, labelPosition: "top", zIndex: 10 },
+      { x: -80, y: 0, labelPosition: "bottom", rotation: 90, zIndex: 20 },
+      { x: 0, y: -27, labelPosition: "top", zIndex: 10 },
+      { x: 0, y: 0, labelPosition: "bottom", rotation: 90, zIndex: 20 },
+      { x: 80, y: -27, labelPosition: "top", zIndex: 10 },
+      { x: 80, y: 0, labelPosition: "bottom", rotation: 90, zIndex: 20 },
+      { x: 0, y: 80, labelPosition: "bottom" },
     ],
     positionLabels_en: [
       "1. Focus",
@@ -741,7 +746,7 @@ Synthesis Goal: Strictly follow this narrative formula: "When [Card 1 Situation]
     ],
     cardSize: {
       mobile: "w-14 aspect-[300/519]",
-      desktop: "w-20 aspect-[300/519]",
+      desktop: "w-28 aspect-[300/519]",
     },
     icon: (isActive) => (
       <div className="flex flex-col items-center justify-center w-6 h-6 gap-0.5">
@@ -803,22 +808,23 @@ Synthesis Goal: Reveal the psychological gap. Contrast the Conscious efforts (To
       "这是用到十五张塔罗牌的环形牌阵，预测未来一年的逐月运势。\n适合提问需要规划全年运势和重要时间节点的情境，帮助你把握节奏，优化决策。",
     cardCount: 15,
     layoutType: "absolute",
+    layoutOffset: { x: 0, y: -30 },
     positions: [
-      { x: 42, y: 42 },
-      { x: 24, y: 42 },
-      { x: 60, y: 42 },
-      { x: 42, y: 0, labelPosition: "bottom" },
-      { x: 63, y: 5, labelPosition: "bottom" },
-      { x: 79, y: 21, labelPosition: "bottom" },
-      { x: 84, y: 42, labelPosition: "bottom" },
-      { x: 79, y: 63, labelPosition: "bottom" },
-      { x: 63, y: 79, labelPosition: "top" },
-      { x: 42, y: 84, labelPosition: "top" },
-      { x: 21, y: 79, labelPosition: "top" },
-      { x: 5, y: 63, labelPosition: "bottom" },
-      { x: 0, y: 42, labelPosition: "bottom" },
-      { x: 5, y: 21, labelPosition: "bottom" },
-      { x: 21, y: 5, labelPosition: "bottom" },
+      { x: 0, y: 0 },
+      { x: -42, y: 0 },
+      { x: 42, y: 0 },
+      { x: 0, y: -104, labelPosition: "bottom" },
+      { x: 52, y: -92, labelPosition: "bottom" },
+      { x: 90, y: -52, labelPosition: "bottom" },
+      { x: 102, y: 0, labelPosition: "bottom" },
+      { x: 90, y: 52, labelPosition: "bottom" },
+      { x: 52, y: 92, labelPosition: "top" },
+      { x: 0, y: 104, labelPosition: "top" },
+      { x: -52, y: 92, labelPosition: "top" },
+      { x: -90, y: 52, labelPosition: "bottom" },
+      { x: -102, y: 0, labelPosition: "bottom" },
+      { x: -90, y: -52, labelPosition: "bottom" },
+      { x: -52, y: -92, labelPosition: "bottom" },
     ],
     positionLabels_en: [
       "Trend",
@@ -856,7 +862,7 @@ Synthesis Goal: Reveal the psychological gap. Contrast the Conscious efforts (To
     ],
     cardSize: {
       mobile: "w-12 aspect-[300/519]",
-      desktop: "w-25 aspect-[300/519]",
+      desktop: "w-26 aspect-[300/519]",
     },
     icon: (isActive) => (
       <div className="relative w-6 h-6 flex items-center justify-center">
@@ -930,6 +936,7 @@ export const getLocalizedSpread = (
     cardCount: data.cardCount,
     layoutType: data.layoutType,
     positions: localizePositions(data.positions, positionLabels),
+    layoutOffset: data.layoutOffset,
     labels: isCn ? data.labels_cn : data.labels_en,
     cardPools: data.cardPools,
     cardSize: data.cardSize,

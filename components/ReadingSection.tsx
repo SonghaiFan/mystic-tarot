@@ -10,6 +10,8 @@ import CardTooltip from "./CardTooltip";
 import { useTranslation } from "react-i18next";
 import { Locale } from "../types";
 
+const ABSOLUTE_LAYOUT_UNIT_REM = 0.25;
+
 interface ReadingSectionProps {
   spread: SpreadType;
   isMobile: boolean;
@@ -135,6 +137,44 @@ ${t("reading.copyPrompt.request")}`;
     return phrases[thinkingKeywordIndex % phrases.length];
   };
 
+  const getAbsoluteCardStyle = (
+    position: (typeof spreadConfig.positions)[number] | undefined,
+    isHovered: boolean
+  ) => {
+    if (
+      spreadConfig.layoutType !== "absolute" ||
+      isMobile ||
+      !position
+    ) {
+      return undefined;
+    }
+
+    const layoutOffset = spreadConfig.layoutOffset ?? { x: 0, y: 0 };
+    const leftOffset =
+      typeof position.x === "number"
+        ? (layoutOffset.x + position.x) * ABSOLUTE_LAYOUT_UNIT_REM
+        : 0;
+    const topOffset =
+      typeof position.y === "number"
+        ? (layoutOffset.y + position.y) * ABSOLUTE_LAYOUT_UNIT_REM
+        : 0;
+
+    return {
+      position: "absolute" as const,
+      left:
+        typeof position.x === "number"
+          ? `calc(50% + ${leftOffset}rem)`
+          : position.x,
+      top:
+        typeof position.y === "number"
+          ? `calc(50% + ${topOffset}rem)`
+          : position.y,
+      transform: "translate(-50%, -50%)",
+      zIndex: isHovered ? 100 : position.zIndex || 5,
+      rotate: position.rotation || 0,
+    };
+  };
+
   return (
     <motion.div
       key="reading-layout"
@@ -157,17 +197,7 @@ ${t("reading.copyPrompt.request")}`;
               ? spreadConfig.cardSize.mobile
               : spreadConfig.cardSize.desktop;
 
-            const absoluteStyle =
-              spreadConfig.layoutType === "absolute" && !isMobile && position
-                ? {
-                  position: "absolute" as const,
-                  left: typeof position.x === "number" ? `${position.x}%` : position.x,
-                  top: typeof position.y === "number" ? `${position.y}%` : position.y,
-                  transform: "translate(-50%, -50%)",
-                  zIndex: isHovered ? 100 : position.zIndex || 5,
-                  rotate: position.rotation || 0,
-                }
-                : undefined;
+            const absoluteStyle = getAbsoluteCardStyle(position, isHovered);
 
             const label =
               spreadConfig.layoutType === "absolute"

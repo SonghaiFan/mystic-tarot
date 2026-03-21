@@ -67,6 +67,12 @@
   },
   "deck": {
     "title": "塔罗牌库",
+    "spreadsTitle": "牌阵库",
+    "spreadCardCount": "{{count}} 张牌",
+    "views": {
+      "cards": "卡牌",
+      "spreads": "牌阵"
+    },
     "categories": {
       "FULL": "全部牌",
       "MAJOR": "大阿尔卡那",

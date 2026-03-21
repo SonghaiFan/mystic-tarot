@@ -67,6 +67,12 @@
   },
   "deck": {
     "title": "Tarot Deck Library",
+    "spreadsTitle": "Spread Library",
+    "spreadCardCount": "{{count}} cards",
+    "views": {
+      "cards": "Cards",
+      "spreads": "Spreads"
+    },
     "categories": {
       "FULL": "All Cards",
       "MAJOR": "Major Arcana",
