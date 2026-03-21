@@ -237,19 +237,15 @@ const TarotCard: React.FC<TarotCardProps> = ({
           className="w-full h-full relative"
           layoutId={!isDetailed ? sharedLayoutId : undefined}
           style={{ transformStyle: "preserve-3d" }}
-          initial={{
-            rotateY: isRevealed ? 0 : 180,
-            rotateZ: isReversed && !isDetailed ? 180 : 0,
-          }}
+          initial={false}
           animate={{
             rotateY: isRevealed ? 0 : 180,
-            rotateZ: isReversed && !isDetailed ? 180 : 0,
           }}
           transition={{ layout: CARD_LAYOUT_TRANSITION, duration: 0.34, ease: "easeInOut" }}
         >
         {/* Front Face */}
         <div
-          className={`absolute inset-0 overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)] ${isDetailed ? "border border-white/15 bg-black" : "bg-white p-[4px]"}`}
+          className={`absolute inset-0 overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)] ${isDetailed ? "border border-white/15 bg-black" : "bg-white p-1"}`}
           style={{ backfaceVisibility: "hidden" }}
         >
           <div className={`relative h-full w-full overflow-hidden ${isDetailed ? "bg-black" : "border border-black/80 bg-black"} ${isDetailed ? "flex flex-col md:flex-row" : "flex"}`}>
@@ -268,7 +264,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                 >
                   <div className="absolute inset-x-[18%] bottom-[6%] h-[12%] rounded-full bg-black/60 blur-2xl opacity-80 pointer-events-none" />
                   <motion.div
-                    className="relative w-full max-w-[15rem] md:max-w-[21rem] aspect-[300/519]"
+                    className="relative w-full max-w-60 md:md:max-w-84 aspect-300/519"
                     layoutId={sharedLayoutId}
                     style={{
                       transformStyle: "preserve-3d",
@@ -279,7 +275,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                     transition={{ layout: CARD_LAYOUT_TRANSITION, duration: 0.18, ease: SILKY_EASE }}
                   >
                     <div
-                      className="absolute inset-0 overflow-hidden bg-white p-[4px] shadow-[0_28px_60px_rgba(0,0,0,0.55)]"
+                      className="absolute inset-0 overflow-hidden bg-white p-1 shadow-[0_28px_60px_rgba(0,0,0,0.55)]"
                       style={{ transform: "translateZ(24px)" }}
                     >
                       <div className="relative h-full w-full overflow-hidden border border-black/80 bg-neutral-950">
@@ -406,13 +402,18 @@ const TarotCard: React.FC<TarotCardProps> = ({
             /* Standard Card View */
             <div className="relative h-full w-full overflow-hidden bg-neutral-950">
               <div className="absolute inset-0 overflow-hidden bg-neutral-950">
-                <img
+                <motion.img
                   src={getCardImageUrl(card.image)}
                   alt={card.nameEn}
                   loading={priority ? "eager" : "lazy"}
                   onLoad={() => setIsImageLoaded(true)}
                   className={`w-full h-full object-cover transition-opacity duration-700 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
                   style={{ filter: imageFilter }}
+                  initial={false}
+                  animate={{
+                    rotateZ: isReversed && !isDetailed ? 180 : 0,
+                  }}
+                  transition={{ duration: 0.34, ease: "easeInOut" }}
                 />
                 {!isImageLoaded && (
                   <div className="absolute inset-0 flex items-center justify-center">
