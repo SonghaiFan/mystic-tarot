@@ -11,6 +11,12 @@ import { useTranslation } from "react-i18next";
 import { Locale } from "../types";
 
 const ABSOLUTE_LAYOUT_UNIT_REM = 0.25;
+const CARD_ASPECT_RATIO = 519 / 300;
+
+const parseWidthUnits = (widthClass: string) => {
+  const match = widthClass.match(/\bw-(\d+(?:\.\d+)?)\b/);
+  return match ? Number(match[1]) : null;
+};
 
 interface ReadingSectionProps {
   spread: SpreadType;
@@ -137,6 +143,53 @@ ${t("reading.copyPrompt.request")}`;
     return phrases[thinkingKeywordIndex % phrases.length];
   };
 
+  const getAbsoluteLayoutOffset = () => {
+    if (spreadConfig.layoutType !== "absolute" || !spreadConfig.positions?.length) {
+      return spreadConfig.layoutOffset ?? { x: 0, y: 0 };
+    }
+
+    const widthClass = isMobile
+      ? spreadConfig.cardSize.mobile
+      : spreadConfig.cardSize.desktop;
+    const cardWidthUnits = parseWidthUnits(widthClass);
+
+    if (!cardWidthUnits) {
+      return spreadConfig.layoutOffset ?? { x: 0, y: 0 };
+    }
+
+    const cardHeightUnits = cardWidthUnits * CARD_ASPECT_RATIO;
+    let minLeft = Infinity;
+    let maxRight = -Infinity;
+    let minTop = Infinity;
+    let maxBottom = -Infinity;
+
+    spreadConfig.positions.forEach((position) => {
+      const x = typeof position.x === "number" ? position.x : 0;
+      const y = typeof position.y === "number" ? position.y : 0;
+      const isRotated = !!position.rotation;
+      const halfWidth = (isRotated ? cardHeightUnits : cardWidthUnits) / 2;
+      const halfHeight = (isRotated ? cardWidthUnits : cardHeightUnits) / 2;
+
+      minLeft = Math.min(minLeft, x - halfWidth);
+      maxRight = Math.max(maxRight, x + halfWidth);
+      minTop = Math.min(minTop, y - halfHeight);
+      maxBottom = Math.max(maxBottom, y + halfHeight);
+    });
+
+    const autoOffset = {
+      x: -((minLeft + maxRight) / 2),
+      y: -((minTop + maxBottom) / 2),
+    };
+    const manualOffset = spreadConfig.layoutOffset ?? { x: 0, y: 0 };
+
+    return {
+      x: autoOffset.x + manualOffset.x,
+      y: autoOffset.y + manualOffset.y,
+    };
+  };
+
+  const absoluteLayoutOffset = getAbsoluteLayoutOffset();
+
   const getAbsoluteCardStyle = (
     position: (typeof spreadConfig.positions)[number] | undefined,
     isHovered: boolean
@@ -149,14 +202,13 @@ ${t("reading.copyPrompt.request")}`;
       return undefined;
     }
 
-    const layoutOffset = spreadConfig.layoutOffset ?? { x: 0, y: 0 };
     const leftOffset =
       typeof position.x === "number"
-        ? (layoutOffset.x + position.x) * ABSOLUTE_LAYOUT_UNIT_REM
+        ? (absoluteLayoutOffset.x + position.x) * ABSOLUTE_LAYOUT_UNIT_REM
         : 0;
     const topOffset =
       typeof position.y === "number"
-        ? (layoutOffset.y + position.y) * ABSOLUTE_LAYOUT_UNIT_REM
+        ? (absoluteLayoutOffset.y + position.y) * ABSOLUTE_LAYOUT_UNIT_REM
         : 0;
 
     return {
