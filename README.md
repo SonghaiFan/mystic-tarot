@@ -1,13 +1,19 @@
-# Frank Tarot | 命运塔罗
+# Frank Tarot | AI Tarot Reading
+
+# 命运塔罗 | AI 塔罗占卜
 
 <div align="center">
   <img src="docs/teaser.png" alt="Frank Tarot teaser" width="100%" />
-  <p><em>An immersive AI tarot reading ritual for the web.</em></p>
+  <p><em>A minimal, beautifully designed AI tarot reading app with voice guidance and a full collection of tarot spreads.</em></p>
 </div>
 
-Frank Tarot is a bilingual tarot reading experience built with React, Vite, and Google Gemini. It combines cinematic presentation, guided card selection, spoken readings, and spread-aware interpretation to turn a simple prompt into a ritual-style session.
+Frank Tarot is a minimal, beautifully designed AI tarot reading app built with React, Vite, and Google Gemini. It combines guided card selection, spoken readings, and a full collection of tarot spreads in a clean and immersive interface.
 
 The app supports English and Simplified Chinese, adapts across desktop and mobile, and is structured as a static site that can be deployed to GitHub Pages.
+
+命运塔罗是一个极简且注重审美的 AI 塔罗应用，基于 React、Vite 和 Google Gemini 构建。它把引导式抽牌、语音播报和完整的塔罗牌阵集合放进一个干净、沉浸的界面里。
+
+应用同时适配桌面端和移动端，并以静态站点方式构建，适合部署到 GitHub Pages。
 
 ## Live Site
 
@@ -15,11 +21,11 @@ https://songhaifan.github.io/frank-tarot/
 
 ## Highlights
 
+- Minimal and aesthetic interface designed for a calm tarot reading experience
 - AI-generated tarot readings shaped by the selected spread, card positions, and upright or reversed orientation
-- Voice-guided ritual flow with ambient audio and generated speech for the final reading
-- Multiple spreads, including single-card, three-card, clarity, relationship, and other themed layouts
+- Voice guidance with ambient audio and generated speech for the final reading
+- A full collection of tarot spreads, including single-card, three-card, clarity, relationship, and other themed layouts
 - Bilingual interface with English and Simplified Chinese content
-- Printable reading output for saving or sharing a session
 - Responsive presentation designed for both mobile and desktop use
 
 ## Tech Stack
