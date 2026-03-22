@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { SILKY_EASE } from "@/constants/ui";
+import { SILKY_EASE } from "@/shared/constants/ui";
 
 interface TrueFocusProps {
   sentence?: string;

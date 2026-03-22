@@ -12,24 +12,24 @@ import {
   SpreadType,
   PickedCard,
   CardPoolType,
-} from "@/types";
+} from "@/features/tarot/types";
 import {
   FULL_DECK,
   getDeckForPool,
   getCardImageUrl,
-} from "@/constants/cards";
-import { SPREADS } from "@/constants/spreads";
-import { generateTarotReading, generateSpeech, predictBestSpread } from "@/services/gemini";
-import CosmicParticles from "@/components/CosmicParticles";
-import HeaderBar from "@/components/HeaderBar";
-import IntroSection from "@/components/IntroSection";
-import InputSection from "@/components/InputSection";
-import PickingSection from "@/components/PickingSection";
-import ReadingSection from "@/components/ReadingSection";
-import DeckLibrary from "@/components/DeckLibrary";
-import printTheReading from "@/utils/printTheReading";
+} from "@/features/tarot/constants/cards";
+import { SPREADS } from "@/features/tarot/constants/spreads";
+import { generateTarotReading, generateSpeech, predictBestSpread } from "@/features/tarot/services/gemini";
+import CosmicParticles from "@/app/components/CosmicParticles";
+import HeaderBar from "@/app/components/HeaderBar";
+import IntroSection from "@/features/tarot/components/IntroSection";
+import InputSection from "@/features/tarot/components/InputSection";
+import PickingSection from "@/features/tarot/components/PickingSection";
+import ReadingSection from "@/features/tarot/components/ReadingSection";
+import DeckLibrary from "@/features/tarot/components/DeckLibrary";
+import printTheReading from "@/features/tarot/utils/printTheReading";
 import { useTranslation } from "react-i18next";
-import { Locale } from "@/types";
+import { Locale } from "@/features/tarot/types";
 
 // --- Configuration ---
 const BACKGROUND_VOLUME = 0.06;

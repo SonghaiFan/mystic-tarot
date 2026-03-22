@@ -1,6 +1,6 @@
-import { getCardImageUrl } from "@/constants/cards";
-import { getLocalizedSpread } from "@/constants/spreads";
-import { Locale } from "@/types";
+import { getCardImageUrl } from "@/features/tarot/constants/cards";
+import { getLocalizedSpread } from "@/features/tarot/constants/spreads";
+import { Locale } from "@/features/tarot/types";
 import i18n from "@/i18n/config";
 
 export default function printTheReading(

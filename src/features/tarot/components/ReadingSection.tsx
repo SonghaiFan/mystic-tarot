@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { Download, RefreshCw, Volume2, Copy, Check } from "lucide-react";
-import { SpreadType, PickedCard } from "@/types";
-import { SILKY_EASE } from "@/constants/ui";
-import { getLocalizedSpread, SPREADS } from "@/constants/spreads";
+import { SpreadType, PickedCard } from "@/features/tarot/types";
+import { SILKY_EASE } from "@/shared/constants/ui";
+import { getLocalizedSpread, SPREADS } from "@/features/tarot/constants/spreads";
 import TarotCard from "./TarotCard";
 import CardTooltip from "./CardTooltip";
 import { useTranslation } from "react-i18next";
-import { Locale } from "@/types";
+import { Locale } from "@/features/tarot/types";
 
 const ABSOLUTE_LAYOUT_UNIT_REM = 0.25;
 const CARD_ASPECT_RATIO = 519 / 300;

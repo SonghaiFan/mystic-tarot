@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
-import { CardPoolType } from "@/types";
-import { FULL_DECK, getDeckForPool } from "@/constants/cards";
+import { CardPoolType } from "@/features/tarot/types";
+import { FULL_DECK, getDeckForPool } from "@/features/tarot/constants/cards";
 import TarotCard from "./TarotCard";
 import { useTranslation } from "react-i18next";
 

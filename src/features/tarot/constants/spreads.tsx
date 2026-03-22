@@ -1,6 +1,6 @@
 import React from "react";
-import groundTruth from "@/data/ground-truth.json";
-import { SpreadType, CardPoolType, Locale } from "@/types";
+import groundTruth from "@/features/tarot/data/ground-truth.json";
+import { SpreadType, CardPoolType, Locale } from "@/features/tarot/types";
 
 export interface SpreadPosition {
   x: number | string;

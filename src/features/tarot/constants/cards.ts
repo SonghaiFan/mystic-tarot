@@ -1,5 +1,5 @@
-import groundTruth from "@/data/ground-truth.json";
-import { TarotCard, CardPoolType } from "@/types";
+import groundTruth from "@/features/tarot/data/ground-truth.json";
+import { TarotCard, CardPoolType } from "@/features/tarot/types";
 
 const LOCAL_CDN = `${import.meta.env.BASE_URL}images/cards/`;
 

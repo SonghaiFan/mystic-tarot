@@ -1,8 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import enTranslation from "@/locales/en.json";
-import zhCNTranslation from "@/locales/zh-CN.json";
-import { Locale } from "@/types";
+import enTranslation from "@/i18n/locales/en.json";
+import zhCNTranslation from "@/i18n/locales/zh-CN.json";
+import { Locale } from "@/features/tarot/types";
 
 const LOCALE_STORAGE_KEY = "mystic-tarot-locale";
 

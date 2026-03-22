@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "motion/react";
-import { SpreadType, TarotCard as TarotCardType, PickedCard } from "@/types";
-import { SILKY_EASE } from "@/constants/ui";
-import { SPREADS } from "@/constants/spreads";
+import { SpreadType, TarotCard as TarotCardType, PickedCard } from "@/features/tarot/types";
+import { SILKY_EASE } from "@/shared/constants/ui";
+import { SPREADS } from "@/features/tarot/constants/spreads";
 import TarotCard from "./TarotCard";
 import { useTranslation } from "react-i18next";
 

@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
-import { SpreadType, PickedCard, Locale } from "@/types";
-import { SPREADS, getLocalizedSpread } from "@/constants/spreads";
+import { SpreadType, PickedCard, Locale } from "@/features/tarot/types";
+import { SPREADS, getLocalizedSpread } from "@/features/tarot/constants/spreads";
 import i18n from "@/i18n/config";
 
 // Helper to create a fresh client instance (important for key updates)

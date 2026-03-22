@@ -8,11 +8,11 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
-import { TarotCard as TarotCardType, PickedCard } from "@/types";
-import { getCardImageUrl } from "@/constants/cards";
-import { getRomanNumeral } from "@/utils/getRomanNumeral";
+import { TarotCard as TarotCardType, PickedCard } from "@/features/tarot/types";
+import { getCardImageUrl } from "@/features/tarot/constants/cards";
+import { getRomanNumeral } from "@/features/tarot/utils/getRomanNumeral";
 import { useTranslation } from "react-i18next";
-import { SILKY_EASE } from "@/constants/ui";
+import { SILKY_EASE } from "@/shared/constants/ui";
 
 interface TarotCardProps
   extends Omit<
