@@ -1,6 +1,6 @@
 import React from "react";
-import groundTruth from "../data/ground-truth.json";
-import { SpreadType, CardPoolType, Locale } from "../types";
+import groundTruth from "@/data/ground-truth.json";
+import { SpreadType, CardPoolType, Locale } from "@/types";
 
 export interface SpreadPosition {
   x: number | string;

@@ -1,4 +1,4 @@
-import { Locale } from "../types";
+import { Locale } from "@/types";
 
 export const LANGUAGE_LABELS: Record<Locale, string> = {
   "zh-CN": "中文",

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Check, ChevronUp } from "lucide-react";
-import { SpreadType } from "../types";
-import { SILKY_EASE } from "../constants/ui";
-import { getLocalizedSpread, SPREADS } from "../constants/spreads";
+import { SpreadType } from "@/types";
+import { SILKY_EASE } from "@/constants/ui";
+import { getLocalizedSpread, SPREADS } from "@/constants/spreads";
 import { useTranslation } from "react-i18next";
-import { Locale } from "../types";
+import { Locale } from "@/types";
 
 interface InputSectionProps {
   question: string;

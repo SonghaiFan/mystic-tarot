@@ -12,24 +12,24 @@ import {
   SpreadType,
   PickedCard,
   CardPoolType,
-} from "./types";
+} from "@/types";
 import {
   FULL_DECK,
   getDeckForPool,
   getCardImageUrl,
-} from "./constants/cards";
-import { SPREADS } from "./constants/spreads";
-import { generateTarotReading, generateSpeech, predictBestSpread } from "./services/gemini";
-import CosmicParticles from "./components/CosmicParticles";
-import HeaderBar from "./components/HeaderBar";
-import IntroSection from "./components/IntroSection";
-import InputSection from "./components/InputSection";
-import PickingSection from "./components/PickingSection";
-import ReadingSection from "./components/ReadingSection";
-import DeckLibrary from "./components/DeckLibrary";
-import printTheReading from "./utils/printTheReading";
+} from "@/constants/cards";
+import { SPREADS } from "@/constants/spreads";
+import { generateTarotReading, generateSpeech, predictBestSpread } from "@/services/gemini";
+import CosmicParticles from "@/components/CosmicParticles";
+import HeaderBar from "@/components/HeaderBar";
+import IntroSection from "@/components/IntroSection";
+import InputSection from "@/components/InputSection";
+import PickingSection from "@/components/PickingSection";
+import ReadingSection from "@/components/ReadingSection";
+import DeckLibrary from "@/components/DeckLibrary";
+import printTheReading from "@/utils/printTheReading";
 import { useTranslation } from "react-i18next";
-import { Locale } from "./types";
+import { Locale } from "@/types";
 
 // --- Configuration ---
 const BACKGROUND_VOLUME = 0.06;

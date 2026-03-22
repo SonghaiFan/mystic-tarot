@@ -1,7 +1,7 @@
-import { getCardImageUrl } from "../constants/cards";
-import { getLocalizedSpread } from "../constants/spreads";
-import { Locale } from "../types";
-import i18n from "../i18n/config";
+import { getCardImageUrl } from "@/constants/cards";
+import { getLocalizedSpread } from "@/constants/spreads";
+import { Locale } from "@/types";
+import i18n from "@/i18n/config";
 
 export default function printTheReading(
   question: any,

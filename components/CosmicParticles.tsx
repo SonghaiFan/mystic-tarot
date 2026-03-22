@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import p5 from "p5";
-import { GameState } from "../types";
+import { GameState } from "@/types";
 
 interface Star {
   radius: number; // Distance from center

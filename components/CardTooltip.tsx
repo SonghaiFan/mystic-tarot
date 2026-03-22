@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect, useState } from "react";
 import { motion } from "motion/react";
-import { PickedCard } from "../types";
+import { PickedCard } from "@/types";
 import { useTranslation } from "react-i18next";
 
 interface CardTooltipProps {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
-import i18n, { LOCALE_STORAGE_KEY } from "./config";
+import i18n, { LOCALE_STORAGE_KEY } from "@/i18n/config";
 
 // Syncs localStorage, <html lang>, and <title> with the active language.
 const I18nSideEffects: React.FC = () => {

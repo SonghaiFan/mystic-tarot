@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import TrueFocus from "../utils/TrueFocus";
+import TrueFocus from "@/utils/TrueFocus";
 import { useTranslation } from "react-i18next";
 
 interface IntroSectionProps {

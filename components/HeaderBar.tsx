@@ -6,10 +6,10 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import AudioVisualizer from "./AudioVisualizer";
-import { GameState } from "../types";
-import { LANGUAGE_LABELS } from "../constants/i18n";
+import { GameState } from "@/types";
+import { LANGUAGE_LABELS } from "@/constants/i18n";
 import { useTranslation } from "react-i18next";
-import { Locale } from "../types";
+import { Locale } from "@/types";
 
 interface HeaderBarProps {
   gameState: GameState;
