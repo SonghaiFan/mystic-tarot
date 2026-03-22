@@ -1,0 +1,115 @@
+{
+  "appTitle": "Frank塔罗",
+  "intro": {
+    "focus": "命 运",
+    "subtitle": "TAROT",
+    "enter": "开始占卜"
+  },
+  "header": {
+    "brand": "F.塔罗",
+    "library": "牌库",
+    "back": "返回",
+    "openLibraryTitle": "打开牌库",
+    "closeLibraryTitle": "关闭牌库",
+    "fullscreen": "全屏",
+    "exitFullscreen": "退出全屏",
+    "stateLabels": {
+      "INTRO": "",
+      "LIBRARY": "牌库",
+      "INPUT": "Step 1 · 提问与牌阵",
+      "PICKING": "Step 2 · 抽牌",
+      "REVEAL": "Step 3 · 解读",
+      "READING": "Step 3 · 解读"
+    }
+  },
+  "input": {
+    "chooseSpread": "选择牌阵",
+    "chooseSpreadHint": "牌阵决定解读角度：感情、决策、全局扫描、关系镜像……先选对牌阵再发问。",
+    "confirmSpread": "确认牌阵",
+    "selectSpread": "选择牌阵",
+    "reselect": "重新选择",
+    "selectedSpread": "已选择「{{name}}」牌阵",
+    "meditation": "请闭上双眼，深呼吸三次\n在心中默念你的困惑，保持虔诚与专注",
+    "enterQuestion": "输入你的问题",
+    "fallbackPlaceholder": "在此输入你心中的疑惑...",
+    "beginRitual": "开始洗牌",
+    "divining": "感知中"
+  },
+  "picking": {
+    "instruction": "轻点任意卡牌，直到下方格子亮满（共 {{count}} 张）"
+  },
+  "reading": {
+    "revealPrompt": "翻开每一张卡牌以显示解读",
+    "questionPrefix": "正在回应：",
+    "replay": "再念一次",
+    "replayTitle": "重播解读音频",
+    "save": "保存图文",
+    "saveTitle": "下载解读图片",
+    "prompt": "提示词",
+    "promptTitle": "复制给其他 AI 的提示词",
+    "copied": "复制成功",
+    "seekAgain": "再次探索",
+    "thinkingPhrases": [
+      "正在向群星求问……",
+      "正在编织命运的丝线……",
+      "正在聆听低语……",
+      "正在校准宇宙回响……"
+    ],
+    "copyPrompt": {
+      "defaultQuestion": "综合指引",
+      "positionFallback": "卡牌",
+      "title": "我使用「{{spreadName}}」牌阵完成了一次塔罗解读。",
+      "question": "问题：{{question}}",
+      "cardsDrawn": "抽到的牌：",
+      "initialInterpretation": "当前解读：",
+      "request": "请基于这些内容，继续给出更深入、更细致的分析，重点关注牌与牌之间的隐藏联系，以及可执行的现实建议。"
+    }
+  },
+  "deck": {
+    "title": "塔罗牌库",
+    "spreadsTitle": "牌阵库",
+    "spreadCardCount": "{{count}} 张牌",
+    "views": {
+      "cards": "卡牌",
+      "spreads": "牌阵"
+    },
+    "categories": {
+      "FULL": "全部牌",
+      "MAJOR": "大阿尔卡那",
+      "SUIT_WANDS": "权杖",
+      "SUIT_CUPS": "圣杯",
+      "SUIT_SWORDS": "宝剑",
+      "SUIT_PENTACLES": "星币"
+    }
+  },
+  "tooltip": {
+    "clickToReveal": "点击翻牌",
+    "clickForDetails": "点击查看详细内容"
+  },
+  "card": {
+    "reversedShort": "逆位",
+    "reversedLong": "逆位",
+    "interpretationTitle": "牌义启示",
+    "arcanaWisdom": "秘境智慧",
+    "keywords": "关键词"
+  },
+  "print": {
+    "title": "塔罗解读",
+    "subtitle": "TAROT READING",
+    "questionLabel": "你的问题",
+    "interpretationLabel": "解读",
+    "filename": "tarot-reading",
+    "dateLocale": "zh-CN"
+  },
+  "staticScripts": {
+    "WELCOME": "静心凝视深渊。当你的直觉苏醒时，进入命运之门。",
+    "ASK": "心中的疑惑，是通往真理的钥匙。告诉我，你为何而来？",
+    "PICK": "在流动的命运中，选择你的指引。",
+    "REVEAL": "这就是，命运的回响。"
+  },
+  "errors": {
+    "readingSoftFail": "迷雾太浓，我看不到前路...",
+    "readingHardFail": "命运的丝线暂时纠缠不清，请静心片刻后再试。",
+    "silentStars": "星象暂时沉默，请稍后再试。"
+  }
+}
