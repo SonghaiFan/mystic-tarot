@@ -809,7 +809,7 @@ Synthesis Goal: Reveal the psychological gap. Contrast the Conscious efforts (To
       "这是用到十五张塔罗牌的环形牌阵，预测未来一年的逐月运势。\n适合提问需要规划全年运势和重要时间节点的情境，帮助你把握节奏，优化决策。",
     cardCount: 15,
     layoutType: "absolute",
-    layoutOffset: { x: 0, y: -30 },
+    layoutOffset: { x: -14, y: -30 },
     positions: [
       { x: 0, y: 0 },
       { x: -42, y: 0 },

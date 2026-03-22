@@ -245,7 +245,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
         >
         {/* Front Face */}
         <div
-          className={`absolute inset-0 overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)] ${isDetailed ? "border border-white/15 bg-black" : "bg-white p-1"}`}
+          className={`absolute rounded-xs inset-0 overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)] ${isDetailed ? "border border-white/15 bg-black" : "bg-white p-1"}`}
           style={{ backfaceVisibility: "hidden" }}
         >
           <div className={`relative h-full w-full overflow-hidden ${isDetailed ? "bg-black" : "border border-black/80 bg-black"} ${isDetailed ? "flex flex-col md:flex-row" : "flex"}`}>
@@ -275,7 +275,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                     transition={{ layout: CARD_LAYOUT_TRANSITION, duration: 0.18, ease: SILKY_EASE }}
                   >
                     <div
-                      className="absolute inset-0 overflow-hidden bg-white p-1 shadow-[0_28px_60px_rgba(0,0,0,0.55)]"
+                      className="absolute rounded-xs inset-0 overflow-hidden bg-white p-1 shadow-[0_28px_60px_rgba(0,0,0,0.55)]"
                       style={{ transform: "translateZ(24px)" }}
                     >
                       <div className="relative h-full w-full overflow-hidden border border-black/80 bg-neutral-950">
@@ -420,7 +420,7 @@ const TarotCard: React.FC<TarotCardProps> = ({
                     <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
                   </div>
                 )}
-                <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/20 to-black/40" />
+                <div className="absolute  inset-0 bg-linear-to-t from-black/95 via-black/20 to-black/40" />
                 <motion.div
                   aria-hidden
                   className="absolute inset-0 pointer-events-none mix-blend-screen"
